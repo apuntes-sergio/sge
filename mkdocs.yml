@@ -44,7 +44,7 @@ plugins:
   - search
 nav:
   - 1 ERP:
-    - 1_intro.md
+    - 1_0_intro.md
     - 1_2_IntroduccionERP.md
     - 1_3_IT.md
     - 1_4_ERP_CRM.md
@@ -54,6 +54,7 @@ nav:
     - 1_8_Terminología.md
   
   - 2 Instalacion de Odoo: 
+    - 2_0_Introduccion.md
     - 2_1_InstalarOdoo.md
     - 2_2_InstalarDocker.md
     - 2_3_InstalarUbuntu.md
