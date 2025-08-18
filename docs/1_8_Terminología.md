@@ -1,0 +1,115 @@
+---
+title: 1.8. Terminología ERP
+description: Sistemas de Gestión Empresarial. ERP.
+---
+
+Este glosario recoge los términos más utilizados en el ámbito de los sistemas ERP (Enterprise Resource Planning), traducidos al castellano para facilitar su comprensión.
+
+## Glosario de términos
+
+- **Aplicación de terceros**: Software que no ha sido desarrollado por el proveedor del ERP.  
+- **Análisis ABC**: Clasificación de artículos según su valor y frecuencia de uso.  
+- **Periodo contable**: Intervalo de tiempo que incluye todas las transacciones financieras (normalmente 12 meses).  
+- **Cuentas por pagar**: Saldos pendientes que la empresa debe a sus proveedores.  
+- **Cuentas por cobrar**: Saldos pendientes que los clientes deben a la empresa.  
+- **Costo real**: Valor de una transacción según el coste pagado al proveedor o empleado.  
+- **Planificación avanzada (APS)**: Método que equilibra capacidad y materiales para optimizar la producción.  
+- **Antigüedad (Aging)**: Días transcurridos desde la emisión de una factura.  
+- **Asignación**: Reserva de materiales para una orden específica.  
+- **API (Interfaz de programación de aplicaciones)**: Funciones del ERP accesibles para desarrolladores.  
+- **Montaje bajo pedido (ATO)**: Estrategia de producción rápida de productos personalizados.  
+- **Disponible para prometer (ATP)**: Fecha estimada de disponibilidad de producto para envío.  
+- **B2B / B2C**: Venta entre empresas / Venta a consumidores.  
+- **Backflush**: Emisión automática de materiales desde inventario a una orden de trabajo.  
+- **Pedido pendiente (Backorder)**: Pedido que no puede completarse por falta de stock.  
+- **Código de barras**: Representación gráfica de datos legibles por escáner.  
+- **Inteligencia empresarial (BI)**: Herramientas para visualizar indicadores clave (KPIs).  
+- **Carta de porte (BOL)**: Detalle de lo que se envía, entregado al transportista.  
+- **Lista de materiales (BOM)**: Materias primas necesarias para fabricar un producto.  
+- **Cuello de botella**: Recurso cuya capacidad limita el rendimiento global.  
+- **Fabricar para stock**: Producción basada en previsiones de demanda.  
+- **Carga indirecta (Burden)**: Costes no relacionados directamente con materiales o mano de obra.  
+- **Capacidad**: Tiempo disponible en un recurso.  
+- **Planificación de necesidades de capacidad (CRP)**: Cálculo de capacidad necesaria para la demanda.  
+- **Nube (Cloud)**: Método de despliegue que usa servidores remotos.  
+- **CPQ (Configurar, Precio, Cotizar)**: Software para configurar productos y generar presupuestos.  
+- **Consumibles**: Artículos que se gastan al recibirlos, sin pasar por inventario.  
+- **CRM (Gestión de relaciones con clientes)**: Software para gestionar interacciones con clientes.  
+- **Contaje cíclico**: Auditoría regular de inventario por muestreo.  
+- **Demanda**: Artículos necesarios para cumplir pedidos.  
+- **Desglose (Drill Down)**: Acceso al detalle de los datos visualizados.  
+- **Envío directo (Drop Ship)**: Artículos enviados directamente al cliente desde el proveedor.  
+- **Comercio electrónico**: Transacciones de compra/venta por Internet.  
+- **EDI (Intercambio electrónico de datos)**: Transferencia automática de datos entre sistemas.  
+- **EFT (Transferencia electrónica de fondos)**: Transferencia automática de dinero entre bancos.  
+- **Ingeniería bajo pedido (ETO)**: Producción personalizada tras recibir el pedido.  
+- **ERP (Planificación de recursos empresariales)**: Software que integra todas las áreas de la empresa.  
+- **Estimación**: Cálculo de coste y precio de venta de un artículo.  
+- **FIFO / LIFO**: Métodos de valoración de inventario (primero en entrar / último en entrar).  
+- **Año fiscal**: Año definido por la empresa para informes financieros.  
+- **Activos fijos**: Bienes necesarios para la producción que no generan liquidez inmediata.  
+- **Cantidad fija de pedido**: Reposición automática de una cantidad predefinida.  
+- **FOB (Libre a bordo)**: Punto en que se transfiere la propiedad del producto.  
+- **Previsión**: Estimación de demanda futura.  
+- **Error de previsión**: Diferencia entre valor real y previsto.  
+- **Libro mayor (G/L)**: Registro de todas las transacciones financieras.  
+- **Implementación**: Configuración del ERP y formación del personal.  
+- **Estado de resultados**: Informe de ingresos y gastos para determinar beneficios o pérdidas.  
+- **Software integrado**: Aplicación que combina múltiples funciones.  
+- **Inventario**: Lista de artículos disponibles con cantidad y valor.  
+- **Ajuste de inventario**: Modificación manual del inventario.  
+- **Factura**: Documento que detalla productos/servicios y su valor.  
+- **Fecha de factura**: Fecha de emisión de la factura.  
+- **Artículo**: Unidad individual en inventario.  
+- **JIT (Justo a tiempo)**: Método para minimizar inventario.  
+- **Orden de trabajo**: Autorización para producir una cantidad definida de un artículo.  
+- **Coste de orden de trabajo**: Valor de materiales, mano de obra y otros costes asociados.  
+- **KPI (Indicador clave de rendimiento)**: Métrica que refleja el cumplimiento de objetivos.  
+- **Tiempo de entrega (Lead Time)**: Tiempo entre pedido y disponibilidad del producto.  
+- **Fabricación ajustada (Lean)**: Método que busca reducir desperdicios.  
+- **Número de lote**: Identificador de una cantidad específica de material.  
+- **Fabricar bajo pedido (MTO)**: Producción que comienza tras recibir el pedido.  
+- **Fabricar para stock (MTS)**: Producción basada en previsiones.  
+- **Programa maestro de producción (MPS)**: Planificación de producción por periodo.  
+- **MRP / MRP II**: Planificación de necesidades de materiales / Recursos de manufactura.  
+- **NAICS**: Clasificación industrial estándar en EE. UU.  
+- **Subcontratación**: Uso de terceros para realizar tareas.  
+- **Costes indirectos (Overhead)**: Costes generales no ligados a producción.  
+- **Albarán**: Lista de artículos incluidos en un envío.  
+- **Número de parte**: Identificador único de cada artículo.  
+- **Recuento físico**: Conteo manual de todo el inventario.  
+- **Compra**: Proceso de adquisición de materiales o servicios.  
+- **Orden de compra**: Autorización para adquirir productos o servicios.  
+- **Solicitud de compra**: Petición de aprobación para comprar.  
+- **Cotización**: Lista de productos/servicios con precios.  
+- **Materia prima**: Materiales utilizados en la fabricación.  
+- **Recepción**: Proceso de entrada de mercancía.  
+- **Nivel de reposición**: Punto que activa una nueva compra.  
+- **Reposición**: Reabastecimiento de inventario.  
+- **Autorización de devolución (RMA)**: Permiso para devolver productos.  
+- **Ruta de producción**: Secuencia de pasos para fabricar un artículo.  
+- **Stock de seguridad**: Reserva para imprevistos.  
+- **Pedido de venta**: Autorización del cliente para recibir productos.  
+- **Planificación**: Organización de pedidos para optimizar recursos.  
+- **SCM (Gestión de la cadena de suministro)**: Control de todas las actividades logísticas.  
+- **Método de envío (Ship Via)**: Forma de transporte del producto.  
+- **Envío**: Proceso de documentación y entrega de productos.  
+- **Licencia de software**: Autorización para usar un programa.  
+- **Código fuente**: Propiedad intelectual del software.  
+- **Repuestos**: Artículos en stock para mantenimiento.  
+- **Proveedor**: Organización externa que abastece inventario.  
+- **Cadena de suministro**: Red de actividades desde proveedor hasta cliente final.  
+- **Administrador de sistemas**: Responsable de configuración y mantenimiento del ERP.  
+- **Hoja de ruta (Traveler)**: Documento que acompaña al producto en producción.  
+- **Campo definido por el usuario (UDF)**: Campo personalizable en el ERP.  
+- **Interfaz de usuario (UI)**: Forma en que el usuario interactúa con el sistema.  
+- **Unidad de medida (UOM)**: Forma de contar un artículo (unidad, kg, cm…).  
+- **Actualización**: Reemplazo de la versión actual del software por una más reciente.  
+- **Usuario**: Persona autorizada para acceder al ERP.  
+- **Inventario gestionado por proveedor**: Stock controlado por el proveedor.  
+- **Almacén**: Lugar donde se guarda inventario.  
+- **Trabajo en curso**: Artículos en proceso de producción.
+
+---
+
+_Licenciado bajo la [Licencia Creative Commons Atribución Compartir Igual 4.

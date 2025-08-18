@@ -1,0 +1,76 @@
+# mkdocs.yml
+# Configuración de MkDocs para el sitio de Apuntes Sistemas de Gestión Empresarial
+site_name: Apuntes Sistemas de Gestión Empresarial
+site_url: https://sergio-apuntes.github.io/sge/
+
+
+theme:
+  name: material
+  language: es
+  features:
+    - navigation.indexes
+    - navigation.instant
+    - navigation.instant.progress
+    - toc.follow
+    - navigation.top              # Muestra el botón para volver al principio
+    - content.code.copy           # Botón de copiar en bloques de código
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - attr_list
+  - md_in_html
+  # los siguientes son para los bloques de código
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  # Tabs para códigos de dos lenguajes o más
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true  
+
+plugins:
+  - glightbox
+  - search
+nav:
+  - 1 ERP:
+    - 1_intro.md
+    - 1_2_IntroduccionERP.md
+    - 1_3_IT.md
+    - 1_4_ERP_CRM.md
+    - 1_5_ERP_actuales.md
+    - 1_6_ERP_Libres_Privativos.md
+    - 1_7_CRM_Actuales.md
+    - 1_8_Terminología.md
+  
+  - 2 Instalacion de Odoo: 
+    - 2_1_InstalarOdoo.md
+    - 2_2_InstalarDocker.md
+    - 2_3_InstalarUbuntu.md
+  - 3 Desarrollo con odoo:
+    - 3_1_ArquitecturaOdoo.md
+    - 3_2_PrimerModulo.md
+    - 3_3_Modulos.md
+  - 4 Desarrollo de un módulo de gestión de proyectos:
+    - 4_1_EjemploCreacionModeloBasico.md
+    - 4_2_EjemploCamposBasicos.md
+    - 4_3_EjemploCamposComputados.md
+    - 4_4_EjemploExcepcionesMensajes.md
+    - 4_5_EjemploCamposComputadosRelacionales.md
+    - 4_6_EjemploCamposValoresDefecto.md
+    - 4_7_EjemploHerencias.md
+    - 4_8_EjemploMejorandoVistas.md
+    - 4_9_EjemploDatosDemo.md
+
+    
+    
