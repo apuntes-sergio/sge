@@ -1,0 +1,1511 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://sergio-apuntes.github.io/sge/JoseCastillo_Ini/client_web/">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>Client Web - Apuntes Sistemas de Gestión Empresarial</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#client-web" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="Apuntes Sistemas de Gestión Empresarial" class="md-header__button md-logo" aria-label="Apuntes Sistemas de Gestión Empresarial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Apuntes Sistemas de Gestión Empresarial
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Client Web
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Apuntes Sistemas de Gestión Empresarial" class="md-nav__button md-logo" aria-label="Apuntes Sistemas de Gestión Empresarial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Apuntes Sistemas de Gestión Empresarial
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    1 ERP
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            1 ERP
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1_intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introducción a Odoo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1_2_IntroduccionERP/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.2. Introducción a la Gestión Empresarial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1_3_IT/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.3. Informática en la Gestión Empresarial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1_4_ERP_CRM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.4. ERP-CRM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1_5_ERP_actuales/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.5. Revisión de ERPs Actuales
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1_6_ERP_Libres_Privativos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.6. ERPs Propietarios vs ERPs de Código Abierto
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1_7_CRM_Actuales/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.7. CRM Actual
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1_8_Terminolog%C3%ADa/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.8. Terminología ERP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    2 Instalacion de Odoo
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            2 Instalacion de Odoo
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2_1_InstalarOdoo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.1. Instalación de Odoo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2_2_InstalarDocker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.2. Instalación con docker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2_3_InstalarUbuntu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.3. Instalación en Ubuntu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    3 Desarrollo con odoo
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            3 Desarrollo con odoo
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3_1_ArquitecturaOdoo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.1. Arquitectura de Odoo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3_2_PrimerModulo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.2. Primer módulo en Odoo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3_3_Modulos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.3. Los módulos en Odoo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    4 Desarrollo de un módulo de gestión de proyectos
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            4 Desarrollo de un módulo de gestión de proyectos
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../4_1_EjemploCreacionModeloBasico/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.1. Creación de un modelo básico, vistas, menús y actions.
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../4_2_EjemploCamposBasicos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.2. Campos básicos y relacionales
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../4_3_EjemploCamposComputados/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.3. Campos básicos computados.
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../4_4_EjemploExcepcionesMensajes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.4. Lanzar excepciones y añadir mensajes de log.
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../4_5_EjemploCamposComputadosRelacionales/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.5. Campos computados relacionales
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../4_6_EjemploCamposValoresDefecto/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.6. Campos con valores por defecto
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../4_7_EjemploHerencias/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.7. Herencias
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../4_8_EjemploMejorandoVistas/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.8. Mejorando vistas
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../4_9_EjemploDatosDemo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.9. Datos de demostración
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#arquitectura-del-client-web" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arquitectura del client web
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enviant-el-client-al-navegador" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enviant el client al navegador
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Enviant el client al navegador">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#els-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Els Assets
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Els Assets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemple-afegir-css-al-nostre-modul" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exemple: Afegir CSS al nostre mòdul
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arquitectura-dels-moduls-en-javascript" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arquitectura dels mòduls en Javascript
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Arquitectura dels mòduls en Javascript">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utilitzar-moduls-natius-es6-en-odoo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Utilitzar mòduls natius ES6 en Odoo
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="client-web">Client Web</h1>
+<p>En la secció de la vista i de l\'herència en la vista hem pogut
+modificar la forma en que <code>Odoo</code> mostra o gestiona la
+base de dades amb el client web. La gestió de la vista es limita a crear
+lists, forms, kanbans... Els creadors d\'Odoo recomanen utilitzar
+aquestes vistes sempre que es puga. No obstant, de vegades volem fer
+alguna cosa més personalitzada. Si volem personalitzar a baix nivell
+l\'aparença i funcionament del client web, deguem entendre bé cóm
+funciona.</p>
+<p>L'Odoo actual carrega un client complet a la web, que es comunica amb
+missatges breus i concrets amb el servidor. Missatges en JSON que sols
+tenen dades o ordres a executar. Cada vegada que refresquem el navegador
+web, està enviant-se un programa de client complet, però quan entrem a
+un menú, sols s\'envia un missatge JSON demanant unes dades i es rep un
+altre amb una llista de les dades a mostrar pel client. Opcionalment,
+s\'envía el xml de la vista, el qual serà interpretat pel client per
+mostrar correctament les dades.</p>
+<blockquote>
+<p>Si volem veure tot el que el servidor rep o envia al client, podem arrancar el servici amb l\'opció --log-level=debug_rpc. També es pot obrir amb F12 la consola del navegador. </p>
+</blockquote>
+<p>El client web és una <strong>SPA (Single Page Application)</strong>, a l\'estil
+d\'altres frameworks coneguts com Angular o React, va creant i destruint
+elements de la interfície contínuament. Aquests elements es diuen <code>components</code>. Els components és la manera genèrica de compartimentar l'interficie. Després hi ha components que actuen com a <code>Widgets</code> per mostrar fields o efectes visuals o altres, per exemples, són <code>views</code> per mostrar un o varis registres. </p>
+<p>Amb Odoo, es proporcionen tres clients web diferenciats, però que, internament, funcionen amb el mateix framework. Aquest són el <strong>web client</strong> que és el "backoffice" utilitzat pel empleats de l'empresa, el <strong>website</strong> que és la pàgina web pública i el <strong>point of sale</strong>, que és per al punts de venda.</p>
+<p>Quan ens referim a crear mòduls per al client, generalment ens referim a fer canvis en l\'apariència o comportament de la web.</p>
+<p>Reflexionem sobre el tipus de modificació que necessitem:</p>
+<ul>
+<li>Un canvi menor en l\'apariència: Afegir algunes regles CSS.</li>
+<li>Un canvi estétic o de comportament de la manera en que es visualitza un field: Afegir HTML, CSS i Javascript a un <strong>Widget</strong>.</li>
+<li>Un canvi en la manera en la que un field enmagatzema o recupera les dades: Modificació del Javascript del Widget i de la part del model o el controlador Javascript de la vista.</li>
+<li>Un canvi en la manera de mostrar un recordset sencer: Crear una  vista.</li>
+<li>Fer una web des de 0 amb les dades d\'Odoo: Utilitzar els <a href="https://www.odoo.com/documentation/master/developer/reference/backend/http.html">Web controllers</a></li>
+</ul>
+<h2 id="arquitectura-del-client-web">Arquitectura del client web</h2>
+<p>El <strong>WebClient</strong> d\'Odoo es construeix amb mòduls, de la mateixa manera que
+els mòduls per al \'servidor\'. Sols que en els mòduls per ampliar el
+client web es modifiquen altres arxius a banda dels típics dels models de
+python o els xml de la vista.</p>
+<p>L\'arquitectura és <strong>MVC</strong> internament. És a dir, Odoo té un model (ORM
+sobre PostgresSQL), un controlador (Mètodes de Python) i una vista (El
+client Web definit en el servidor amb XML) i el propi client web també
+té un model (Les peticions Ajax al servidor amb JSON i la interpretació
+d\'aquestes), un controlador (Funcions Javascript per a gestionar
+aquestes dades) i una vista (El renderitzat dels elements web al
+navegador). Com que Javascript és un llenguatge que deixa fer de tot, no
+tenim perquè respectar aquesta arquitectura, però els nostres mòduls han
+de poder ser mantinguts i cal que aprofiten al màxim els recursos que el
+client web ja ens proporciona, per tant, intentarem programar el menys
+possible i aprofitar tot el que ja té el client.</p>
+<p>Els mòduls principals del client web depenen del mòdul <strong>web</strong>, que
+proporciona el nucli del client web. Els altres complementen a aquest.
+Hi ha mòduls que específicament es diuen, per exemple, <strong>web_kanban</strong>,
+que amplien la web. Però en realitat qualsevol mòdul ho pot fer. El
+mòdul web conté tot l'HTML i Javascript necessari per a que els altres
+mòduls de la web funcionen.</p>
+<p>Per modificar el client web cal proporcional HTML, xml, CSS, Javascript
+i imatges. Això ha d\'estar en el directori <strong>static</strong> del mòdul:</p>
+<ul>
+<li>static/src/js : the JavaScript files</li>
+<li>static/src/css : the CSS files</li>
+<li>static/src/xml : the HTML template files</li>
+<li>static/img : pictures used in templates or CSS</li>
+<li>static/libs : JS libraries needed by the module</li>
+</ul>
+<p>El server no manipula aquesta informació, però la processa i l\'envia a client.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Com que els CSS i JS no són processades pel servidor, no cal reiniciar el servidor per veure els canvis, sols refrescar el navegador. Això no sempre funciona, ja que el servidor pot ser que no processe els assets o que la cau del navegador no actualitze el JS o el XML.
+</span></code></pre></div>
+<h2 id="enviant-el-client-al-navegador">Enviant el client al navegador</h2>
+<p>Cada vegada que refresquem, s\'envia el client sencer. Això vol dir
+molts CSS, moltes línies de Javascript de molt fitxers distints i molt
+d'HTML i XML. Per evitar saturar la xarxa, el servidor fa una
+compressió de totes eixes dades de la següent manera:</p>
+<ul>
+<li>Tots els CSS i Javascript són concatenats en un sol fitxer. La concatenació s\'ordena per dependències entre mòduls.</li>
+<li>El Javascript és minimitzat llevant espais i refactoritzant les variables per noms més curts.</li>
+<li>Una web HTML molt simple sols amb l\'enllaç als CSS i Javascript és enviada al client.</li>
+<li>Tot es comprimeix en gzip pel server per reduir l\'enviament. El navegador és capaç de descomprimir.</li>
+</ul>
+<p>Tot això fa difícil de fer debug amb el client. Per això es recomana ficar <strong>?debug=1</strong> a la URL per demanar que no minimitze.</p>
+<h3 id="els-assets">Els Assets</h3>
+<p>El client d\'Odoo és molt complex i necessita tindre Javascript, HTML i
+CSS de molts fitxers distints. Gestionar això permetent que qualsevol
+puga fer un mòdul per afegir més implica una gestió d\'aquests enllaços
+més automàtica. Per això han creat principalment tres <strong>bundles</strong> en XML
+que no són més que una col·lecció de links a Javascript o CSS. Aquests
+tenen l\'estructura d\'un Template QWeb i els més comuns són:</p>
+<ul>
+<li><strong>web.assets_common</strong>: amb les coses comuns.</li>
+<li><strong>web.assets_backend</strong>: Amb les coses específiques del Backend.</li>
+<li><strong>web.assets_frontend</strong>: Amb les coses de la web pública.</li>
+</ul>
+<p>Si volem afegir fitxers a un asset en odoo, s\'ha d\'afegir al manifest:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="s1">&#39;assets&#39;</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="s1">&#39;web.assets_backend&#39;</span><span class="p">:</span> <span class="p">[</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>        <span class="s1">&#39;web/static/src/xml/**/*&#39;</span><span class="p">,</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="p">],</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="s1">&#39;web.assets_common&#39;</span><span class="p">:</span> <span class="p">[</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        <span class="s1">&#39;web/static/lib/bootstrap/**/*&#39;</span><span class="p">,</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        <span class="s1">&#39;web/static/src/js/boot.js&#39;</span><span class="p">,</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>        <span class="s1">&#39;web/static/src/js/webclient.js&#39;</span><span class="p">,</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="p">],</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="p">},</span>
+</span></code></pre></div>
+<blockquote>
+<p>Aquesta és la manera general d'afegir funcionalitats o estils. Però tal vegada el nostre widget no necessita ser carregat sempre i estem afegint una càrrega constant a la xarxa. Per això pot ser interessant afegir la llibreria sols quan es crea el widget en temps d'execució. Odoo proporciona formes de carrega llibreries i CSS de forma dinàmica (lazyload en Qweb template engine).</p>
+</blockquote>
+<p>Documentació sobre els assets: <a href="https://www.odoo.com/documentation/master/developer/reference/frontend/assets.html">https://www.odoo.com/documentation/master/developer/reference/frontend/assets.html</a></p>
+<h4 id="exemple-afegir-css-al-nostre-modul">Exemple: Afegir CSS al nostre mòdul</h4>
+<p>Abans d\'entrar en la creació de Widgets, pot ser interessant observar
+cóm els <strong>bundles</strong> es poden ampliar d\'una forma simple per modificar o
+afegir CSS.</p>
+<p>El primer és crear el css en
+<strong>/<code>&lt;modul&gt;</code>/static/src/css/<code>&lt;modul&gt;</code>.css</strong>. En el nostre cas, sols fem un per a fer la lletra mès menuda:</p>
+<div class="language-css highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">.</span><span class="nc">reserves_tree</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">font-size</span><span class="p">:</span><span class="mf">0.8</span><span class="kt">em</span><span class="p">;}</span>
+</span></code></pre></div>
+<p>Després afegim el css al bundle <strong>assets_backend</strong>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="s1">&#39;assets&#39;</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="s1">&#39;web.assets_backend&#39;</span><span class="p">:</span> <span class="p">[</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>        <span class="s1">&#39;web/static/src/xml/**/*&#39;</span><span class="p">,</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="p">],</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="p">},</span>
+</span></code></pre></div>
+<p>I per últim, sols cal utilitzar la classe css:</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;bookings&quot;</span><span class="w"> </span><span class="na">limit=</span><span class="s">&quot;10&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;reserves_tree&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></div>
+<h2 id="arquitectura-dels-moduls-en-javascript">Arquitectura dels mòduls en Javascript</h2>
+<p>De la mateixa manera que hem vist per introduir un CSS personalitzat en
+Odoo, es pot introduir un Javascript. Aquest serà afegit al final del
+bundle i serà executat pel navegador.</p>
+<p>Odoo té molt de Javascript ja funcionant i podem interferir. Però el major problema és que no sabem molt bé qué s\'està executant en cada moment. Javascript és un llenguatge que
+treballa molt de forma asíncrona. Això permet que es puga carregar part
+de la web mentres una altra part ja està funcionant. Aquesta asincronia
+fa que no es puga predir fàcilment en quin ordre es carregarà o
+executarà tot. Totes les aplicacions web complexes tenen que solucionar
+eixos problemes. Javascript té un ecosistema de biblioteques molt divers
+i no tots treballen de la mateixa manera, de fet, molts han solventat
+carències del llenguatge amb tècniques de programació i biblioteques.
+Aques és el cas dels mòduls. Odoo gestiona la complexitat del seu
+Javascript amb mòduls i dependències d\'altres mòduls. Per això no és
+tan simple con afegir un parell d\'instruccions Jquery per modificar una
+part del DOM, ja que no podem saber si està carregada o quan es
+carregarà. Abans de fer partxes que solucionen mal els problemes, cal
+estudiar cóm ho fa Odoo.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Els mòduls simplifiquen la programació de les webs grans. Els mòduls oculten la complexitat de la programació de les distintes parts lògiques d’un programa. Els mòduls ofereixen una interfície en la que interactuen amb la resta de mòduls. Un programa modular és més fàcilment ampliable i reutilitzable.
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>En els mòduls cal aconseguir tindre la major independència al aconseguit el menor &#39;&#39;&#39;acoblament&#39;&#39;&#39; i la major &#39;&#39;&#39;cohesió&#39;&#39;&#39;. L’acoblament és la excessiva dependència d’un mòdul respecte a altres i la cohesió és la íntima relació entre els elements interns del mòdul. [https://developer.mozilla.org/es/docs/Web/JavaScript/Introducci%C3%B3n_a_JavaScript_orientado_a_objetos]
+</span></code></pre></div>
+<p>Odoo suporta tres maneres de fer codi Javascript:</p>
+<ul>
+<li>Sense mòduls (No recomanable)</li>
+<li>Amb mòduls natius ES6.</li>
+<li>Amb el seu propi sistema de mòduls (En versions antigues)</li>
+</ul>
+<h3 id="utilitzar-moduls-natius-es6-en-odoo">Utilitzar mòduls natius ES6 en Odoo</h3>
+<p>La documentació oficial recomana fer els nous mòduls d\'aquesta manera.</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">someFunction</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./file_b&#39;</span><span class="p">;</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="k">export</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">otherFunction</span><span class="p">(</span><span class="nx">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">someFunction</span><span class="p">(</span><span class="nx">val</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">3</span><span class="p">);</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<h1 id="owl">OWL</h1>
+<p>Moltes pàgines web SPA com és Odoo estan fetes en un framework de
+Javascript, ja que els manteniments dels components, els hooks, la
+reactivitat o la comunicació amb el servidor són complicats i és
+innecessari fer-ho sempre. Alguns dels frameworks són: Angular, Vue,
+React...</p>
+<p>Odoo té el seu propi, i a partir de la versió 14 es diu <code>OWL</code> i es
+desenvolupa per separat, sempre pensant en que siga la base dels nous
+elements de la web en Odoo.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>La primera pregunta que un desenvolupador web es fa al veure que Odoo està desenvolupant el seu framework és perquè no utilitzen Angular, Vue o React o qualsevol altre framework madur. Els desenvolupadors d&#39;Odoo la responen en cada article: Necessiten que siga més lleugera, adaptada totalment a Odoo i no dependre d&#39;altres. Semblen bons motius i si tenen raó o no es veurà en les pròximes versions. 
+</span></code></pre></div>
+<p>OWL és un framework web menut (\&lt;20KB) que té els elements d\'un
+framework modern:</p>
+<ul>
+<li>Un sistema declaratiu de components</li>
+<li>Un sistema de reactivitat basat en Hooks.</li>
+<li>Per defecte té un mode concurrent.</li>
+<li>Un store per a l\'estat del programai</li>
+<li>Un Router.</li>
+<li>Un sistema de plantilles amb QWeb.</li>
+<li>Al contrari que en versions anteriors, OWL aprofita la sintaxi ES6
+    per a les classes.</li>
+<li>Un virtual DOM amb renderització asíncrona.</li>
+</ul>
+<p>En la <a href="https://github.com/odoo/owl">documentació oficial d\'OWL</a> quasi no menciona cóm integrar-lo en Odoo. Això és perquè OWL aspira a ser un framework independent i poder ser utilitzat per a quasevol cosa. En la realitat, ha sigut desenvolupat pensant en Odoo i quasi sols s'utilitza en projectes relacionats.</p>
+<blockquote>
+<p>Quan desenvolupem per a Odoo en OWL cal tenir en compte que Odoo afegeix a OWL alguns objectes propis, com una estructura estàndard de <code>props</code>, el concepte de <code>Widget</code>, registres ja predefinits i moltes coses més. </p>
+</blockquote>
+<p>Abans de continuar cal preguntar-se què es vol aconseguir o què podem aconseguir amb OWL:
+- Crear una web completa sense relació amb Odoo.
+- Crear una web completa que tinga com a backend Odoo (no té molta diferència de l\'anterior)
+- Fer una secció en la web o el backend d\'Odoo.
+- Fer una vista, un menú, un widget nou per a Odoo.</p>
+<p>Aquest manual es centra sobretot en l\'última opció i anem a començar
+per ella.</p>
+<h2 id="crear-un-component-dodoo-en-owl">Crear un component d\'Odoo en OWL</h2>
+<p>Els components tenen una plantilla <code>Qweb</code>, un estil <code>css</code> i un <code>Javascript</code>. Amés, estan enregistrats.</p>
+<p>Abans de començar, cal fer l\'estructura de directoris i fitxers i un xml per afegir el nostre Javascript al bundle:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>  <span class="s1">&#39;assets&#39;</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    <span class="s1">&#39;web.assets_backend&#39;</span><span class="p">:</span> <span class="p">[</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>        <span class="s1">&#39;provesowl/static/src/js/component.js&#39;</span><span class="p">,</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>        <span class="s1">&#39;provesowl/static/src/css/component.css&#39;</span><span class="p">,</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="p">],</span>
+</span></code></pre></div>
+<p>En la ruta especificada farem el fitxer <strong>components.js</strong> i el css.</p>
+<p>Els components en OWL estan basats en classes ES6 o en el seu sistema modular. En components.js afegim aquest codi:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">//Importar els elements del framework</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Component</span><span class="p">,</span><span class="w"> </span><span class="nx">xml</span><span class="p">,</span><span class="w"> </span><span class="nx">useState</span><span class="p">,</span><span class="w"> </span><span class="nx">mount</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;@odoo/owl&quot;</span><span class="p">;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1">// Crear el component que hereta de Component d&#39;OWL</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="kd">class</span><span class="w"> </span><span class="nx">MyComponent</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Component</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="nx">template</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">xml</span><span class="sb">`</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="sb">        &lt;div t-on-click=&quot;increment&quot;&gt;</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="sb">            &lt;t t-esc=&quot;state.value&quot;&gt;</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="sb">        &lt;/div&gt;</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="sb">    `</span><span class="p">;</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">    </span><span class="c1">// La funció setup és on s&#39;inicialitza el component, no deuriem utilitzar constructor.</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">    </span><span class="nx">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">({</span><span class="w"> </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="p">});</span>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">    </span><span class="nx">increment</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">value</span><span class="o">++</span><span class="p">;</span>
+</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="p">}</span>
+</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>
+</span><span id="__span-9-22"><a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="c1">// La forma de cridar a la funció xml en tagged templates </span>
+</span><span id="__span-9-23"><a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="c1">// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates</span>
+</span><span id="__span-9-24"><a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>
+</span><span id="__span-9-25"><a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a><span class="nx">MyComponent</span><span class="p">.</span><span class="nx">template</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">xml</span><span class="sb">`&lt;button t-on-click=&quot;increment&quot;&gt;  </span>
+</span><span id="__span-9-26"><a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a><span class="sb">Click Me! [&lt;t t-esc=&quot;state.value&quot;/&gt;]</span>
+</span><span id="__span-9-27"><a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a><span class="sb">&lt;/button&gt;`</span><span class="p">;</span>
+</span></code></pre></div>
+<p>Es necessita donar d'alta un Widget o ampliar les vistes. Per provar si funciona el donamem d'alta de la manera més senzilla, amb un <code>widget</code> independent a l'estil del <code>web_ribbon</code>:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nx">registry</span><span class="p">.</span><span class="nx">category</span><span class="p">(</span><span class="s2">&quot;view_widgets&quot;</span><span class="p">).</span><span class="nx">add</span><span class="p">(</span><span class="s2">&quot;click_count&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nx">component</span><span class="o">:</span><span class="w"> </span><span class="nx">MyComponent</span><span class="p">});</span>
+</span></code></pre></div>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">&lt;widget</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;click_count&quot;</span><span class="nt">/&gt;</span>
+</span></code></pre></div>
+<blockquote>
+<p>El codi anterior és símplement un exemple tret de la documentació d'Odoo. Té un problema de disseny i és que la plantilla <code>xml</code> deuria estar en un fitxer a banda i ser referenciada per a poder estar en un asset, poder ser traduida i ser més eficient.</p>
+</blockquote>
+<p>```{admonition} Consells
+:class: tip
+El client web d'Odoo, al igual que la programació del servidor, té moltes opcions. Amés, canvia més d'una versió a un altra, al menys mentre s'acaba de consolidar OWL. Per tant, és interessant buscar exemples a la documentació d'Odoo. Especialment a l'addon Web, però també es pot buscar al propi repositori d'Odoo en github per veure cóm utilitzen determinades classes o funcions a la resta de mòduls.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>## Insertar components en Odoo
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>Els components fets en OWL per a Odoo es poden aplicar de moltes maneres, entre elles:
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>- Com a widgets de fields amb `widget=””` 
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>- Com widgets independents com el `web_ribbon` dins de vistes.
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>- Amb `client actions` que mostren un component personalitzar. Ací es tracta de crear un `ir.actions.client` amb un tag determinat que apunte a un component enregistrat com `registry.category(&quot;actions&quot;)` 
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>- Com una vista personalitzada cridada amb un action window.
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>- Dins d&#39;altres components com a component predefinit.
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>- Dialogs (Popups personalitzats)
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>- Notification Toasts (Notificacions emergents)
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>Algunes d&#39;aquestes maneres les anirem utilitzant al llarg d&#39;aquest article. Per exemple, el `click_count` de l&#39;exemple anterior és un widget independent.
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>Per a que els components i altres elements del frontend estiguen disponibles per a ser insertats en altres components s&#39;ha d&#39;enregistrar. OWL gestiona el registres a l&#39;objecte `registry`. Aquests estan organitzats per categories. A nosaltres en interessen les categories de `actions`,  `views`, `view_widgets` o `fields`, per exemple.  
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>## Modificar components en OWL
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>
+</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>De la mateixa manera que hem vist anteriorment, anem a modificar un component existent. En aquest cas serà un component per a un `field`, per tant, estem parlan de un `widget`. La paraula `Widget` es considera obsoleta en Odoo amb OWL, ara cal dir `Components`. No obstant, al crear forms o trees, encara posem `widget=`, per tant, podem entendre al Widget com un component capaç de mostrar o editar dades dins de les vistes.
+</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>
+</span><span id="__span-12-22"><a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>&gt; Cal dir que els Widgets són l&#39;única manera actualment de clavar components personalitzats en `form`, `list` o `search`, ja que aquestes vistes no accepten plantilles `Qweb`. En les vistes `form` sols s&#39;accepta `XML` amb `fields` que poden tenir `widgets`. No obstant, en Kanban i altres més manuals sí es pot utilitzar QWeb.
+</span><span id="__span-12-23"><a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>
+</span><span id="__span-12-24"><a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>
+</span><span id="__span-12-25"><a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a>El primer que farem serà crear un nou component a partir d\&#39;un existent amb herència en OWL:
+</span><span id="__span-12-26"><a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a>
+</span><span id="__span-12-27"><a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a>
+</span><span id="__span-12-28"><a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a>```javascript
+</span><span id="__span-12-29"><a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a>export class FabBooleanField extends BooleanField {
+</span><span id="__span-12-30"><a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a>   static template = &quot;natacio.FabBooleanField&quot;
+</span><span id="__span-12-31"><a id="__codelineno-12-31" name="__codelineno-12-31" href="#__codelineno-12-31"></a>}
+</span><span id="__span-12-32"><a id="__codelineno-12-32" name="__codelineno-12-32" href="#__codelineno-12-32"></a>export const booleanField = {
+</span><span id="__span-12-33"><a id="__codelineno-12-33" name="__codelineno-12-33" href="#__codelineno-12-33"></a>    component: FabBooleanField,
+</span><span id="__span-12-34"><a id="__codelineno-12-34" name="__codelineno-12-34" href="#__codelineno-12-34"></a>};
+</span><span id="__span-12-35"><a id="__codelineno-12-35" name="__codelineno-12-35" href="#__codelineno-12-35"></a>registry.category(&quot;fields&quot;).add(&quot;fabboolean&quot;, booleanField);
+</span></code></pre></div></p>
+<p>El primer que fem és heretar de <code>BooleanField</code>, que és un widget per a un field Boolean que hereta de <code>Component</code>.</p>
+<p>Tots els components tenen un atribut estátic que es diu <code>template</code> i que definirem després en un <code>xml</code>.</p>
+<p>Després es crea un objecte booleanField que servirà per enregistrar-lo en la categoria de <code>fields</code>.</p>
+<p>El <code>xml</code> és molt simple:</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="nt">&lt;templates</span><span class="w"> </span><span class="na">xml:space=</span><span class="s">&quot;preserve&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">    </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-name=</span><span class="s">&quot;natacio.FabBooleanField&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">        </span><span class="nt">&lt;div</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;o_fab_boolean_field&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">            </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-call=</span><span class="s">&quot;web.BooleanField&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">            </span><span class="nt">&lt;span</span><span class="w"> </span><span class="na">t-if=</span><span class="s">&quot;state.value&quot;</span><span class="nt">&gt;</span>❤️<span class="nt">&lt;/span&gt;</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">            </span><span class="nt">&lt;span</span><span class="w"> </span><span class="na">t-if=</span><span class="s">&quot;!state.value&quot;</span><span class="nt">&gt;</span>🖤<span class="nt">&lt;/span&gt;</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">            </span><span class="nt">&lt;span</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;mx-2&quot;</span><span class="nt">&gt;</span>Valor:<span class="w"> </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-esc=</span><span class="s">&quot;state.value&quot;</span><span class="nt">/&gt;&lt;/span&gt;</span>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="w">        </span><span class="nt">&lt;/div&gt;</span>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="w">    </span><span class="nt">&lt;/t&gt;</span>
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="nt">&lt;/templates&gt;</span>
+</span></code></pre></div>
+<p>El valor del Boolean està en <code>state</code>i amb <code>Qweb</code> mostrem un ❤️ en funció del seu valor.</p>
+<p>Amb <code>t-call</code> es crida a la plantilla original.</p>
+<blockquote>
+<p>Fixem-nos en <code>state</code>, que és un atribut heretat del field BooleanField. Les dades les rep per <code>props</code>, però en el seu setup les extreu.</p>
+</blockquote>
+<h2 id="crear-nous-widgets-en-owl">Crear nous Widgets en OWL</h2>
+<h3 id="crear-un-widget-molt-simple">Crear un Widget molt simple</h3>
+<p>Aquest és un codi mínim que funciona per crear un widget:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Component</span><span class="p">,</span><span class="w"> </span><span class="nx">xml</span><span class="p">,</span><span class="w"> </span><span class="nx">useState</span><span class="p">,</span><span class="w"> </span><span class="nx">mount</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;@odoo/owl&quot;</span><span class="p">;</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">standardFieldProps</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;@web/views/fields/standard_field_props&quot;</span><span class="p">;</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">registry</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;@web/core/registry&quot;</span><span class="p">;</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">CodeField</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Component</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="nx">props</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{...</span><span class="nx">standardFieldProps</span><span class="p">}</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">    </span><span class="nx">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">formattedValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">record</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">name</span><span class="p">];</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="p">}</span>
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="nx">CodeField</span><span class="p">.</span><span class="nx">template</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">xml</span><span class="sb">`&lt;pre t-esc=&quot;formattedValue&quot; class=&quot;bg-primary text-white p-3 rounded&quot;/&gt;`</span><span class="p">;</span>
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="nx">registry</span><span class="p">.</span><span class="nx">category</span><span class="p">(</span><span class="s2">&quot;fields&quot;</span><span class="p">).</span><span class="nx">add</span><span class="p">(</span><span class="s2">&quot;codefield&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="w">    </span><span class="nx">component</span><span class="o">:</span><span class="w"> </span><span class="nx">CodeField</span><span class="p">,</span>
+</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="p">});</span>
+</span></code></pre></div>
+<p>Per utilitzar el widget:</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;code&quot;</span><span class="w"> </span><span class="na">widget=</span><span class="s">&quot;codefield&quot;</span><span class="nt">/&gt;</span>
+</span></code></pre></div>
+<p>Aquest field sols és de lectura i mostra el codi dins d'un <code>&lt;pre&gt;</code> blau. És interessant perquè arreplega el seu valor de <code>props</code> i perquè pot ser utilitzat com a Widget. A continuació anem a aprofuncir un poc més i a fer Widgets i components més complexos.</p>
+<blockquote>
+<p>Hi ha widgets com el <code>ribbon</code> que es poden fer i enregistrar i utilitzar directament. </p>
+</blockquote>
+<h3 id="crear-un-widget-per-a-un-many2many">Crear un widget per a un Many2many</h3>
+<p>Els components per a fields en Odoo han d'oferir al component pare uns <code>props</code> estàndad. El pare els utilitzarà per passar tota l'informació que necessita el component fill. El primer que necessitem és indicar aquests props i llegir les dades en la funció <code>setup</code>:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">Tree</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Component</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="nx">template</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;natacio.Tree&quot;</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="nx">props</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">        </span><span class="p">...</span><span class="nx">standardFieldProps</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">    </span><span class="nx">relatedRecords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">([]);</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">    </span><span class="nx">setup</span><span class="p">(){</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">);</span>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">ids</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">record</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">name</span><span class="p">].</span><span class="nx">records</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">r</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">resId</span><span class="p">);</span>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">orm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useService</span><span class="p">(</span><span class="s2">&quot;orm&quot;</span><span class="p">);</span>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">ids</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="nx">orm</span><span class="p">.</span><span class="nx">read</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">record</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">name</span><span class="p">].</span><span class="nx">resModel</span><span class="p">,</span><span class="w"> </span><span class="nx">ids</span><span class="p">,</span><span class="w"> </span><span class="p">[]).</span><span class="nx">then</span><span class="p">((</span><span class="nx">records</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="w">                </span><span class="k">this</span><span class="p">.</span><span class="nx">relatedRecords</span><span class="p">.</span><span class="nx">push</span><span class="p">(...</span><span class="nx">records</span><span class="p">);</span>
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="w">            </span><span class="p">});</span>
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a><span class="p">}</span>
+</span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a>
+</span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a><span class="nx">registry</span><span class="p">.</span><span class="nx">category</span><span class="p">(</span><span class="s2">&quot;fields&quot;</span><span class="p">).</span><span class="nx">add</span><span class="p">(</span><span class="s2">&quot;tree&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nx">component</span><span class="o">:</span><span class="w"> </span><span class="nx">Tree</span><span class="p">});</span>
+</span></code></pre></div>
+<p><code>Props</code> té molta informació sobre tot el que necessita el field i la vista pare. </p>
+<p>Amés, l'exemple utilitza <code>this.orm.read()</code> que és una funció disponible al servici <code>orm</code>. Els servicis proporcionen diverses utilitats. En aquest cas, són les mateixes funcions de l'ORM que es poden fer als <code>models</code>. Aquesta funció necessita el model, les ids a llegir i un array de fields. Si l'array està buit els retorna tots. </p>
+<p>Una altra cosa interessant és <code>relatedRecords</code>. Es declara com un <code>useState</code> per aconseguir la reactivitat. Les dades que es posen ahí es sincronitzaràn amb l'intefície. En cas de que canvien, canviaran a l'intefície.</p>
+<p>Falta definir el <code>xml</code> de la plantilla:</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="w">  </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-name=</span><span class="s">&quot;natacio.Tree&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">        </span><span class="nt">&lt;div</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;natacio-tree-container&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">        </span><span class="nt">&lt;div</span><span class="w"> </span><span class="na">t-ref=</span><span class="s">&quot;treeContainer&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="w">        </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-esc=</span><span class="s">&quot;relatedRecords.length&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">            </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-foreach=</span><span class="s">&quot;relatedRecords&quot;</span><span class="w"> </span><span class="na">t-as=</span><span class="s">&quot;i&quot;</span><span class="w"> </span><span class="na">t-key=</span><span class="s">&quot;i.id&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="w">                </span><span class="nt">&lt;p&gt;</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="w">                    </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-esc=</span><span class="s">&quot;i.name&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="w">                </span><span class="nt">&lt;/p&gt;</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="w">            </span><span class="nt">&lt;/t&gt;</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="w">        </span><span class="nt">&lt;/div&gt;</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="w">    </span><span class="nt">&lt;/t&gt;</span>
+</span></code></pre></div>
+<p>Aquesta template mostra tant la quantitat de registres com el nom de tots ells. És molt simple, però amb altres etiquetes i <code>css</code> es podria fer una llista com la vista <code>list</code>, per exemple. </p>
+<h3 id="props">Props</h3>
+<p>Com en React o Vue, OWL permet que els components tinguen una propietat estàtica anomenada <code>props</code> (properties). Serveix per a comunicar al component les seues dades.</p>
+<p>https://github.com/odoo/owl/blob/master/doc/reference/props.md </p>
+<p>Els props poden ser valors estàtics, poden ser referències a objectes per ser dinàmics i reactius o poden ser referències a funcions. Els components pares els poden assignar de la següent manera:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kd">class</span><span class="w"> </span><span class="nx">Child</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Component</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="nx">template</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">xml</span><span class="sb">`&lt;div&gt;&lt;t t-esc=&quot;props.a&quot;/&gt;&lt;t t-esc=&quot;props.b&quot;/&gt;&lt;/div&gt;`</span><span class="p">;</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="p">}</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="kd">class</span><span class="w"> </span><span class="nx">Parent</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Component</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="nx">template</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">xml</span><span class="sb">`&lt;div&gt;&lt;Child a=&quot;state.a&quot; b=&quot;&#39;string&#39;&quot;/&gt;&lt;/div&gt;`</span><span class="p">;</span>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="nx">components</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Child</span><span class="w"> </span><span class="p">};</span>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="w">  </span><span class="nx">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">({</span><span class="w"> </span><span class="nx">a</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;fromparent&quot;</span><span class="w"> </span><span class="p">});</span>
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Com que el pare ha de saber quin nom posar al props, hi ha uns amb un nom per defecte que funcionen específicament per a Odoo: <code>standardFieldProps</code>. Amés, es poden crear nous dins de l'objecte <code>static props</code> del component. D'aquesta manera, fem components (Widgets) compatibles amb les vistes (components pares) ja existents.  El codi oficial d'Odoo els defineix així:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">standardFieldProps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">    </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="nx">optional</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">    </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">    </span><span class="nx">readonly</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="nb">Boolean</span><span class="p">,</span><span class="w"> </span><span class="nx">optional</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="w">    </span><span class="nx">record</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="nb">Object</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="p">};</span>
+</span></code></pre></div>
+<p>Dins del record es por aconseguir tota l'informació que es vol mostrar. De fet, està tota l'informació de la vista que conté el field. </p>
+<blockquote>
+<p>Cal fer, per exemple, un console.log dels props per veure tot el que poden oferir, en els exemples es por veure que obtenim les dades i el nom del model. En l'exemple les dades són d'un Many2many, per tant, contenen l'array <code>records</code> amb tots els registres relacionats.</p>
+</blockquote>
+<h3 id="components-prefedinits">Components prefedinits</h3>
+<p>Odoo té desenvolupats amb OWL una serie de components predefinits que podem utilitzar en els nostre components. </p>
+<p>Documentació: https://www.odoo.com/documentation/18.0/developer/reference/frontend/owl_components.html#reference-list </p>
+<p>Aquest, com els components que podem fer nosaltres, tenen una etiqueta i una serie de <code>props</code> que es poden definir. Si observem el field <code>BooleanField</code>, que és molt simple, aquesta es la seua plantilla:</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="w">    </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-name=</span><span class="s">&quot;web.BooleanField&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">        </span><span class="nt">&lt;CheckBox</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;props.id&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;state.value&quot;</span><span class="w"> </span><span class="na">className=</span><span class="s">&quot;&#39;d-inline-block&#39;&quot;</span><span class="w"> </span><span class="na">disabled=</span><span class="s">&quot;props.readonly&quot;</span><span class="w"> </span><span class="na">onChange.bind=</span><span class="s">&quot;onChange&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">    </span><span class="nt">&lt;/t&gt;</span>
+</span></code></pre></div>
+<p>I és importat així en javascript</p>
+<div class="language-js highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="k">static</span><span class="w"> </span><span class="nx">components</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">CheckBox</span><span class="w"> </span><span class="p">};</span>
+</span></code></pre></div>
+<h4 id="crear-components-predefinits">Crear Components predefinits</h4>
+<p>Un component que siga importat i afegi a <code>static components</code>  ja pot utilitzar-se com a etiqueta. Mirem aquest exemple tant simple:</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">EmojiField</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Component</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="nx">template</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;modul.EmojiField&quot;</span>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>En un altre component:
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="nx">components</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">EmojiField</span><span class="w"> </span><span class="p">}</span>
+</span></code></pre></div></p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="nt">&lt;EmojiField/&gt;</span>
+</span></code></pre></div>
+<p>La propia definició com a classe i importació com a element de l'objecte <code>static components</code> ja fa que es puga utilitzar com a <code>tag</code> en la plantilla XML. </p>
+<h3 id="crear-un-widget-per-a-un-field-en-mode-lecturaescriptura">Crear un widget per a un field en mode lectura/escriptura</h3>
+<h2 id="modificar-una-vista-en-owl">Modificar una vista en OWL</h2>
+<p>Les vistes existents també són <code>components</code>, però són molt més complexos que els <code>fields</code> normals. Un field sol obtenir les dades per <code>props</code> i, com a molt, implementar la manera de comunicar els canvis a la vista. Les vistes han d'obtenir les dades del servidor, cridar a widgets i, en ocasions, interpretar un <code>xml</code> passat per <code>arch</code>. </p>
+<p>Per abordar aquesta complexitat, Odoo opta per una arquitectura <code>MVC</code> i fa per a les vistes un model, un controlador i un renderitzador, a banda d'una plantilla <code>xml</code>. </p>
+<h2 id="crear-noves-vistes-en-owl">Crear noves vistes en OWL</h2>
+<p><a href="https://codingdodo.com/odoo-javascript-101-classes-and-mvc-architecture/">https://codingdodo.com/odoo-javascript-101-classes-and-mvc-architecture/</a>
+<a href="https://codingdodo.com/odoo-15-javascript-reference/">https://codingdodo.com/odoo-15-javascript-reference/</a></p>
+<h2 id="hooks-en-owl">Hooks en OWL</h2>
+<p><a href="https://www.cybrosys.com/blog/hooks-in-odoo-owl-framework">https://www.cybrosys.com/blog/hooks-in-odoo-owl-framework</a></p>
+<p><a href="https://github.com/odoo/owl">OWL, el nou framework per a Odoo 14</a></p>
+<p><a href="https://www.oocademy.com/v14.0/tutorial/introduction-to-owl-87#-Adding-our-first-component">tutorial
+complet</a></p>
+<p><a href="https://www.fatalerrors.org/a/odoo14-odoo-web-library-owl.html">2</a></p>
+<p><a href="https://www.cybrosys.com/blog/hooks-in-odoo-owl-framework">3</a></p>
+<p><a href="https://www.youtube.com/watch?v=IrcQf4hgjtw">https://www.youtube.com/watch?v=IrcQf4hgjtw</a></p>
+<p>Enllaços: <a href="https://github.com/odoo/owl">https://github.com/odoo/owl</a>
+<a href="https://odoo.github.io/owl/playground/">https://odoo.github.io/owl/playground/</a>
+<a href="https://medium.com/cybrosys/introduction-to-odoo-owl-framework-29cbe9111919">https://medium.com/cybrosys/introduction-to-odoo-owl-framework-29cbe9111919</a>
+<a href="https://www.odoo.com/es_ES/forum/ayuda-1/blogs-or-websites-available-for-owl-odoo-web-library-for-odoo-v14-to-learn-from-the-scratch-168365">https://www.odoo.com/es_ES/forum/ayuda-1/blogs-or-websites-available-for-owl-odoo-web-library-for-odoo-v14-to-learn-from-the-scratch-168365</a>
+<a href="https://www.youtube.com/watch?v=HSer89uSnoM&amp;list=PL1-aSABtP6ABc8HP_02IuC9lUHESnUJM1&amp;index=11">https://www.youtube.com/watch?v=HSer89uSnoM&amp;list=PL1-aSABtP6ABc8HP_02IuC9lUHESnUJM1&amp;index=11</a></p>
+<h1 id="qweb">QWeb</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "navigation.instant", "navigation.instant.progress", "toc.follow", "navigation.top", "content.code.copy"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
+</html>

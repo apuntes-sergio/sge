@@ -1,0 +1,1637 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Ejemplo guiado de desarrollo de módulo de gestión de proyectos en Odoo">
+      
+      
+      
+        <link rel="canonical" href="https://sergio-apuntes.github.io/sge/4_1_EjemploCreacionModeloBasico/">
+      
+      
+        <link rel="prev" href="../3_3_Modulos/">
+      
+      
+        <link rel="next" href="../4_2_EjemploCamposBasicos/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>4.1. Creación de un modelo básico, vistas, menús y actions. - Apuntes Sistemas de Gestión Empresarial</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.0253249f.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#introduccion" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href=".." title="Apuntes Sistemas de Gestión Empresarial" class="md-header__button md-logo" aria-label="Apuntes Sistemas de Gestión Empresarial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Apuntes Sistemas de Gestión Empresarial
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4.1. Creación de un modelo básico, vistas, menús y actions.
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Apuntes Sistemas de Gestión Empresarial" class="md-nav__button md-logo" aria-label="Apuntes Sistemas de Gestión Empresarial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Apuntes Sistemas de Gestión Empresarial
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    1 ERP
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            1 ERP
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introducción a Odoo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_2_IntroduccionERP/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.2. Introducción a la Gestión Empresarial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_3_IT/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.3. Informática en la Gestión Empresarial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_4_ERP_CRM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.4. ERP-CRM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_5_ERP_actuales/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.5. Revisión de ERPs Actuales
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_6_ERP_Libres_Privativos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.6. ERPs Propietarios vs ERPs de Código Abierto
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_7_CRM_Actuales/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.7. CRM Actual
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_8_Terminolog%C3%ADa/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.8. Terminología ERP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    2 Instalacion de Odoo
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            2 Instalacion de Odoo
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_1_InstalarOdoo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.1. Instalación de Odoo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_2_InstalarDocker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.2. Instalación con docker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_3_InstalarUbuntu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.3. Instalación en Ubuntu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    3 Desarrollo con odoo
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            3 Desarrollo con odoo
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_1_ArquitecturaOdoo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.1. Arquitectura de Odoo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_2_PrimerModulo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.2. Primer módulo en Odoo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_3_Modulos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.3. Los módulos en Odoo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    4 Desarrollo de un módulo de gestión de proyectos
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            4 Desarrollo de un módulo de gestión de proyectos
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    4.1. Creación de un modelo básico, vistas, menús y actions.
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    4.1. Creación de un modelo básico, vistas, menús y actions.
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introducción
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creacion-de-la-aplicacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creación de la aplicación
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creacion-de-modulo-basico-de-tareas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creación de módulo básico de Tareas
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creación de módulo básico de Tareas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anadir-el-modelo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Añadir el modelo
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#revision-de-la-base-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Revisión de la base de datos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Revisión de la base de datos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#desde-el-interfaz-de-odoo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Desde el interfaz de odoo
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#desde-la-linea-de-comandos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Desde la línea de comandos.
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#desde-dbeaver" class="md-nav__link">
+    <span class="md-ellipsis">
+      Desde dbeaver
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vistas-menu-y-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vistas, menú y action
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Vistas, menú y action">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configurando-vistas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configurando vistas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Actions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#menus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Menús
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#permisos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Permisos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Permisos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manifest
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificacion-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verificación rápida
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_2_EjemploCamposBasicos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.2. Campos básicos y relacionales
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_3_EjemploCamposComputados/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.3. Campos básicos computados.
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_4_EjemploExcepcionesMensajes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.4. Lanzar excepciones y añadir mensajes de log.
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_5_EjemploCamposComputadosRelacionales/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.5. Campos computados relacionales
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_6_EjemploCamposValoresDefecto/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.6. Campos con valores por defecto
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_7_EjemploHerencias/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.7. Herencias
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_8_EjemploMejorandoVistas/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.8. Mejorando vistas
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_9_EjemploDatosDemo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.9. Datos de demostración
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introducción
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creacion-de-la-aplicacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creación de la aplicación
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creacion-de-modulo-basico-de-tareas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creación de módulo básico de Tareas
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creación de módulo básico de Tareas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anadir-el-modelo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Añadir el modelo
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#revision-de-la-base-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Revisión de la base de datos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Revisión de la base de datos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#desde-el-interfaz-de-odoo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Desde el interfaz de odoo
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#desde-la-linea-de-comandos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Desde la línea de comandos.
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#desde-dbeaver" class="md-nav__link">
+    <span class="md-ellipsis">
+      Desde dbeaver
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vistas-menu-y-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vistas, menú y action
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Vistas, menú y action">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configurando-vistas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configurando vistas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Actions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#menus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Menús
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#permisos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Permisos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Permisos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manifest
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificacion-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verificación rápida
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>4.1. Creación de un modelo básico, vistas, menús y actions.</h1>
+
+<h2 id="introduccion">Introducción</h2>
+<p>En esta sección vamos a realizar de forma guiada un ejemplo de desarrollo de un módulo que nos permitirá gestionar la realización de proyectos de desarrollo informático. </p>
+<p>Básicamente, los elementos que vamos a tener en cuenta para nuestro módulo básicamente son los siguientes:</p>
+<ul>
+<li><strong>Proyectos</strong>: Cada desarrollo de una aplicación diferente, será un proyecto</li>
+<li><strong>Tareas</strong>: El desarrollo se basa en la realización de tareas</li>
+<li><strong>Sprints</strong>: Dividimos la fase de desarrollo en <em>sprints</em> temporales que agrupan una serie de tareas a realizar</li>
+<li><strong>Desarrolladores</strong>: son las personas que realizan cada una de las tareas del proyecto </li>
+</ul>
+<h2 id="creacion-de-la-aplicacion">Creación de la aplicación</h2>
+<p>Para comenzar, puesto que ya tenemos el sistema configurado, procedemos a la creación de la estructura de la aplicación mediante <strong>scaffold</strong>.</p>
+<p>Debemos tener claro el nombre de nuestra aplicación que será <strong>Gestion_Tareas_Sergio</strong> en mi caso.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-ti<span class="w"> </span>odoo<span class="w"> </span>odoo<span class="w"> </span>scaffold<span class="w"> </span>GestionTareasSergio<span class="w"> </span>/mnt/extra-addons
+</span></code></pre></div>
+<p>Comprobamos que se ha generado toda la estructura</p>
+<figure align="center">
+  <a class="glightbox" href="../imgs/ejemploT/01_Creaci%C3%B3n.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Image title" src="../imgs/ejemploT/01_Creaci%C3%B3n.png" width="75%" /></a>
+  <figcaption>Creación de la estructura del módulo</figcaption>
+</figure>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>En caso de tener problemas de permisos, recordad añadir permisos a todos los elementos</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>chmod<span class="w"> </span>-R<span class="w"> </span><span class="m">777</span><span class="w"> </span>./gestion_tareas_sergio/
+</span></code></pre></div>
+</div>
+<p>y ahora configuramos el <strong><strong>manifest</strong>.py</strong> para dar descripción de nuestra aplicación lo vamos a <strong>instalar</strong> para comprobar que todo funciona correctamente.</p>
+<figure align="center">
+  <a class="glightbox" href="../imgs/ejemploT/02_PrimeraInstalacion.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Image title" src="../imgs/ejemploT/02_PrimeraInstalacion.png" width="70%" /></a>
+  <figcaption>Comprobamos que la aplicación esta instalada correctamente</figcaption>
+</figure>
+<p>Estaría bonito, crear un logotipo para nuestra aplicación y así identificarla rápidamente.</p>
+<div class="admonition tip">
+<p class="admonition-title">¿Reiniciar o reinstalar?</p>
+<p>Debes <strong>reiniciar el servidor de Odoo</strong> cuando:</p>
+<ul>
+<li>Modificas <strong>modelos Python</strong> (<code>models/*.py</code>), ya que el código se carga al iniciar el servidor.</li>
+<li>Cambias el archivo <code>__manifest__.py</code>, porque Odoo lo lee al cargar los módulos.</li>
+</ul>
+<p>Puedes <strong>actualizar el módulo sin reiniciar el servidor</strong> si:</p>
+<ul>
+<li>Solo modificas <strong>vistas XML</strong> (como formularios, listas, etc.).</li>
+<li>Cambias <strong>archivos de datos estáticos</strong> (como <code>views/*.xml</code>, <code>security/*.xml</code>, etc.).</li>
+<li>Ajustas <strong>controladores web</strong> (<code>controllers/*.py</code>), aunque en este caso, si el código ya está cargado en memoria, puede requerir reinicio dependiendo del entorno (por ejemplo, en producción).</li>
+</ul>
+<p>En ocasiones si los cambios realizados en los módulos es muy grande, la aplicación puede fallar y es mejor <em>desinstalar</em> y volver a <em>instalar</em> la aplicación, aunque esto conlleve a la perdida de datos.</p>
+</div>
+<h2 id="creacion-de-modulo-basico-de-tareas">Creación de módulo básico de <em>Tareas</em></h2>
+<p>Comenzaremos creando un módulo básico que contendrá información de las <strong>tareas</strong> en las que se dividirá nuestro desarrollo completa.</p>
+<h3 id="anadir-el-modelo">Añadir el modelo</h3>
+<p>Lo primer de todo será ir al fichero <code>models/models.py</code> y comenzar a modificar el fichero existente para crear el modelo según nuestras necesidades. </p>
+<p>Recordad que tenemos por una parte <code>__init__.py</code> donde se importan los modelos que hay en <code>./models</code>, y que aquí tenemos otro <code>models/__init__.py</code> que nos indica los ficheros modelos concretos a importar, en este caso <code>models/models.py</code>.</p>
+<figure align="center">
+  <a class="glightbox" href="../imgs/ejemploT/03_ArquitecturaModelos.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Image title" src="../imgs/ejemploT/03_ArquitecturaModelos.png" width="60%" /></a>
+  <figcaption>Comprobamos que la aplicación esta instalada correctamente</figcaption>
+</figure>
+<p>En principio, los campos que vamos a necesitar van a ser los siguientes:</p>
+<ul>
+<li>nombre de tareas, de tipo texto corto (<code>fields.Char()</code>)</li>
+<li>descripción, de tipo texto largo (<code>fields.Text()</code>)</li>
+</ul>
+<p>Así pues, comencemos modificando el modelo, para lo cual damos un nombre a la clase de la tarea y le asignamos un nombre y una descripción.</p>
+<p>El nombre que le vamos a dar a la clase es <code>tareas_sergio</code> en mi caso, que me llamo así, y después en el nombre debemos especificar de nuevo este nombre precedido de forma correcta por el nombre de la aplicación.</p>
+<details class="note">
+<summary>models.py</summary>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">odoo</span> <span class="kn">import</span> <span class="n">models</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">api</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">class</span> <span class="nc">tareas_sergio</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">_name</span> <span class="o">=</span> <span class="s1">&#39;gestion_tareas_sergio.tareas_sergio&#39;</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="n">_description</span> <span class="o">=</span> <span class="s1">&#39;gestion_tareas_sergio.tareas_sergio&#39;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="n">nombre</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Char</span><span class="p">()</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="n">descripcion</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Text</span><span class="p">()</span>
+</span></code></pre></div>
+</details>
+<p>Intenta hacer esta parte sin mirar la solución....</p>
+<p>Vamos a comenzar poco a poco, de forma que tras cada modificación vamos a reinstalar la aplicación para comprobar que todo funciona correctamente. <strong>Si hacemos muchos cambios a la vez sin reinstalar ni verificar nos encontraremos con problemas</strong> errores <em>arrastrados</em> que serán muy difíciles de solucionar. </p>
+<h3 id="revision-de-la-base-de-datos">Revisión de la base de datos</h3>
+<p>En Odoo, la estructura de las tablas creadas depende del modelo (model) definido en el sistema. Odoo utiliza el <strong>ORM</strong> (<em>Object-Relational Mapping</em>) de Python para mapear clases a tablas en la base de datos PostgreSQL.</p>
+<p>Así pues, Una vez instalada, si no hemos tenido ningún problema, podemos comprobar <em>cómo ha trabajado</em> este <strong>ORM</strong> y cómo debe haberse creado el modelo y por tanto deben haber cambios en la base de datos. </p>
+<p>Vamos a revisar estos cambios y comprobar que todo cambio en el modelo repercute en un cambio en las tablas.</p>
+<p>Para comprobar los cambios realizados en la base de datos, tenemos tres opciones: </p>
+<ul>
+<li>desde el propio interfaz de odoo en modo desarrollo</li>
+<li>desde la línea de comandos usando el interfaz de PostgreSQL</li>
+<li>o desde una herramienta de administración de base de datos con interfaz gráfico como puede ser <a href="https://dbeaver.io/">dbeaver</a></li>
+</ul>
+<h4 id="desde-el-interfaz-de-odoo">Desde el interfaz de odoo</h4>
+<p>Para revisar los modelos desde el interfaz de Odoo, una vez en modo <em>desarrollo</em>, accedemos a <em>Ajustes</em> -&gt; <em>Técnico</em> y ahí tenemos una sección dedicada a la <em>Estructura de la base de datos</em>:</p>
+<figure align="center">
+  <a class="glightbox" href="../imgs/ejemploT/04_ModelosInterfazOdoo.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Image title" src="../imgs/ejemploT/04_ModelosInterfazOdoo.png" width="70%" /></a>
+  <figcaption>Revisión de base de datos desde odoo</figcaption>
+</figure>
+<p>Aquí podemos ver un listado de todas las tablas tanto del propio sistema Odoo como de todas las aplicaciones que tenemos instaladas. </p>
+<p>En Odoo, el nombre de la tabla que se crea en la base de datos se determina principalmente por el atributo <code>_name</code> del modelo:</p>
+<ul>
+<li>Si defines <code>_name = 'mi.modelo'</code>, la tabla se llamará <code>mi_modelo</code>.</li>
+<li>Odoo reemplaza los puntos (.) por guiones bajos (_) para formar el nombre de la tabla.</li>
+</ul>
+<p>Si buscamos el modelo que hemos creado, en mi caso <em>tareas_sergio</em>, clicamos sobre el y podemos ver sus características así como los campos que tiene: </p>
+<figure align="center">
+  <a class="glightbox" href="../imgs/ejemploT/05_ModelosInterfazOdoo2.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Image title" src="../imgs/ejemploT/05_ModelosInterfazOdoo2.png" width="60%" /></a>
+  <figcaption>Revisión de base de datos desde odoo. Campos modelo</figcaption>
+</figure>
+<p>Como se puede ver en la anterior figura, además de los dos campos que hemos creado para el modelo, Odoo crea una serie de campos para llevar control de versiones y añadir sus propios índices.</p>
+<h4 id="desde-la-linea-de-comandos">Desde la línea de comandos.</h4>
+<p>Como somos unos apasionados de los sistemas, nos gusta comprobar que todo funciona sin entorno gráfico, por lo que podemos por una parte entrar en la interfaz de <em>PostgreSQL</em> y desde ahí, revisar tanto la existencia de la tabla asociada al modelo, como de sus campos.</p>
+<p>Para ello, entramos en el terminal del contenedor:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>postgresql<span class="w"> </span>bash
+</span></code></pre></div>
+<p>Accedemos al interfaz de comando de PostgreSQL</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>psql<span class="w"> </span>-U<span class="w"> </span>odoo
+</span></code></pre></div>
+<p>Una vez en el interfaz, comprobamos las bases de datos existentes y cambiamos a la correspondiente</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="se">\l</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="se">\c</span><span class="w"> </span>odoo
+</span></code></pre></div>
+<p>buscamos la tabla con una de las siguientes opciones</p>
+<p><div class="language-sql highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="err">\</span><span class="n">dt</span><span class="w"> </span><span class="o">*</span><span class="n">sergio</span><span class="o">*</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">pg_tables</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">tablename</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;%sergio%&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+En el primer caso, el * (asterisco) sirve como comodín. </p>
+<p>y finalmente, listamos los campos de la tabla:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="err">\</span><span class="n">d</span><span class="w"> </span><span class="err">\</span><span class="n">d</span><span class="w"> </span><span class="n">gestion_tareas_sergio_tareas_sergio</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">column_name</span><span class="p">,</span><span class="w"> </span><span class="n">data_type</span><span class="w"> </span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span><span class="w"> </span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="k">WHERE</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;gestion_tareas_sergio_tareas_sergio&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<p>y para salir del interfaz de PosgreSQL:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="err">\</span><span class="n">q</span>
+</span></code></pre></div>
+<figure align="center">
+  <a class="glightbox" href="../imgs/ejemploT/06_ModelosInterfazOdoo3.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Image title" src="../imgs/ejemploT/06_ModelosInterfazOdoo3.png" width="90%" /></a>
+  <figcaption>Revisión de base de datos desde odoo. Campos modelo desde interfaz PosgreSQL</figcaption>
+</figure>
+<h4 id="desde-dbeaver">Desde <strong>dbeaver</strong></h4>
+<p>Tambíén podemos utilizar esta aplicación de gestión de base de datos para acceder y comprobar las tablas y campos de nuestro modelo:</p>
+<p>Para ello, tras instalar la aplicación, creamos una nueva conexión a la base de datos; como hemos abierto el puerto del contenedor en la definición del <code>docker-compose.yml</code>, podemos acceder como si se tratara de una base de datos en local.</p>
+<p>Creamos y configuramos una conexión: </p>
+<figure align="center">
+  <a class="glightbox" href="../imgs/ejemploT/07_dbeaver_Config.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Image title" src="../imgs/ejemploT/07_dbeaver_Config.png" width="75%" /></a>
+  <figcaption>Configuración conexión en dbeaver</figcaption>
+</figure>
+<p>Si todo funciona bien podemos ver también la tabla y su estructura.</p>
+<figure align="center">
+  <a class="glightbox" href="../imgs/ejemploT/08_dbeaver_Tabla.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Image title" src="../imgs/ejemploT/08_dbeaver_Tabla.png" width="80%" /></a>
+  <figcaption>Tabla y su estructura</figcaption>
+</figure>
+<h3 id="vistas-menu-y-action">Vistas, menú y action</h3>
+<p>Ahora que ya tenemos el modelo definido, lo hemos revisado en la base de datos, es momento de continuar trabajando con nuestra módulo y hacer que sea visible desde el menú de Odoo.</p>
+<p>Para ello, tal y como hemos visto en el ejemplo de "Hola Mundo 3" tenemos que definir las vistas que queremos publicar, tenemos que mostrar una opción en el menú para poder ver estas vistas y activar las acciones para dar funcionalidad al menú.</p>
+<h4 id="configurando-vistas">Configurando vistas</h4>
+<p>De momento, este modelo no es accesible desde ningún sitio: no tenemos ninguna vista. Por defecto, Odoo crea unas vistas básicas si no haces nada, pero vamos a ver dónde están y cómo personalizarlas.</p>
+<p>Las vistas están en el directorio <code>views</code>, en un documento XML. </p>
+<p>En este fichero comentado tenemos algunos bloques que van a ser: </p>
+<ul>
+<li>uno de vista, </li>
+<li>uno de action (que veremos más adelante), </li>
+<li>uno de server action y </li>
+<li>uno de menús. </li>
+</ul>
+<p>Vamos a ir viéndolos poco a poco, porque se trata de ir definiendo cada uno de esos bloques</p>
+<p>Realmente, un bloque <code>&lt;record&gt;</code> implica que va a ser un registro en la base de datos. Este registro necesita saber dónde se va a guardar, en el primer caso en el modelo <code>ir.ui.view</code> (las vistas también son modelos en Odoo).</p>
+<p>Así pues comenzamos descomentando el primer bloque y ponemos un <code>id</code> único, en mi caso, por ejemplo <code>gestion_tareas_sergio.list</code>, que será la vista en modo <strong>lista</strong> (anteriormente <em>Tree</em>) de las tareas.</p>
+<p>Establecemos un nombre (no es lo más importante, pero hay que establecerlo), por ejemplo <code>Gestion Tareas Sergio list</code>. El modelo sobre el que va a actuar esta vista será el de tareas. </p>
+<p>Después establecemos el <strong>modelo</strong> que debe coincidir con el nombre del modelo que hemos establecido al definir el modelo, en mi caso "gestion_tareas_sergio.tareas_sergio". Esto si es fundamental</p>
+<p>A continuación, añadimos el listado de campos que mostrará la vista. En este caso, solo tenemos dos campos creado, <code>nombre</code> y <code>descripcion</code>. De nuevo son los mismos que hemos establecido en el modelo.</p>
+<figure align="center">
+  <a class="glightbox" href="../imgs/ejemploT/09_DefiniendoVistas.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Image title" src="../imgs/ejemploT/09_DefiniendoVistas.png" width="80%" /></a>
+  <figcaption>Definiendo la vista de un modelo</figcaption>
+</figure>
+<p>Este XML indica que es una vista de tipo <strong>List</strong> y que mostrará el campo <code>name</code> del modelo. Este campo debe existir en el fichero Python, como hemos visto antes.</p>
+<div class="admonition nota">
+<p class="admonition-title">Revisando la vista definida</p>
+<p>Una vez definida la vista, ahora deberíamos poder encontrar la vista si consultamos desde la aplicación el listado de vistas. Recordamos que nuestra vista se llama <code>manage_task_list</code>. Si actualizamos el módulo, la podremos encontrar. En este caso, no hemos tenido que reiniciar el servicio. </p>
+<p><figure markdown="span" align="center">
+  <a class="glightbox" href="../imgs/ejemploT/10_ListadoDeVistas.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Image title" src="../imgs/ejemploT/10_ListadoDeVistas.png" width="80%" /></a>
+  <figcaption>Listado de vistas</figcaption>
+</figure></p>
+</div>
+<h4 id="actions">Actions</h4>
+<p>La vista aún es inaccesible porque no hay ningún menú que permita acceder a ella. Para relacionarlo y ver una lista de tareas, vamos a activar el action correspondiente.</p>
+<p>Un action permite abrir, cuando se relacione con una opción de menú, la vista correspondiente. Será un registro del modelo de acciones de ventana (<code>ir.actions.act_window</code>).</p>
+<p>Continuamos pues descomentando el siguiente bloque de código y asignado un <code>id</code> único por ejemplo <code>GestionTareasSergio window</code>. Le ponemos un nombre, importante el modelo sobre el que actúa y el orden en el que queremos que se muestren las vistas (primero la <em>list</em> que acabamos de crear y después la <em>form</em>, que Odoo generará automáticamente si no la hemos definido).</p>
+<details class="note">
+<summary>ir.actions.act_window</summary>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">&lt;record</span><span class="w"> </span><span class="na">model=</span><span class="s">&quot;ir.actions.act_window&quot;</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;gestion_tareas_sergio.action_window&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span>GestionTareasSergio<span class="w"> </span>window<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;res_model&quot;</span><span class="nt">&gt;</span>gestion_tareas_sergio.tareas_sergio<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;view_mode&quot;</span><span class="nt">&gt;</span>list,form<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="nt">&lt;/record&gt;</span>
+</span></code></pre></div>
+</details>
+<p>Una acción relaciona un menú o botón con una acción que se desencadena en el cliente y se convierte en una petición al servidor. En este caso, el action se transforma en una petición que demanda al servidor las vistas <em>list</em> y <em>torm</em> del modelo de tareas, y el servidor devolverá la vista <em>list</em> creada y una vista <em>form</em> generada automáticamente.</p>
+<h4 id="menus">Menús</h4>
+<p>Para que este action funcione, el cliente debe tener un menú. </p>
+<p>Así que seguimos descomentando el bloque de código de menú y vamos a crear una opción de menú principal, por ejemplo <code>Tareas Sergio</code>, y de ahí colgará un submenú llamado <code>Gestión</code>, y finalmente otro llamado <code>Tareas</code>. El action del menú <code>Tareas</code> será el que hemos definido antes, para que al pulsar se cargue la vista de tareas, o sea la <code>action</code> de este menú, será el <code>id</code> del <code>ir.action.act_window</code> que hemos definido antes</p>
+<p>Por una parte tenemos el código </p>
+<details class="note">
+<summary>Bloques de menú</summary>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="cm">&lt;!-- Top menu item --&gt;</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nt">&lt;menuitem</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Gestión Tareas Sergio&quot;</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;gestion_tareas_sergio.menu_root&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="cm">&lt;!-- menu categories --&gt;</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="nt">&lt;menuitem</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Gestión&quot;</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;gestion_tareas_sergio.gestion&quot;</span><span class="w"> </span><span class="na">parent=</span><span class="s">&quot;gestion_tareas_sergio.menu_root&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="cm">&lt;!-- actions --&gt;</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="nt">&lt;menuitem</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Tareas&quot;</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;gestion_tareas_sergio.gestion_tareas&quot;</span><span class="w"> </span><span class="na">parent=</span><span class="s">&quot;gestion_tareas_sergio.gestion&quot;</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">          </span><span class="na">action=</span><span class="s">&quot;gestion_tareas_sergio.action_window&quot;</span><span class="nt">/&gt;</span>
+</span></code></pre></div>
+</details>
+<p>y por otra tenemos el esquema de cómo debe estar todo conectado:</p>
+<figure align="center">
+  <a class="glightbox" href="../imgs/ejemploT/11_ManuOrganizacion.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Image title" src="../imgs/ejemploT/11_ManuOrganizacion.png" width="80%" /></a>
+  <figcaption>Estructura de la configuración del menú</figcaption>
+</figure>
+<p>Ahora ya tenemos definido el menú y antes de seguir sería aconsejable volver a reinstalar el módulo para asegurarnos que no tenemos ningún error y comprobar si sale o no el menú.</p>
+<p>Si revisamos, sigue sin salir nuestra aplicación en el menú tras haberlo definido. Esto es debido a un tema de permisos que abordamos en el siguiente punto.</p>
+<h3 id="permisos">Permisos</h3>
+<p>En <strong>Odoo</strong>, para que un usuario pueda <strong>ver un menú</strong> y <strong>acceder a listas o formularios</strong> de un modelo, se deben cumplir ciertos requisitos de <strong>permisos y configuraciones</strong>. </p>
+<p>Se debe definir un archivo <em>XML</em> o <em>CSV</em> con los permisos para el modelo. Esto se hace en un archivo como <code>ir.model.access.csv</code>.</p>
+<p>Cada línea define:</p>
+<ul>
+<li><strong>Modelo</strong>, </li>
+<li><strong>Grupo</strong></li>
+<li><strong>Permisos</strong>: leer (<code>read</code>), escribir (<code>write</code>), crear (<code>create</code>), borrar (<code>unlink</code>)</li>
+</ul>
+<p>Ejemplo:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>access_gestion_tareas_sergio_tareas_sergio,acceso_tareas_sergio,model_gestion_tareas_sergio_tareas_sergio,base.group_user,1,1,1,1
+</span></code></pre></div>
+<p>donde cada línea representa un conjunto de permisos para un grupo sobre un modelo. Los campos son:</p>
+<ul>
+<li><strong>id</strong>: Identificador único del registro (puede ser cualquier nombre único).</li>
+<li><strong>name</strong>: Nombre legible del permiso, puede ser cualquiera</li>
+<li><strong>model_id:id</strong>:  hace referencia al <strong>modelo</strong> al que se aplican los permisos. La forma estándar de referenciarlo es <code>model_&lt;nombre_del_modelo&gt;</code>, donde <code>&lt;nombre_del_modelo&gt;</code> es el valor de <code>_name</code> del modelo, sustituyendo los puntos (<code>.</code>) por guiones bajos (<code>_</code>). Puede parecer poco intuitivo, pero es el formato que exige Odoo.</li>
+<li><strong>group_id:id</strong>: Grupo de usuarios al que se le asignan los permisos (puede ser base.group_user, base.group_system, etc.). Si se deja vacío, aplica a todos los usuarios.</li>
+<li><strong>perm_read</strong>: 1 si puede leer, 0 si no.</li>
+<li><strong>perm_write</strong>: 1 si puede modificar, 0 si no.</li>
+<li><strong>perm_create</strong>: 1 si puede crear, 0 si no.</li>
+<li><strong>perm_unlink</strong>: 1 si puede borrar, 0 si no.</li>
+</ul>
+<p>De esta forma, para que un menú sea visible:</p>
+<ul>
+<li>El usuario debe tener acceso al <strong>grupo</strong> asignado al menú. Para simplificar de momento van a ser todos los usuarios: <code>base.group_user</code></li>
+<li>El menú debe estar vinculado a una <strong>acción</strong>, aspecto que en nuestro caso ya hemos hecho</li>
+<li>Se debe tener al menos una vista de tipo <code>list</code> o <code>form</code> para que la acción funcione correctamente.</li>
+</ul>
+<h4 id="manifest">Manifest</h4>
+<p>En el fichero <code>__manifest__.py</code> hay que habilitar estos permisos para que se carguen. Esta línea suele venir comentada por defecto y hay que descomentarla.</p>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="s1">&#39;security/ir.model.access.csv&#39;</span><span class="p">,</span>
+</span></code></pre></div>
+<p>Ahora ya deberíamos verlo todo: reiniciamos Docker o el servicio, actualizamos el módulo y ya aparece la opción de menú principal <code>Manage</code>. Si la cargamos, tenemos <code>Gestión</code> y <code>Tareas</code>. Al pulsar en <code>Tareas</code> aparece la vista con el campo <code>name</code>. Si pulsamos en "Nuevo", podemos crear tareas (esto es una vista formulario generada por defecto).</p>
+<h4 id="verificacion-rapida">Verificación rápida</h4>
+<p>Para comprobar si todo está bien configurado:</p>
+<ol>
+<li>Activa el <strong>modo desarrollador</strong>.</li>
+<li>Ve a <strong>Ajustes &gt; Técnico &gt; Seguridad &gt; Reglas de acceso</strong> y <strong>Reglas de registro</strong>.</li>
+<li>Asegúrate de que el usuario pertenece al grupo correcto.</li>
+<li>Verifica que el menú tiene una acción válida y que el modelo tiene permisos definidos.</li>
+</ol>
+<p>o directamente, podemos ver que ya aparece en el menú de aplicacion todos los elementos que hemos definido</p>
+<figure align="center">
+  <a class="glightbox" href="../imgs/ejemploT/12_ManuVista.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Image title" src="../imgs/ejemploT/12_ManuVista.png" width="80%" /></a>
+  <figcaption>Vsita de menú y aplicación</figcaption>
+</figure>
+<p>En esta imagen estamos viendo la vista tipo listado con los dos campos, y además se ha accedido al menú y se puede ver los 3 niveles de menú que hemos definido: <strong>Gestión Tareas Sergio -&gt; Gestión -&gt; Tareas</strong></p>
+<p>De esta manera, hemos visto cómo crear un módulo básico con funcionalidad básica: un modelo, vistas, permisos, opciones de menú y cómo relacionarlo todo.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.indexes", "navigation.instant", "navigation.instant.progress", "toc.follow", "navigation.top", "content.code.copy"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
+</html>

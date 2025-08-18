@@ -1,0 +1,1600 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Ejemplo guiado de desarrollo de módulo de gestión de proyectos en Odoo">
+      
+      
+      
+        <link rel="canonical" href="https://sergio-apuntes.github.io/sge/4_5_EjemploCamposComputadosRelacionales/">
+      
+      
+        <link rel="prev" href="../4_4_EjemploExcepcionesMensajes/">
+      
+      
+        <link rel="next" href="../4_6_EjemploCamposValoresDefecto/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>4.5. Campos computados relacionales - Apuntes Sistemas de Gestión Empresarial</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.0253249f.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#diseno-y-situacion-actual-modelos-y-relaciones" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href=".." title="Apuntes Sistemas de Gestión Empresarial" class="md-header__button md-logo" aria-label="Apuntes Sistemas de Gestión Empresarial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Apuntes Sistemas de Gestión Empresarial
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4.5. Campos computados relacionales
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Apuntes Sistemas de Gestión Empresarial" class="md-nav__button md-logo" aria-label="Apuntes Sistemas de Gestión Empresarial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Apuntes Sistemas de Gestión Empresarial
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    1 ERP
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            1 ERP
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introducción a Odoo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_2_IntroduccionERP/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.2. Introducción a la Gestión Empresarial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_3_IT/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.3. Informática en la Gestión Empresarial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_4_ERP_CRM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.4. ERP-CRM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_5_ERP_actuales/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.5. Revisión de ERPs Actuales
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_6_ERP_Libres_Privativos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.6. ERPs Propietarios vs ERPs de Código Abierto
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_7_CRM_Actuales/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.7. CRM Actual
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_8_Terminolog%C3%ADa/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.8. Terminología ERP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    2 Instalacion de Odoo
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            2 Instalacion de Odoo
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_1_InstalarOdoo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.1. Instalación de Odoo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_2_InstalarDocker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.2. Instalación con docker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_3_InstalarUbuntu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.3. Instalación en Ubuntu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    3 Desarrollo con odoo
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            3 Desarrollo con odoo
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_1_ArquitecturaOdoo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.1. Arquitectura de Odoo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_2_PrimerModulo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.2. Primer módulo en Odoo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_3_Modulos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.3. Los módulos en Odoo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    4 Desarrollo de un módulo de gestión de proyectos
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            4 Desarrollo de un módulo de gestión de proyectos
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_1_EjemploCreacionModeloBasico/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.1. Creación de un modelo básico, vistas, menús y actions.
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_2_EjemploCamposBasicos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.2. Campos básicos y relacionales
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_3_EjemploCamposComputados/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.3. Campos básicos computados.
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_4_EjemploExcepcionesMensajes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.4. Lanzar excepciones y añadir mensajes de log.
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    4.5. Campos computados relacionales
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    4.5. Campos computados relacionales
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#diseno-y-situacion-actual-modelos-y-relaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diseño y situación actual: Modelos y relaciones
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nuevos-modelos-y-relaciones-permisos-y-vistas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nuevos modelos y relaciones, permisos y vistas
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Nuevos modelos y relaciones, permisos y vistas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nuevos-modelos-y-sus-relaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nuevos modelos y sus relaciones
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#seguridad-vistas-acciones-y-menu" class="md-nav__link">
+    <span class="md-ellipsis">
+      Seguridad, vistas, acciones y menú
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#campos-computados-relacionales" class="md-nav__link">
+    <span class="md-ellipsis">
+      Campos computados relacionales
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Campos computados relacionales">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#campo-computado-relacional-many2one-para-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      Campo computado relacional Many2one para Sprint
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Campo computado relacional Many2one para Sprint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-de-implementacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ejemplo de implementación
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#campo-computado-relacional-many2many-para-tecnologias-usadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Campo computado relacional Many2many para tecnologías usadas
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Campo computado relacional Many2many para tecnologías usadas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-de-implementacion_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ejemplo de implementación
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#related-campos-relacionales-no-almacenados-en-base-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related. Campos relacionales no almacenados en base de datos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Related. Campos relacionales no almacenados en base de datos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-de-implementacion_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ejemplo de implementación
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusiones" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusiones
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_6_EjemploCamposValoresDefecto/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.6. Campos con valores por defecto
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_7_EjemploHerencias/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.7. Herencias
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_8_EjemploMejorandoVistas/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.8. Mejorando vistas
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_9_EjemploDatosDemo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4.9. Datos de demostración
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#diseno-y-situacion-actual-modelos-y-relaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diseño y situación actual: Modelos y relaciones
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nuevos-modelos-y-relaciones-permisos-y-vistas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nuevos modelos y relaciones, permisos y vistas
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Nuevos modelos y relaciones, permisos y vistas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nuevos-modelos-y-sus-relaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nuevos modelos y sus relaciones
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#seguridad-vistas-acciones-y-menu" class="md-nav__link">
+    <span class="md-ellipsis">
+      Seguridad, vistas, acciones y menú
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#campos-computados-relacionales" class="md-nav__link">
+    <span class="md-ellipsis">
+      Campos computados relacionales
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Campos computados relacionales">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#campo-computado-relacional-many2one-para-sprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      Campo computado relacional Many2one para Sprint
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Campo computado relacional Many2one para Sprint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-de-implementacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ejemplo de implementación
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#campo-computado-relacional-many2many-para-tecnologias-usadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Campo computado relacional Many2many para tecnologías usadas
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Campo computado relacional Many2many para tecnologías usadas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-de-implementacion_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ejemplo de implementación
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#related-campos-relacionales-no-almacenados-en-base-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related. Campos relacionales no almacenados en base de datos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Related. Campos relacionales no almacenados en base de datos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-de-implementacion_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ejemplo de implementación
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusiones" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusiones
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>4.5. Campos computados relacionales</h1>
+
+<p>En este apartado se abordará el desarrollo de campos computados relacionales en Odoo, utilizando como ejemplo un módulo de gestión de proyectos de software que estamos desarrollando. </p>
+<p>El objetivo es mostrar, de manera estructurada y formal, cómo modelar entidades y relaciones, así como implementar campos computados tanto de tipo <code>Many2one</code> como <code>Many2many</code>.</p>
+<p>Los campos computados relacionales resultan fundamentales en Odoo cuando se requiere que ciertos datos se mantengan actualizados de forma automática en función de la información relacionada en otros modelos. Por ejemplo, permiten que un campo refleje siempre el estado más reciente de una relación, sin necesidad de intervención manual.</p>
+<p>En el contexto de la gestión de proyectos, estos campos facilitan la automatización de procesos como la asignación de <em>sprints</em> a <em>tareas</em> o la recopilación de <em>tecnologías</em> utilizadas en una historia de usuario. Así, se reduce el riesgo de errores y se mejora la coherencia de los datos, ya que la información se actualiza dinámicamente conforme cambian las relaciones entre los distintos modelos.</p>
+<p>Además, los campos computados relacionales contribuyen a simplificar la lógica de negocio y la experiencia de usuario, ya que presentan información relevante de manera centralizada y siempre actualizada, sin requerir acciones adicionales por parte de los usuarios.</p>
+<h2 id="diseno-y-situacion-actual-modelos-y-relaciones">Diseño y situación actual: Modelos y relaciones</h2>
+<p>Hasta este punto, el módulo cuenta con los siguientes modelos principales:</p>
+<ul>
+<li><strong>Tarea</strong></li>
+<li><strong>Sprint</strong></li>
+<li><strong>Tecnología</strong></li>
+</ul>
+<p>Las relaciones existentes son:</p>
+<ul>
+<li>Una <strong>tarea</strong> está relacionada con un <strong>sprint</strong> mediante una relación <code>Many2one</code>.</li>
+<li>Una <strong>tarea</strong> puede estar asociada a varias <strong>tecnologías</strong> mediante una relación <code>Many2many</code>.</li>
+<li>Un <strong>sprint</strong> puede contener varias <strong>tareas</strong> (<code>One2many</code>).</li>
+<li>Una <strong>tecnología</strong> puede estar asociada a varias <strong>tareas</strong> (<code>Many2many</code>).</li>
+</ul>
+<p>Además también tenemos campos computados como: </p>
+<ul>
+<li>El campo <code>codigo</code> en <strong>tareas</strong> en generado automáticamente mediante la función <code>_get_codigo</code>.</li>
+<li>El campo <code>fecha_fin</code> en <strong>sprints</strong>, calculado a partir de la función <code>_compute_fecha_fin</code>.</li>
+</ul>
+<hr />
+<h2 id="nuevos-modelos-y-relaciones-permisos-y-vistas">Nuevos modelos y relaciones, permisos y vistas</h2>
+<p>Vamos a avanzar en la creación de un módulo para gestionar el desarrollo de software mediante una metodología <em>Scrum</em></p>
+<div class="admonition note">
+<p class="admonition-title">Metodología ágil scrum</p>
+<p>En la metodología <strong>Scrum</strong>, un <strong>proyecto</strong> se organiza en ciclos cortos llamados <strong>sprints</strong>, durante los cuales se desarrollan incrementos funcionales del producto. El trabajo a realizar se descompone en <strong>historias de usuario</strong>, que representan funcionalidades o requisitos desde la perspectiva del usuario final. Cada <strong>historia de usuario</strong> puede dividirse en <strong>tareas</strong> más pequeñas y manejables, que son asignadas al <strong>equipo</strong> durante el <strong>sprint</strong>. </p>
+<p>De este modo, Scrum facilita la planificación iterativa, la adaptación continua y la entrega incremental de valor, asegurando que el equipo mantenga el enfoque en los objetivos del proyecto y pueda responder rápidamente a los cambios en los requisitos.</p>
+<p>Más info: <a href="https://www.flowlu.com/es/blog/project-management/agile-planning-step-by-step-guide-for-agile-projects-and-sprints/">Flowlu: Guía Paso a Paso para Proyectos y Sprints Ágiles</a></p>
+</div>
+<h3 id="nuevos-modelos-y-sus-relaciones">Nuevos modelos y sus relaciones</h3>
+<p>Para enriquecer el modelo de datos y adaptarlo a una gestión de proyectos basada en metodologías ágiles (por ejemplo, Scrum), se añaden los siguientes modelos:</p>
+<ul>
+<li>
+<p><strong>Proyecto (<code>Proyextos</code>)</strong>: Representa un proyecto de software. Incluye campos como nombre y descripción, y está asociado a un conjunto de historias de usuario.</p>
+<ul>
+<li>Nombre (<code>name</code>)</li>
+<li><code>Descripción</code></li>
+<li><code>Historias</code>: (Se define a continuación qué es una historia). Cada historia tiene un proyecto, pero un proyecto tiene muchas historias. (<code>One2many</code>)</li>
+</ul>
+</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Relación Proyecto - Historias (One2Many)</p>
+<div class="language-text highlight"><pre><span></span><code>              +-------------------+      (One2many)      +-----------------------+
+              |     Proyecto      |---------------------&gt;|   Historia Usuario    |
+              +-------------------+                      +-----------------------+
+</code></pre></div>
+<p>Si tenemos una relación One2many del modelo que estamos definiendo con otro modelo, a la hora de impementar la relación, ponemos lo mismo: One2many</p>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">historias</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">One2many</span><span class="p">(</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="s1">&#39;gestion_tareas_sergio.proyectos_sergio&#39;</span><span class="p">,</span>   <span class="c1"># Modelo con el que nos relacionamos</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="s1">&#39;proyectos&#39;</span><span class="p">)</span>                                <span class="c1"># Campo del modelo que tendrá el Many2one</span>
+</span></code></pre></div>
+</div>
+<ul>
+<li>
+<p><strong>Historia de Usuario (<code>Historias</code>)</strong>: Cada historia de usuario pertenece a un proyecto y puede estar asociada a varias tareas.</p>
+<ul>
+<li>Nombre (<code>name</code>)</li>
+<li><code>descripción</code></li>
+<li><code>proyecto</code>: Relación con proyectos. Un proyecto tiene muchas historias y cada historia tiene un proyecto (<code>Many2one</code>)</li>
+<li><code>tareas</code>: Relación con tareas. Una historia tiene muchos tareas y cada tarea tiene un proyecto (<code>One2many</code>)</li>
+</ul>
+</li>
+<li>
+<p><strong>Tareas</strong>: Añadimos la relación inversa con Historias:</p>
+<ul>
+<li><code>historia</code>: Una tarea pertenece a una historia de usuario y una historia tiene muchas tareas (<code>Many2one</code>).</li>
+</ul>
+</li>
+</ul>
+<p>Vamos a crear estas tablas y establecer las relaciones.</p>
+<details class="example">
+<summary>models.py</summary>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># *******************************************************</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># PROYECTOS</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">class</span> <span class="nc">proyectos_sergio</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">_name</span> <span class="o">=</span> <span class="s1">&#39;gestion_tareas_sergio.proyectos_sergio&#39;</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="n">_description</span> <span class="o">=</span> <span class="s1">&#39;gestion_tareas_sergio.proyectos_sergio&#39;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="n">name</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Char</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="s2">&quot;Nombre&quot;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Introduzca el nombre del proyecto&quot;</span><span class="p">)</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="n">descripcion</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="s2">&quot;Descripción&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Breve descripción del proyecto&quot;</span><span class="p">)</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">historias_om</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">One2many</span><span class="p">(</span> <span class="s1">&#39;gestion_tareas_sergio.historias_sergio&#39;</span><span class="p">,</span> <span class="s1">&#39;proyecto_mo&#39;</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="s1">&#39;Historias de Usuario&#39;</span><span class="p">)</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1"># *******************************************************</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="c1"># HISTORIAS DE USUARIO</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="k">class</span> <span class="nc">historias_sergio</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    <span class="n">_name</span> <span class="o">=</span> <span class="s1">&#39;gestion_tareas_sergio.historias_sergio&#39;</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>    <span class="n">_description</span> <span class="o">=</span> <span class="s1">&#39;gestion_tareas_sergio.historias_sergio&#39;</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>    <span class="n">name</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Char</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="s2">&quot;Nombre&quot;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Introduzca el nombre de la historia de usuario&quot;</span><span class="p">)</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>    <span class="n">descripcion</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="s2">&quot;Descripción&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Breve descripción de la hisoria de usuario&quot;</span><span class="p">)</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>    <span class="n">proyecto_mo</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Many2one</span><span class="p">(</span> <span class="s1">&#39;gestion_tareas_sergio.proyectos_sergio&#39;</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="s1">&#39;Poryecto&#39;</span><span class="p">)</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>    <span class="n">tareas_om</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">One2many</span><span class="p">(</span> <span class="s1">&#39;gestion_tareas_sergio.tareas_sergio&#39;</span><span class="p">,</span> <span class="s1">&#39;historia_mo&#39;</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="s1">&#39;Tareas&#39;</span><span class="p">)</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="c1"># *******************************************************</span>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="c1"># TAREAS</span>
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="k">class</span> <span class="nc">tareas_sergio</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>    <span class="n">_name</span> <span class="o">=</span> <span class="s1">&#39;gestion_tareas_sergio.tareas_sergio&#39;</span>
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>    <span class="n">_description</span> <span class="o">=</span> <span class="s1">&#39;gestion_tareas_sergio.tareas_sergio&#39;</span>
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>    <span class="n">name</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Char</span><span class="p">(</span><span class="n">string</span><span class="o">=</span><span class="s2">&quot;Nombre&quot;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Introduzca el nombre&quot;</span><span class="p">)</span>
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>    <span class="n">historia_mo</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Many2one</span><span class="p">(</span> <span class="s1">&#39;gestion_tareas_sergio.historias_sergio&#39;</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="s1">&#39;Historias de usuario&#39;</span><span class="p">)</span>
+</span></code></pre></div>
+</details>
+<div class="admonition nota">
+<p class="admonition-title">Nota</p>
+<p>Ya que estamos modificando modelos, vamos a eliminar el campo <code>fecha_creacion</code> de los modelos, ya que Odoo crea automáticamente un campo de fecha de creación para cada registro.</p>
+</div>
+<h3 id="seguridad-vistas-acciones-y-menu">Seguridad, vistas, acciones y menú</h3>
+<p>Una vez realizadas todas las modificaciones y comprobado que todo funciona correctamente, se deben actualizar los <strong>permisos</strong> para los nuevos modelos y modificar y/o crear vistas de formulario si procede facilitar la gestión de proyectos e historias de usuario. Además, se añaden acciones de ventana y opciones de menú para acceder a estos modelos desde la interfaz de Odoo.</p>
+<p>Intenta completar todos los cambios sin ver la solución que se va publicando.... </p>
+<details class="example">
+<summary>ir.model.access.csv</summary>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>. . . 
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>access_gestion_tareas_sergio_proyectos_sergio,acceso_proyectos_sergio,model_gestion_tareas_sergio_proyectos_sergio,base.group_user,1,1,1,1
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>access_gestion_tareas_sergio_historias_sergio,acceso_historias_sergio,model_gestion_tareas_sergio_historias_sergio,base.group_user,1,1,1,1
+</span></code></pre></div>
+</details>
+<details class="example">
+<summary>views.xml</summary>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="cm">&lt;!-- explicit FORM view definition --&gt;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nt">&lt;record</span><span class="w"> </span><span class="na">model=</span><span class="s">&quot;ir.ui.view&quot;</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;tareas_form&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span>gestion_tareas_sergio.tareas_sergio.form<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;model&quot;</span><span class="nt">&gt;</span>gestion_tareas_sergio.tareas_sergio<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;arch&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;xml&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="nt">&lt;form&gt;</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">      </span><span class="nt">&lt;sheet&gt;</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">        </span><span class="nt">&lt;group&gt;</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">          </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;codigo&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">          </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">          </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;descripcion&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">          </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;fecha_ini&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">          </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;fecha_fin&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">          </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;finalizado&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">          </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;sprint&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">          </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;rel_tecnologias&quot;</span><span class="w"> </span><span class="na">widget=</span><span class="s">&quot;many2many_tags&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">          </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;historia_mo&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">        </span><span class="nt">&lt;/group&gt;</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">      </span><span class="nt">&lt;/sheet&gt;</span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">    </span><span class="nt">&lt;/form&gt;</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">  </span><span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="nt">&lt;/record&gt;</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="cm">&lt;!-- actions opening views on models --&gt;</span>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="nt">&lt;record</span><span class="w"> </span><span class="na">model=</span><span class="s">&quot;ir.actions.act_window&quot;</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;gestion_tareas_sergio.action_proyectos&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="w">  </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span>Gestion<span class="w"> </span>Tareas<span class="w"> </span>Sergio<span class="w"> </span>Proyectos<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="w">  </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;res_model&quot;</span><span class="nt">&gt;</span>gestion_tareas_sergio.proyectos_sergio<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="w">  </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;view_mode&quot;</span><span class="nt">&gt;</span>list,form<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="nt">&lt;/record&gt;</span>
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>
+</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="nt">&lt;record</span><span class="w"> </span><span class="na">model=</span><span class="s">&quot;ir.actions.act_window&quot;</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;gestion_tareas_sergio.action_historias&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-3-32"><a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="w">  </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span>Gestion<span class="w"> </span>Tareas<span class="w"> </span>Sergio<span class="w"> </span>Historias<span class="w"> </span>de<span class="w"> </span>Usuarios<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-3-33"><a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a><span class="w">  </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;res_model&quot;</span><span class="nt">&gt;</span>gestion_tareas_sergio.historias_sergio<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-3-34"><a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a><span class="w">  </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;view_mode&quot;</span><span class="nt">&gt;</span>list,form<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-3-35"><a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a><span class="nt">&lt;/record&gt;</span>
+</span><span id="__span-3-36"><a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a>
+</span><span id="__span-3-37"><a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a><span class="cm">&lt;!-- actions --&gt;</span>
+</span><span id="__span-3-38"><a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a><span class="nt">&lt;menuitem</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Proyectos&quot;</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;gestion_tareas_sergio.gestion_proyectos&quot;</span><span class="w"> </span>
+</span><span id="__span-3-39"><a id="__codelineno-3-39" name="__codelineno-3-39" href="#__codelineno-3-39"></a><span class="w">  </span><span class="na">parent=</span><span class="s">&quot;gestion_tareas_sergio.gestion&quot;</span><span class="w"> </span>
+</span><span id="__span-3-40"><a id="__codelineno-3-40" name="__codelineno-3-40" href="#__codelineno-3-40"></a><span class="w">  </span><span class="na">action=</span><span class="s">&quot;gestion_tareas_sergio.action_proyectos&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-3-41"><a id="__codelineno-3-41" name="__codelineno-3-41" href="#__codelineno-3-41"></a>
+</span><span id="__span-3-42"><a id="__codelineno-3-42" name="__codelineno-3-42" href="#__codelineno-3-42"></a><span class="nt">&lt;menuitem</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Historias de Usuarios&quot;</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;gestion_tareas_sergio.gestion_historias&quot;</span><span class="w"> </span>
+</span><span id="__span-3-43"><a id="__codelineno-3-43" name="__codelineno-3-43" href="#__codelineno-3-43"></a><span class="w">  </span><span class="na">parent=</span><span class="s">&quot;gestion_tareas_sergio.gestion&quot;</span><span class="w"> </span>
+</span><span id="__span-3-44"><a id="__codelineno-3-44" name="__codelineno-3-44" href="#__codelineno-3-44"></a><span class="w">  </span><span class="na">action=</span><span class="s">&quot;gestion_tareas_sergio.action_historias&quot;</span><span class="nt">/&gt;</span>
+</span></code></pre></div>
+<p>Ten en cuenta que en este código se omite la parte que no se ha modificado</p>
+</details>
+<h2 id="campos-computados-relacionales">Campos computados relacionales</h2>
+<p>Una vez ya tenemos ampliado nuestro módulo con nuevos modelos, ahora vamos a platear una realaciones mas avanzadas entre estos modelos.</p>
+<p>En concreto vamos a crear vamos a crear dos:</p>
+<ul>
+<li>Teniendo en cuenta que los sprints son intervalos de tiempo en los que dividimos nuestro proyecto, y que además vamos a tener la precaución de que que en cada momento <strong>solo tenemos activo un sprint</strong>, una tarea puede pertenecer a un sprint en un momento determinado y un tiempo más tarde, si la tarea no se ha finalizado puede pertenecer a otro sprint, esto se puede conseguir calculando en cada momento el sprint que tenemos abierto en un proyecto determinado y las tareas que tenemos asociado a ese proyecto mediante las diferentes historias de usuario.</li>
+<li>Por otra parte, podemos asociar las diferentes tecnologías que se usan en cada Historia de Usuario teniendo en cuenta que las tecnologías estan asociadas a las tareas, y a su vez, las tareas a las historias. De esta forma, podemos calcular qué tecnologías se utilizan en las diferentes tareas asociadas a cada Historia de Usuario de forma automática.</li>
+</ul>
+<p>Veamos cómo implementamos todo esto a continuación.</p>
+<h3 id="campo-computado-relacional-many2one-para-sprint">Campo computado relacional <code>Many2one</code> para Sprint</h3>
+<p>Se implementa un campo computado que asocia automáticamente una tarea al sprint abierto correspondiente, en función de la fecha actual y el proyecto al que pertenece la historia de usuario.</p>
+<h4 id="ejemplo-de-implementacion">Ejemplo de implementación</h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">class</span> <span class="nc">tareas_sergio</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="n">_name</span> <span class="o">=</span> <span class="s1">&#39;gestion_tareas_sergio.tareas_sergio&#39;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="o">.</span> <span class="o">.</span> <span class="o">.</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">sprint_moc</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Many2one</span><span class="p">(</span><span class="s1">&#39;gestion_tareas_sergio.sprints_sergio&#39;</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="s1">&#39;Sprint&#39;</span><span class="p">,</span> <span class="n">compute</span><span class="o">=</span><span class="s1">&#39;_compute_sprint&#39;</span><span class="p">,</span> <span class="n">store</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="c1"># @api.depends(&#39;codigo&#39;)</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="nd">@api</span><span class="o">.</span><span class="n">depends</span><span class="p">(</span><span class="s1">&#39;fecha_ini&#39;</span><span class="p">,</span> <span class="s1">&#39;fecha_fin&#39;</span><span class="p">,</span> <span class="s1">&#39;historia_mo&#39;</span><span class="p">)</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    <span class="k">def</span> <span class="nf">_compute_sprint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>        <span class="k">for</span> <span class="n">tarea</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>            <span class="n">tarea</span><span class="o">.</span><span class="n">sprint_moc</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>            <span class="k">if</span> <span class="n">tarea</span><span class="o">.</span><span class="n">historia_mo</span> <span class="ow">and</span> <span class="n">tarea</span><span class="o">.</span><span class="n">historia_mo</span><span class="o">.</span><span class="n">proyecto_mo</span><span class="p">:</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>                <span class="n">sprints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;gestion_tareas_sergio.sprints_sergio&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">search</span><span class="p">([(</span><span class="s1">&#39;proyecto_om.id&#39;</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="n">tarea</span><span class="o">.</span><span class="n">historia_mo</span><span class="o">.</span><span class="n">proyecto_mo</span><span class="o">.</span><span class="n">id</span><span class="p">)])</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>                <span class="k">if</span> <span class="n">sprints</span><span class="p">:</span> 
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>                    <span class="k">for</span> <span class="n">sprint</span> <span class="ow">in</span> <span class="n">sprints</span><span class="p">:</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sprint</span><span class="o">.</span><span class="n">fecha_fin</span><span class="p">,</span> <span class="n">datetime</span><span class="p">)</span> <span class="ow">and</span> <span class="n">sprint</span><span class="o">.</span><span class="n">fecha_fin</span> <span class="o">&gt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">():</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>                            <span class="n">tarea</span><span class="o">.</span><span class="n">sprint_moc</span> <span class="o">=</span> <span class="n">sprint</span><span class="o">.</span><span class="n">id</span>
+</span></code></pre></div>
+<p>El campo <code>sprint_moc</code> es un campo relacional de tipo <code>Many2one</code> que enlaza cada tarea con un sprint del modelo <code>gestion_tareas_sergio.sprints_sergio</code>. Este campo es <strong>computado</strong>, lo que significa que su valor se calcula automáticamente mediante el método <code>_compute_sprint</code> y se almacena en la base de datos (<code>store=True</code>).</p>
+<p>El decorador <code>@api.depends('fecha_ini', 'fecha_fin', 'historia_mo')</code> indica que el cálculo de <code>sprint_moc</code> depende de los campos <code>fecha_ini</code>, <code>fecha_fin</code> y <code>historia_mo</code>. Cuando alguno de estos campos cambia, se ejecuta el método <code>_compute_sprint</code>. También podemos decidir que el cálculo dependa del código, con lo cual si cambiamos las fechas de la tarea, no cambiará el sprint. </p>
+<p>Dentro del método, para cada tarea, primero se inicializa <code>sprint_moc</code> en <code>False</code>. Luego, si la tarea tiene asociada una historia de usuario (<code>historia_mo</code>) y esta historia está vinculada a un proyecto (<code>proyecto_mo</code>), se buscan todos los sprints relacionados con ese proyecto.</p>
+<p>Para cada sprint encontrado, se verifica si la fecha de finalización (<code>fecha_fin</code>) es un objeto <code>datetime</code> y si es posterior al momento actual. Si se cumple esta condición, se asigna el identificador del sprint a <code>sprint_moc</code>. De este modo, la tarea queda asociada automáticamente al sprint activo más próximo, facilitando la organización y planificación de las tareas dentro de los sprints del proyecto.</p>
+<p>Este enfoque automatiza la asignación del sprint adecuado a cada tarea, facilitando la gestión y organización del trabajo en función de la planificación temporal de los sprints.</p>
+<hr />
+<h3 id="campo-computado-relacional-many2many-para-tecnologias-usadas">Campo computado relacional <code>Many2many</code> para tecnologías usadas</h3>
+<p>Se crea un campo computado en el modelo de historia de usuario que recopila todas las tecnologías utilizadas en las tareas asociadas a dicha historia.</p>
+<h4 id="ejemplo-de-implementacion_1">Ejemplo de implementación</h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">class</span> <span class="nc">historias_sergio</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="n">_name</span> <span class="o">=</span> <span class="s1">&#39;gestion_tareas_sergio.historias_sergio&#39;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="o">.</span> <span class="o">.</span> <span class="o">.</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="n">tecnologias_mmc</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Many2many</span><span class="p">(</span> <span class="s2">&quot;gestion_tareas_sergio.tecnologias_sergio&quot;</span><span class="p">,</span> <span class="n">compute</span><span class="o">=</span><span class="s2">&quot;_compute_tecnologias&quot;</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="s2">&quot;Tecnologías&quot;</span><span class="p">)</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="k">def</span> <span class="nf">_compute_tecnologias</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>        <span class="k">for</span> <span class="n">historias</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>            <span class="n">tecnologias</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>            <span class="k">for</span> <span class="n">tareas</span> <span class="ow">in</span> <span class="n">historias</span><span class="o">.</span><span class="n">tareas_om</span><span class="p">:</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>                <span class="k">if</span> <span class="ow">not</span> <span class="n">tecnologias</span><span class="p">:</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>                    <span class="n">tecnologias</span> <span class="o">=</span> <span class="n">tareas</span><span class="o">.</span><span class="n">tecnologias_mm</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>                <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>                    <span class="n">tecnologias</span> <span class="o">=</span> <span class="n">tecnologias</span> <span class="o">+</span> <span class="n">tareas</span><span class="o">.</span><span class="n">tecnologias_mm</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>            <span class="n">historias</span><span class="o">.</span><span class="n">tecnologias_mmc</span> <span class="o">=</span> <span class="n">tecnologias</span>
+</span></code></pre></div>
+<p>El campo <code>tecnologias_mmc</code> es un campo relacional de tipo <code>Many2many</code> que enlaza cada historia con múltiples tecnologías del modelo <code>gestion_tareas_sergio.tecnologias_sergio</code>. Este campo es <strong>computado</strong>, es decir, su valor se calcula automáticamente mediante el método <code>_compute_tecnologias</code>.</p>
+<p>El método <code>_compute_tecnologias</code> recorre cada registro de historia y, para cada uno, inicializa la variable <code>tecnologias</code> en <code>None</code>. Luego, itera sobre todas las tareas asociadas a la historia (<code>tareas_om</code>). Para cada tarea, si <code>tecnologias</code> aún no tiene valor, se le asignan las tecnologías de la primera tarea; en caso contrario, se suman (concatenan) las tecnologías de la tarea actual a las ya acumuladas. Finalmente, el campo <code>tecnologias_mmc</code> de la historia se actualiza con el conjunto total de tecnologías recopiladas de todas sus tareas.</p>
+<p>Este enfoque permite que el campo de tecnologías de la historia de usuario refleje automáticamente todas las tecnologías utilizadas en sus tareas asociadas, facilitando la consulta y gestión de la información relacionada.</p>
+<hr />
+<h3 id="related-campos-relacionales-no-almacenados-en-base-de-datos">Related. Campos relacionales no almacenados en base de datos</h3>
+<p>Hasta ahora, los campos relacionales que hemos tratado han sido de tipo <code>Many2one</code>, <code>One2many</code> o <code>Many2many</code>, y en ocasiones, campos relacionales computados, es decir, calculados automáticamente mediante código Python.</p>
+<p>Sin embargo, existe una situación particular en la que podemos necesitar un campo relacional que <strong>no requiera almacenamiento en la base de datos</strong> y que <strong>tampoco sea calculado mediante código Python</strong>. Esto ocurre cuando, en un modelo, queremos añadir un campo relacional que ya existe en otro modelo y simplemente queremos mostrarlo, sin duplicar la información ni crear una nueva relación en la base de datos.</p>
+<h4 id="ejemplo-de-implementacion_2">Ejemplo de implementación</h4>
+<p>Supongamos que tenemos el siguiente escenario:</p>
+<ul>
+<li>El modelo <strong>Proyecto</strong> está relacionado con las <strong>Historias de Usuario</strong>.</li>
+<li>Cada <strong>Historia de Usuario</strong> pertenece a un <strong>Proyecto</strong> y está asociada a un conjunto de <strong>Tareas</strong>.</li>
+<li>Las <strong>Tareas</strong> están relacionadas con un <strong>Sprint</strong>, con las <strong>Tecnologías</strong> utilizadas y con la <strong>Historia de Usuario</strong> a la que pertenecen.</li>
+</ul>
+<p>Ahora, imaginemos que queremos que, en el formulario de <strong>Tarea</strong>, además de la historia de usuario, se muestre también el <strong>Proyecto</strong> al que pertenece la tarea. Podríamos crear un campo <code>Many2one</code> directamente en el modelo de tareas, pero esto generaría una columna adicional en la base de datos, lo cual no es necesario, ya que la relación ya existe a través de la historia de usuario.</p>
+<p>Para resolver esto, Odoo permite definir un campo relacional utilizando el atributo <code>related</code>. De este modo, el campo en el modelo de tareas simplemente referencia el campo <code>proyecto</code> del modelo de historia de usuario, sin necesidad de almacenamiento adicional ni lógica de cálculo.</p>
+<p>Por ejemplo:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">class</span> <span class="nc">tareas_sergio</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  <span class="n">_name</span> <span class="o">=</span> <span class="s1">&#39;gestion_tareas_sergio.tareas_sergio&#39;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  <span class="c1"># ...</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>  <span class="n">historia_mo</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Many2one</span><span class="p">(</span> <span class="s1">&#39;gestion_tareas_sergio.historias_sergio&#39;</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="s1">&#39;Historias de usuario&#39;</span><span class="p">)</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>  <span class="c1"># Nuevo campo que relaciona directamente con el proyecto a partir de la historia de usuario</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>  <span class="n">proyecto_no</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Many2one</span><span class="p">(</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>      <span class="s1">&#39;gestion_tareas_sergio.proyectos_sergio&#39;</span><span class="p">,</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>      <span class="n">string</span><span class="o">=</span><span class="s1">&#39;Proyecto&#39;</span><span class="p">,</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>      <span class="n">related</span><span class="o">=</span><span class="s1">&#39;historia_mo.proyecto_mo&#39;</span><span class="p">,</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>      <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></code></pre></div>
+<p>En este caso, el campo <code>proyecto_no</code> en el modelo de tareas obtiene automáticamente el proyecto asociado a la historia de usuario seleccionada. Además, al establecer <code>readonly=True</code>, evitamos que el usuario pueda modificar este valor manualmente.</p>
+<p>Para que este campo sea visible en el formulario de tareas, basta con añadirlo a la vista correspondiente:</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;proyecto_no&quot;</span><span class="nt">/&gt;</span>
+</span></code></pre></div>
+<p>De este modo, cuando se seleccione una historia de usuario en una tarea, el campo de proyecto se actualizará automáticamente mostrando el valor correspondiente, sin que el usuario pueda modificarlo.</p>
+<figure align="center">
+  <a class="glightbox" href="../imgs/ejemploT/17_EjemploTarelaRelatedProyecto.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Image title" src="../imgs/ejemploT/17_EjemploTarelaRelatedProyecto.png" width="75%" /></a>
+  <figcaption>Asignación automática de proyecto</figcaption>
+</figure>
+<p>Este tipo de campos relacionales son útiles cuando queremos mostrar información relacionada sin duplicar datos ni realizar cálculos adicionales. Utilizando el atributo <code>related</code>, podemos mantener la integridad y simplicidad del modelo de datos, facilitando la navegación y consulta de información en la interfaz de Odoo.</p>
+<h2 id="conclusiones">Conclusiones</h2>
+<p>En este apartado se ha mostrado cómo crear campos computados relacionales en Odoo, tanto para relaciones <code>Many2one</code> como <code>Many2many</code>. Además, se ha ampliado la estructura del módulo para incluir proyectos e historias de usuario, permitiendo una gestión más completa y alineada con metodologías ágiles como Scrum.</p>
+<p>La estructura resultante permite:</p>
+<ul>
+<li>Gestionar múltiples proyectos, cada uno con sus historias de usuario.</li>
+<li>Desglosar historias de usuario en tareas, que a su vez se asocian a sprints y tecnologías.</li>
+<li>Automatizar la asignación de sprints y la recopilación de tecnologías mediante campos computados relacionales.</li>
+</ul>
+<p>Este enfoque facilita la escalabilidad y el mantenimiento del módulo, y sienta las bases para futuras ampliaciones, como la gestión de usuarios y permisos avanzados.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.indexes", "navigation.instant", "navigation.instant.progress", "toc.follow", "navigation.top", "content.code.copy"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
+</html>
