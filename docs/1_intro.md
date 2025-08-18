@@ -2,8 +2,6 @@
 
 TODO ESTO LO TENGO QUE CAMBIAR
 
-SI
-
 ---
 
 Estos apuntes son para desarrollar para Odoo en el módulo SGE de DAM. Muchas instrucciones están adaptadas para el funcionamiento de Odoo en un entorno de aprendizaje.
