@@ -4,7 +4,7 @@ description: Sistemas de Gestión Empresarial. ERP.
 ---
  
 
-Una solución o herramienta CRM —Customer Relationship Management o Gestión de Relaciones con Clientes— puede incorporar distintos tipos de funciones con propósitos complementarios.
+Una solución o herramienta CRM (***Customer Relationship Management*** o *Gestión de Relaciones con Clientes*) puede incorporar distintos tipos de funciones con propósitos complementarios.
 
 ## CRM Operativo
 

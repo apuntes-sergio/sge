@@ -39,39 +39,62 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true  
 
+
 plugins:
-  - glightbox
   - search
+  - glightbox
+
+
 nav:
+  - Presentación: 
+    - index.md
+
   - 1 ERP:
-    - 1_0_intro.md
-    - 1_2_IntroduccionERP.md
-    - 1_3_IT.md
+    - 1_1_IntroduccionERP.md
+    - 1_2_Sistemas_Informacion.md
+    - 1_3_Sistemas_Clave.md
     - 1_4_ERP_CRM.md
     - 1_5_ERP_actuales.md
     - 1_6_ERP_Libres_Privativos.md
     - 1_7_CRM_Actuales.md
-    - 1_8_Terminología.md
+    - 1_8_Modelos_Servicio.md
+    - 1_9_Terminología.md
   
-  - 2 Instalacion de Odoo: 
-    - 2_0_Introduccion.md
-    - 2_1_InstalarOdoo.md
-    - 2_2_InstalarDocker.md
-    - 2_3_InstalarUbuntu.md
-  - 3 Desarrollo con odoo:
-    - 3_1_ArquitecturaOdoo.md
-    - 3_2_PrimerModulo.md
-    - 3_3_Modulos.md
-  - 4 Desarrollo de un módulo de gestión de proyectos:
-    - 4_1_EjemploCreacionModeloBasico.md
-    - 4_2_EjemploCamposBasicos.md
-    - 4_3_EjemploCamposComputados.md
-    - 4_4_EjemploExcepcionesMensajes.md
-    - 4_5_EjemploCamposComputadosRelacionales.md
-    - 4_6_EjemploCamposValoresDefecto.md
-    - 4_7_EjemploHerencias.md
-    - 4_8_EjemploMejorandoVistas.md
-    - 4_9_EjemploDatosDemo.md
+  - 2 Python:
+    - 2_1_IntroduccionPython.md
 
+  - 3 Git:  
+    - 3_1_Guia_Git_Github.md
+
+  - 4 Docker:
+    - 4_1_Guia_Docker.md
+
+  - 5 Instalacion de Odoo: 
+    - 5_1_InstalarOdoo.md
+    - 5_2_InstalarDocker.md
+    - 5_3_InstalarUbuntu.md
+  - 6 Introducción a odoo:
+    - 6_1_ArquitecturaOdoo.md
+    - 6_2_PrimerModulo.md
+  - 7 Desarrollo módulo ejemplo:
+    - 7_1_EjemploCreacionModeloBasico.md
+    - 7_2_EjemploCamposBasicos.md
+    - 7_3_EjemploCamposComputados.md
+    - 7_4_EjemploExcepcionesMensajes.md
+    - 7_5_EjemploCamposComputadosRelacionales.md
+    - 7_6_EjemploCamposValoresDefecto.md
+    - 7_7_EjemploHerencias.md
+    - 7_8_EjemploMejorandoVistas.md
+    - 7_9_EjemploDatosDemo.md
+  - 8 Desarrollo con odoo:
+    - 8_1_Modulos.md
+    - 8_2_Campos.md
+    - 8_3_ArchivosDeDatos.md
+    - 8_4_AccionesYMenu.md
+    - 8_5_Vistas.md
+    - 8_6_Controladores.md
+    - 8_7_Herencia.md
+    - 8_8_Security.md
+    - 8_9_Miscelanea.md
     
     

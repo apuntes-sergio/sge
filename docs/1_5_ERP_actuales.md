@@ -1,5 +1,5 @@
 ---
-title: 1.5. Revisión de ERPs Actuales
+title: 1.5. Historia y características de los ERP
 description: Sistemas de Gestión Empresarial. ERP.
 ---
 
@@ -69,7 +69,7 @@ Las principales características de un sistema ERP son:
 
 ## Actividad 2
 
-📌 Clasifica los ERPs que has investigado en la actividad 1 según sus características.
+📌 Clasifica los ERPs que has investigado en la actividad del punto anterior según sus características.
 
 ---
 
