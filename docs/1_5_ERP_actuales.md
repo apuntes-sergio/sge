@@ -67,7 +67,7 @@ Las principales características de un sistema ERP son:
 
 ---
 
-## Actividad 2
+## Propuesta debate continuación
 
 📌 Clasifica los ERPs que has investigado en la actividad del punto anterior según sus características.
 

@@ -61,7 +61,7 @@ Las funciones de atención al cliente de un CRM también fomentan la fidelizaci�
 
 ---
 
-## Actividad
+## Propuesta debate
 
 🔍 Investiga algunos ERPs actuales disponibles en el mercado.
 
