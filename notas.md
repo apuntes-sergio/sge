@@ -126,8 +126,9 @@ Revisando el fichero de configuración, podemos ver por ejemplo las carpetas de 
 
   - https://edube.org/study/pe1
     - Tienen que hacer el curso
-    - Deben entregar las capturas de los ejercicios con un print("SU NOMBRE") en la solución.
+    - Deben entregar las capturas de los ejercicios con un print("TU NOMBRE") en la solución.
       - Módulo 2
+        - 2.1.1.6 LABORATORIO: La función print()
         - 2.1.1.18 LABORATORIO: La función print()
         - 2.1.1.19 LABORATORIO: Dando formato a la salida
         - 2.2.1.11 LABORATORIO: Literales de Python - Cadenas
@@ -169,5 +170,5 @@ Revisando el fichero de configuración, podemos ver por ejemplo las carpetas de 
 
 
 
-
-  - https://edube.org/study/pe2
+- https://edube.org/study/pe1
+- https://edube.org/study/pe2
