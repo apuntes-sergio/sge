@@ -65,8 +65,8 @@ nav:
     - 2_1_IntroduccionPython.md
   #  - 2_2_PrimerosPasosPython.md
     - 2_2_ControlFlujoExcepciones.md
-    # - 2_3_EstructurasDatos.md
-    # - 2_4_Funciones.md
+    - 2_3_EstructurasDatos.md
+    - 2_4_Funciones.md
     # - 2_5_ProgramacionOrientadaObjetos.md
     # - 2_6_Modulos.md
 
