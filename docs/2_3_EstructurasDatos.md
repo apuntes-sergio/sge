@@ -1,6 +1,6 @@
 ---
-title: Estructuras de datos y colecciones en Python
-description: Introducción a Python. Estructuras de datos y colecciones en Python
+title: Estructuras de datos o colecciones en Python
+description: Introducción a Python. Estructuras de datos o colecciones en Python
 ---
 
 Python ofrece estructuras de datos versátiles que permiten organizar y manipular información de forma eficiente. En esta sesión trabajaremos con listas, diccionarios, tuplas y conjuntos, y aprenderemos a recorrerlos e incluso transformarlos con comprensiones de listas.
@@ -758,3 +758,21 @@ for nombre in nombres:
 ```
 
 Recorrer una colección permite aplicar lógica sobre cada elemento, como mostrarlo, modificarlo o filtrarlo.
+
+
+## Tabla resumen de estructuras de datos o colecciones
+
+Sintetizando, estas son las estructuras que hemos visto.
+
+| Tipo         | Nombre técnico         | Mutabilidad | Orden | Duplicados | Ejemplo               |
+|--------------|------------------------|-------------|-------|------------|------------------------|
+| Lista        | `list`                 | Mutable     | Sí    | Sí         | `["a", "b", "c"]`      |
+| Diccionario  | `dict`                 | Mutable     | Sí    | No (claves únicas) | `{"a": 1, "b": 2}` |
+| Tupla        | `tuple`                | Inmutable   | Sí    | Sí         | `("a", "b", "c")`      |
+| Conjunto     | `set`                  | Mutable     | No    | No         | `{"a", "b", "c"}`      |
+
+Donde 
+
+- **Mutabilidad**: indica si una colección puede modificarse después de creada. Las listas, diccionarios y conjuntos son mutables; las tuplas no lo son.
+- **Orden**: determina si los elementos mantienen el orden en que fueron añadidos. Listas, tuplas y diccionarios (desde Python 3.7) conservan el orden; los conjuntos no.
+- **Duplicados**: señala si se permiten elementos repetidos. Listas y tuplas sí los permiten; conjuntos y diccionarios no (las claves deben ser únicas).

@@ -1,6 +1,6 @@
 ---
-title: Funciones, modularidad y manejo de excepciones
-description: Introducción a Python. Funciones, modularidad y manejo de excepciones
+title: Funciones y manejo de excepciones
+description: Introducción a Python. Funciones y manejo de excepciones
 ---
 
 Una función en Python es como una pequeña herramienta que realiza una tarea específica. En lugar de repetir el mismo bloque de código varias veces, podemos escribirlo una sola vez dentro de una función y luego llamarla cada vez que la necesitemos. Esto hace que el código sea más limpio, más fácil de entender y mucho más sencillo de mantener. Por ejemplo, si queremos saludar a varias personas, en lugar de escribir `print("Hola, Sergio")`, `print("Hola, Lucía")`, etc., podemos crear una función que reciba el nombre como entrada y se encargue de mostrar el saludo. Así, cada vez que queramos saludar a alguien, solo tenemos que llamar a esa función con el nombre correspondiente.
@@ -321,8 +321,6 @@ Una función puede devolver un resultado con `return`, lo que permite usar ese v
 
 Tal y como sucede en otros lenguajes, debemos diferenciar entre variables **locales** y **globales**. Las variables definidas **dentro de una función** son **locales** y no afectan al resto del programa. Las variables **globales** pueden ser accedidas **desde cualquier parte**, pero deben usarse con **cuidado** para evitar **conflictos**.
 
-Claro, Sergio. Vamos a aclarar el concepto de **ámbito de variables** en Python con explicaciones sencillas y ejemplos concretos. El ámbito determina **dónde** una variable puede ser utilizada dentro del programa.
-
 ### Variables locales
 
 Una variable local es aquella que se define **dentro de una función** y solo existe mientras esa función se está ejecutando. No puede ser accedida desde fuera.
@@ -394,9 +392,6 @@ Si realmente se quiere **modificar** una variable global desde dentro de una fun
     ```
 
 Aquí, al declarar `global contador`, le decimos a Python que queremos usar la variable global y no crear una nueva local. Esto permite modificar su valor desde dentro de la función.
-
-
-Por supuesto, Sergio. Aquí tienes la sección de **manejo de excepciones en Python** completamente reformulada, con una introducción más amplia, sin la parte de excepciones genéricas, y con un ejemplo que detecta dos tipos de excepciones distintas y muestra un mensaje genérico si ocurre cualquier otra.
 
 ---
 

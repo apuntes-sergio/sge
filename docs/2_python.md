@@ -1,4 +1,3 @@
-Perfecto, Sergio. Aquí tienes una **planificación de 7 sesiones de 2 horas** diseñada específicamente como **preparación para la programación de módulos en Odoo**, sin mencionar Odoo directamente pero cubriendo los fundamentos que luego se aplicarán en su desarrollo: estructuras de datos, funciones, POO, entornos virtuales, y gestión de paquetes.
 
 ---
 
@@ -360,10 +359,6 @@ Esta unidad sienta las bases para trabajar con Python de forma profesional. A pa
 
 
 ---
----
----
-
-Perfecto, Sergio. Aquí tienes la **Unidad 2** desarrollada en formato compatible con **MkDocs Material**, pensada como continuación de la Unidad 1. Esta sesión se centra en **estructuras condicionales y control de flujo**, fundamentales para la lógica de negocio que luego se aplicará en el desarrollo de módulos en Odoo.
 
 Incluye apuntes extensos, ejemplos claros y tres actividades prácticas al final.
 

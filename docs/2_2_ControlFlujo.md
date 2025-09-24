@@ -17,9 +17,6 @@ description: Introducción a Python. Estructuras condicionales y control de fluj
 El control de flujo permite que un programa tome decisiones y ejecute diferentes bloques de código según ciertas condiciones. En Python, esto se logra principalmente con las estructuras `if`, `elif` y `else`.
 
 
-Perfecto, Sergio. Aquí tienes el contenido reformulado para **MkDocs Material**, con un enfoque más explicativo, comentarios en los ejemplos y ampliaciones que ayudan a los alumnos a entender no solo la sintaxis, sino también el razonamiento detrás de cada bloque.
-
-
 ## Condicionales en Python
 
 Las estructuras condicionales permiten ejecutar diferentes bloques de código según se cumplan o no ciertas condiciones. Son fundamentales para controlar el flujo de un programa.
@@ -134,10 +131,6 @@ Este ejemplo combina entrada de datos, conversión de tipos (`int()`), condicion
     - Evita condicionales anidados innecesarios.
     - Comenta el propósito de cada bloque si no es evidente.
     - Usa `elif` en lugar de múltiples `if` independientes.
-
----
-
-Por supuesto, Sergio. Aquí tienes una explicación completa y detallada sobre el uso de estructuras tipo `case` en Python, adaptada al formato **MkDocs Material**, sin iconos, con introducción en cada sección, explicaciones claras y ejemplos comentados.
 
 ---
 

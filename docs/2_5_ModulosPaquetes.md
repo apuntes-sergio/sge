@@ -267,25 +267,74 @@ En el ejemplo anterior podemos ver los siguientes pasos:
 4. Se sale del entorno virtual
 5. Se comprueba que el paquete `emogi` no esta instalado, por lo que se demuestra que solo queda instalado si se utiliza con el entorno activo.
 
-### Trabajando con entornos virtuales
+
+### Trabajando con entornos virtuales y organización de módulos
 
 La forma más aconsejable y profesional de organizar un proyecto con entorno virtual es **trabajar en una carpeta base del proyecto** y tener el entorno virtual como una **subcarpeta dentro de ella**. Esto permite mantener el código fuente, los archivos de configuración, los datos y el entorno virtual **bien separados y estructurados**, lo que facilita el mantenimiento, la colaboración y el despliegue.
 
-De hecho podemos decir que tenemos una estructura base típica a la hora de crear un proyecto en Python que sería similar a la mostrada en el siguiente ejemplo
+Además, cuando el proyecto crece, es habitual agrupar funciones propias en **subcarpetas** que actúan como paquetes. Esto mejora la modularidad y permite importar funciones desde distintos archivos sin mezclar todo en un único módulo. Para que una subcarpeta sea tratada como paquete, debe contener un archivo `__init__.py`, aunque esté vacío.
+
+!!!note "El fichero `__init__.py`"
+
+    El archivo `__init__.py` indica que una carpeta debe ser tratada como un paquete de Python. Aunque en versiones modernas ya no es obligatorio, sigue siendo una buena práctica incluirlo.
+    
+    Aunque el archivo `__init__.py` puede estar vacío, también puede incluir **código útil de inicialización** para el paquete. Esto permite controlar qué funciones, clases o submódulos se exponen al importar el paquete, definir constantes globales, o incluso agrupar accesos para simplificar el uso desde fuera.
+
+    Por ejemplo, si tienes varios módulos en la carpeta `utilidades/`, puedes usar `__init__.py` para importar funciones clave y facilitar el acceso desde el exterior:
+
+    ```python
+    # utilidades/__init__.py
+    from .texto import formatear_mensaje
+    from .numeros import es_par
+    ```
+
+    Esto permite que desde `main.py` puedas hacer:
+
+    ```python
+    from utilidades import formatear_mensaje, es_par
+    ```
+
+    En lugar de tener que importar cada módulo por separado. También puedes definir constantes o funciones que se ejecuten al cargar el paquete:
+
+    ```python
+    # utilidades/__init__.py
+    VERSION = "1.0"
+
+    def iniciar():
+        print("Paquete utilidades cargado correctamente.")
+    ```
+
+    Este enfoque es útil cuando quieres que el paquete tenga un comportamiento inicial o una configuración común.
+
+De hecho, podemos decir que tenemos una estructura base típica a la hora de crear un proyecto en Python que sería similar a la mostrada en el siguiente ejemplo:
 
 !!!example "Estructura recomendada"
 
     ```plaintext
     mi_proyecto/
-    ├── venv/                 ← entorno virtual (subcarpeta)
-    ├── main.py               ← código principal
-    ├── utils.py              ← módulos propios
-    ├── requirements.txt      ← dependencias del proyecto
-    ├── README.md             ← documentación
-    └── datos/                ← archivos de entrada/salida
+    ├── venv/                     ← entorno virtual (subcarpeta)
+    ├── main.py                   ← código principal
+    ├── utilidades/              ← paquete con módulos propios
+    │   ├── __init__.py          ← indica que es un paquete
+    │   └── texto.py             ← módulo con funciones de texto
+    ├── requirements.txt         ← dependencias del proyecto
+    ├── README.md                ← documentación
+    └── datos/                   ← archivos de entrada/salida
     ```
 
-Esta estructura permite que el entorno virtual esté contenido dentro del proyecto, pero **no mezclado con el código**. También facilita que puedas subir tu proyecto a GitHub o compartirlo sin incluir el entorno virtual (que suele añadirse al `.gitignore`).
+Esta estructura permite que el entorno virtual esté contenido dentro del proyecto, pero **no mezclado con el código**. También facilita que puedas subir tu proyecto a GitHub o compartirlo sin incluir el entorno virtual (que suele añadirse al `.gitignore`). Al mismo tiempo, el uso de paquetes como `utilidades/` permite mantener el código organizado y reutilizable.
+
+!!!tip "Ejemplo de invocación de funciones desde un módulo en subcarpeta"
+
+    Si tienes una función `formatear_mensaje()` definida en `utilidades/texto.py`, puedes usarla desde `main.py` así:
+
+    ```python
+    from utilidades.texto import formatear_mensaje
+
+    print(formatear_mensaje("hola desde Enguera"))
+    ```
+
+    Recuerda que la carpeta `utilidades` debe contener un archivo `__init__.py` para que Python la reconozca como paquete.
 
 En el siguiente apartado hablaremos el archivo `requirements.txt`
 
@@ -318,6 +367,10 @@ pip install -r requirements.txt
 
 Esto es muy útil para compartir proyectos con otros desarrolladores o para desplegar en servidores. En vez de estar instalando manualmente todos los paquetes, mediante este fichero el servidor sabe qué paquetes debe instalar (automáticamente).
 
+## 🧩 Ejemplo y ejercicio de uso
+
+El siguiente ejemplo permite crear un flujo que prepara un proyecto web con *Flask* sin afectar otros proyectos.
+
 !!!example "Ejemplo de uso"
 
     Contenido de fichero `requirements.txt`
@@ -338,11 +391,6 @@ Esto es muy útil para compartir proyectos con otros desarrolladores o para desp
     # Desactivar entorno
     deactivate
     ```
-
-El ejemplo crear un flujo que permite preparar un proyecto web con *Flask* sin afectar otros proyectos.
-
-
-## 🧩 Ejemplo y ejercicio de uso
 
 !!!question "Ejercicio: Preparar entorno para proyecto de análisis de datos"
 

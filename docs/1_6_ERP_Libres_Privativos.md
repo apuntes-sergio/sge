@@ -35,9 +35,6 @@ Al elegir entre un software u otro, es importante tener en cuenta diversos facto
   <figcaption>Matriz de decisión de ERPs.</figcaption>
 </figure>
 
-Claro, Sergio. Aquí tienes la sección completada con una descripción detallada de la tabla y comentarios avanzados que contextualizan y enriquecen el análisis de los principales sistemas ERP-CRM del mercado:
-
-
 ## Principales Sistemas ERP-CRM del Mercado
 
 <figure markdown="span" align="center">
