@@ -383,13 +383,17 @@ Se pueden colocar **bucles dentro de otros bucles**. Por supuesto, en Python pod
 
     Este ejemplo muestra cómo se combinan dos bucles `for` para recorrer pares de valores.
 
-???question "Ejercicio propuesto con `for`: Crea un programa que pida al usuario un número y muestre su tabla de multiplicar del 1 al 10 usando un bucle `for`."
+!!!question "Ejercicio propuesto con `for`:"
 
-    ```python
-    numero = int(input("Introduce un número: "))
-    for i in range(1, 11):
-        print(f"{numero} x {i} = {numero * i}")
-    ```
+    Crea un programa que pida al usuario un número y muestre su tabla de multiplicar del 1 al 10 usando un bucle `for`."
+
+    ???quote "Solucion"
+
+        ```python
+        numero = int(input("Introduce un número: "))
+        for i in range(1, 11):
+            print(f"{numero} x {i} = {numero * i}")
+        ```
 
 
 ### Bucle `while`
@@ -427,16 +431,19 @@ En generar podemos utilizar todos los operadores indicados anteriormente con el 
 
     Este bucle sigue preguntando hasta que el usuario responde "sí".
 
-???question "Ejercicio propuesto con `while`: Repite de nuevo el bucle de la tabla de multiplicar, pero ahora con  `while`."
+!!!question "Ejercicio sencillo con `while`"
 
-    ```python
-    numero = int(input("Introduce un número: "))
-    i = 1  # Inicializamos el contador
-    while i <= 10:
-        print(f"{numero} x {i} = {numero * i}")
-        i += 1  # Incrementamos el contador
+    Repite de nuevo el bucle de la tabla de multiplicar, pero ahora con  `while`.
 
-    ```
+    ???quote "Solución"
+
+        ```python
+        numero = int(input("Introduce un número: "))
+        i = 1  # Inicializamos el contador
+        while i <= 10:
+            print(f"{numero} x {i} = {numero * i}")
+            i += 1  # Incrementamos el contador
+        ```
 
 
 
@@ -483,21 +490,25 @@ y **`continue`**
 
 
 
-???question "Ejercicio propuesto tablas de multiplicar. Amplia el programa anterior de las tablas de multiplicar para que te pregunte de qué numero quiere hacer la tabla de multiplicar, genere la tabla de multiplicar y termine cuando le pidas la tabla del 0"
+!!!question "Ejercicio propuesto tablas de multiplicar"
 
-    ```python
-    while True:
-        numero = int(input("Introduce un número (0 para salir): "))
-        
-        if numero == 0:
-            print("¡Hasta luego!")
-            break  # Sale del bucle si el número es 0
-        
-        print(f"\nTabla de multiplicar del {numero}:")
-        for i in range(1, 11):
-            print(f"{numero} x {i} = {numero * i}")
-        print()  # Línea en blanco para separar tablas
-    ```
+    Amplia el programa anterior de las tablas de multiplicar para que te pregunte de qué numero quiere hacer la tabla de multiplicar, genere la tabla de multiplicar y termine cuando le pidas la tabla del 0"
+
+    ???quote "Solucion"
+
+        ```python
+        while True:
+            numero = int(input("Introduce un número (0 para salir): "))
+            
+            if numero == 0:
+                print("¡Hasta luego!")
+                break  # Sale del bucle si el número es 0
+            
+            print(f"\nTabla de multiplicar del {numero}:")
+            for i in range(1, 11):
+                print(f"{numero} x {i} = {numero * i}")
+            print()  # Línea en blanco para separar tablas
+        ```
 
     > Introduce una variante para que si pides las tablas del 5 al 7, solo haga hasta el 5 y no hasta el 10
 

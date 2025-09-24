@@ -339,7 +339,7 @@ Devuelve una copia superficial del diccionario. Es útil para duplicar estructur
 | `clear()`          | Elimina todos los elementos del diccionario                                 | `usuario.clear()`                            | `{}`                                        |
 | `copy()`           | Devuelve una copia superficial del diccionario                              | `nuevo = usuario.copy()`                     | `{'nombre': 'Sergio', 'edad': 25}`         |
 
-### Ejemplo y ejercicio de uso
+### 🧩 Ejemplo y ejercicio de uso
 
 En el siguiente ejemplo se muestra cómo consultar, modificar y eliminar información de un diccionario de forma segura y eficiente.
 
@@ -436,7 +436,7 @@ print(coordenada[0])  # 10.5
 Las tuplas se comportan como listas, pero no pueden modificarse. Esto las hace útiles para representar datos constantes.
 
 
-### Ejemplo y ejercicio de uso
+### 🧩 Ejemplo y ejercicio de uso
 
 En el siguiente ejemplo se muestra cómo crear una tupla, acceder a sus elementos y utilizarla para representar datos que no deben modificarse.
 
@@ -661,7 +661,7 @@ Devuelve los elementos que están en el **primer conjunto pero no en el segundo*
 | `difference(set2)`    | Devuelve los elementos que están en el primero pero no en el segundo        | `a.difference(b)`                | `{"rojo", "azul"}`                |
 
 
-### Ejemplo y ejercicio de uso
+### 🧩 Ejemplo y ejercicio de uso
 
 En el siguiente ejemplo se muestra cómo crear un conjunto, añadir y eliminar elementos, y realizar operaciones típicas como unión, intersección y diferencia entre conjuntos.
 

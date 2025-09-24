@@ -64,11 +64,11 @@ nav:
   #  - 2_python.md
     - 2_1_IntroduccionPython.md
   #  - 2_2_PrimerosPasosPython.md
-    - 2_2_ControlFlujoExcepciones.md
+    - 2_2_ControlFlujo.md
     - 2_3_EstructurasDatos.md
-    - 2_4_Funciones.md
+    - 2_4_FuncionesExcepciones.md
+    - 2_5_ModulosPaquetes.md
     # - 2_5_ProgramacionOrientadaObjetos.md
-    # - 2_6_Modulos.md
 
   - 3 Git:  
     - 3_1_Guia_Git_Github.md

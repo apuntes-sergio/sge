@@ -102,6 +102,207 @@ Si necesitas flexibilidad en el orden, puedes usar **argumentos nombrados** al l
 
     Es útil para mantener la estructura del código mientras lo desarrollas o cuando quieres ignorar ciertos casos sin romper la lógica del programa.
 
+
+
+### Funciones con número de parámetros variables
+
+En Python, a veces necesitamos definir funciones que puedan recibir una cantidad **variable de argumentos**, sin saber cuántos serán exactamente. Esto es útil cuando queremos que la función sea flexible y se adapte a diferentes situaciones sin tener que modificar su definición.
+
+Para ello, Python ofrece dos mecanismos:
+
+- `*args`: permite recibir cualquier número de **argumentos posicionales**.
+- `**kwargs`: permite recibir cualquier número de **argumentos nombrados** (clave-valor).
+
+También se pueden combinar ambos para crear funciones muy versátiles.
+
+#### Uso de `*args` (argumentos posicionales variables)
+
+Cuando usamos `*args` en la definición de una función, estamos diciendo que esa función puede recibir **muchos valores sin nombre**, que serán agrupados en una **tupla**. Esto es útil cuando queremos operar con una lista de números, textos u otros elementos sin saber cuántos serán.
+
+Se puede ver más claro en los siguientes ejemplos:
+
+!!!example "Ejemplo 1: Sumar varios números pasados como parámetros"
+
+    ```python
+    def sumar_todos(*numeros):
+        """Suma todos los números que se pasen como argumentos."""
+        return sum(numeros)
+
+    print(sumar_todos(2, 4, 6))       # 12
+    print(sumar_todos(1, 3, 5, 7, 9)) # 25
+    ```
+
+!!!example "Ejemplo mostramos los parámetros pasados"
+
+    ```python
+    def mostrar_nombres(*nombres):
+        print("Lista de nombres:")
+        for nombre in nombres:
+            print("-", nombre)
+
+    mostrar_nombres("Lucía", "Carlos", "Marta")
+    mostrar_nombres("Sergio")
+    ```
+
+En ambos casos, la función puede recibir uno, tres o veinte argumentos sin cambiar su definición.
+
+#### Uso de `**kwargs` (argumentos nombrados variables)
+
+Cuando usamos `**kwargs`, la función puede recibir muchos **argumentos con nombre**, que serán agrupados en un **diccionario**. Esto es útil cuando queremos que el usuario pueda especificar información sin seguir un orden fijo.
+
+De nuevo comprenderemos mejor su uso con un par de ejemplos. Observar como los parámetros pasados deben tener formato de **diccionario**:
+
+!!!example "Mostrar información de usuario"
+
+    ```python
+    def mostrar_info(**datos):
+        for clave, valor in datos.items():
+            print(f"{clave}: {valor}")
+
+    mostrar_info(nombre="Sergio", edad=25, ciudad="Alberic")
+    ```
+
+Observar cómo se han recuperado tanto la clave como el valor de cada tupla del diccionario
+
+Veamos de nuevo otro ejemplo similar
+
+!!!example "Ejemplo de lectura de configuración"
+
+    ```python
+    def configurar(**opciones):
+        print("Configuración aplicada:")
+        for clave, valor in opciones.items():
+            print(f"{clave} = {valor}")
+
+    configurar(color="azul", tamaño="mediano", activo=True)
+    ```
+
+En estos ejemplos, los argumentos se pasan como pares clave-valor, y la función los procesa como un diccionario.
+
+#### Combinación de parámetros fijos, `*args` y `**kwargs`
+
+También se pueden combinar parámetros normales con `*args` y `**kwargs` en una misma función. El orden debe ser:
+
+1. Parámetros normales
+2. `*args`
+3. `**kwargs`
+
+Esto permite que la función tenga una parte fija, una parte variable de datos, y una parte flexible de configuración.
+
+De nuevo veamos un par de ejemplos:
+
+!!!example "Procesar datos con nombre y valores"
+
+    ```python
+    def procesar(nombre, *valores, **opciones):
+        print("Nombre:", nombre)
+        print("Valores:", valores)
+        print("Opciones:", opciones)
+
+    procesar("Lucía", 10, 20, activo=True, nivel="avanzado")
+    ```
+Observar en este ejemplo como el primer parámetro de la invocación de la función pertenece al parámetro fijo y el resto de parámetros simple se convierten en una lista para los parámetros posicionales y los parámetros pasados como tuplas clave-valor se convierten en los parámetros finales en modo diccionario.
+
+Veamos otro ejemplo similar
+
+!!!example "Enviar mensaje personalizado"
+
+    ```python
+    def enviar_mensaje(destinatario, *lineas, **firma):
+        print(f"Para: {destinatario}")
+        for linea in lineas:
+            print(linea)
+        if "nombre" in firma:
+            print(f"\nAtentamente,\n{firma['nombre']}")
+
+    enviar_mensaje("Carlos", "Hola,", "¿Cómo estás?", nombre="Sergio")
+    ```
+
+Estas funciones permiten construir estructuras muy flexibles, ideales para proyectos reales donde los datos pueden variar según el contexto.
+
+
+#### 🧩 Ejemplo y ejercicio de uso
+
+En el siguiente ejemplo se muestra cómo definir una función que acepta una cantidad variable de argumentos posicionales (`*args`) y nombrados (`**kwargs`). La función simula el registro de un pedido, donde se pueden añadir productos sin límite y configurar opciones adicionales como envío o método de pago.
+
+Este ejemplo permite aplicar de forma conjunta los conceptos de funciones, `*args`, `**kwargs`, bucles, y acceso a diccionarios.
+
+```python
+def registrar_pedido(cliente, *productos, **configuracion):
+    """Registra un pedido con productos y opciones adicionales."""
+    print(f"Pedido de: {cliente}")
+    
+    if productos:
+        print("Productos solicitados:")
+        for producto in productos:
+            print("-", producto)
+    else:
+        print("No se han añadido productos.")
+
+    if configuracion:
+        print("Configuración del pedido:")
+        for clave, valor in configuracion.items():
+            print(f"{clave}: {valor}")
+    else:
+        print("Sin configuración adicional.")
+
+# Ejemplo de uso
+registrar_pedido("Lucía", "Teclado", "Ratón", envio="urgente", pago="tarjeta")
+registrar_pedido("Carlos")
+```
+
+Este ejemplo muestra cómo se pueden combinar argumentos fijos, múltiples valores y opciones flexibles en una sola función.
+
+!!!question "Ejercicio básico: Registro de usuario con parámetros variables"
+
+    Crea una función llamada `registrar_usuario` que reciba:
+
+    - Un argumento obligatorio: `nombre`
+    - Una cantidad variable de intereses (`*intereses`)
+    - Una cantidad variable de datos personales (`**datos`)
+
+    La función debe:
+
+    1. Mostrar el nombre del usuario.
+    2. Mostrar los intereses si se han indicado.
+    3. Mostrar los datos personales como pares clave-valor si se han indicado.
+
+    Prueba la función con los siguientes casos:
+
+    - `registrar_usuario("Sergio", "Python", "IA", ciudad="Valencia", edad=25)`
+    - `registrar_usuario("Lucía")`
+
+    > Pistas  
+    > - Usa `*intereses` para recoger temas de interés.  
+    > - Usa `**datos` para recoger información adicional.  
+    > - Usa bucles para mostrar los contenidos.
+
+    ???quote "Solución"
+
+        ```python
+        def registrar_usuario(nombre, *intereses, **datos):
+            print(f"Usuario registrado: {nombre}")
+            
+            if intereses:
+                print("Intereses:")
+                for interes in intereses:
+                    print("-", interes)
+            else:
+                print("No se han indicado intereses.")
+
+            if datos:
+                print("Datos personales:")
+                for clave, valor in datos.items():
+                    print(f"{clave}: {valor}")
+            else:
+                print("No se han indicado datos personales.")
+
+        # Pruebas
+        registrar_usuario("Sergio", "Python", "IA", ciudad="Valencia", edad=25)
+        registrar_usuario("Lucía")
+        ```
+
+
 ### Retorno de valores
 
 Una función puede devolver un resultado con `return`, lo que permite usar ese valor en otras partes del programa.
@@ -207,7 +408,7 @@ Cuando ocurre una excepción y no se gestiona, el programa se detiene y muestra 
 
 El manejo de excepciones es especialmente útil cuando se trabaja con entrada de datos, operaciones matemáticas, acceso a archivos o cualquier situación en la que el comportamiento del usuario o del entorno pueda provocar errores. Saber identificar y tratar estos errores es fundamental para escribir programas robustos y profesionales.
 
-### uso de `try` `except`
+### Uso de `try` `except`
 
 Veamos un ejemplo sencillo de captura de excepciones.
 
@@ -285,7 +486,7 @@ Son muchos los tipos de excepciones a captura, sin embargo, para simplificar a c
 | `Exception`         | Clase base de todas las excepciones; se puede usar para capturar cualquier tipo|
 
 
-### uso de `finally`
+### Uso de `finally`
 
 También se puede usar `finally` para ejecutar código siempre, ocurra o no una excepción:
 
@@ -314,7 +515,7 @@ Por último, veamos también un ejemplo de `raise` que nos permite lanzar una ex
 
 En ocasiones, para la gestión de errores de nuestro aplicativo nos puede resultar conveniente el uso de esta estructura.
 
-## Ejemplo y ejercicio de uso
+## 🧩 Ejemplo y ejercicio de uso
 
 En el siguiente ejemplo se muestra cómo definir una función que realiza una operación matemática, valida la entrada del usuario, y gestiona distintos tipos de errores mediante excepciones específicas. Además, se incluye un bloque genérico para capturar cualquier otro tipo de error no previsto.
 
