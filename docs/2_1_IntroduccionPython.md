@@ -235,6 +235,10 @@ complejo = 2 + 3j
 
 Tal y como se asigne un valor u otro, el interprete ya asigna el tipo adecuado a la variable 
 
+!!!note "Número complejos"
+
+    Python es capaz de trabajar con números complejos, que están compuestos por un número en coma flotante y un imaginario, pero queda fuera del alcance de nuestro curso, aunque sirva saber que tiene esta capacidad para comprender la dimensión de python.
+
 #### Operadores aritméticos
 
 Por supuesto podemos realizas diferentes operaciones matemáticas:
@@ -277,6 +281,17 @@ print( mensaje)
 print( "Esta también es otra cadena concatenada con comas, ", nombre, "¿se entiende?")
 ```
 
+!!!warning "Cuidado"
+
+    Si concatenamos cadenas, debemos tener cuidado con el tipo de las variables
+    ```python
+    txt = "hola"
+    num = 25
+    print( txt, num)                # Correcto
+    print( txt + " " + num)         # Incorrecto
+    print( txt + " " + str( num))   # Correcto
+    ```
+
 #### Alternativa moderna: **f-strings**
 
 Desde Python 3.6, puedes usar **f-strings** para insertar valores dentro de cadenas de forma más limpia y legible. Este tipo de cadenas se define anteponiendo un `f` a la cadena, de forma que las variables ya no las ponemos entre comillas, sino que las incluimos entre llaves `{}`:
@@ -286,6 +301,8 @@ nombre = "Sergio"
 edad = 25
 print(f"{nombre} tiene {edad} años")
 ```
+
+Además no tenemos problemas con el tipo de las variables.
 
 ### Tipado dinámico y variables como objetos
 

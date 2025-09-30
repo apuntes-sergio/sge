@@ -539,8 +539,6 @@ Este ejemplo cubre tres tipos de errores:
 - Conversión fallida de texto a número (`ValueError`)
 - Cualquier otro error no previsto (`Exception`)
 
----
-
 !!!question "Ejercicio básico: Validación de precio con función y excepciones"
 
     Crea una función llamada `calcular_precio_final` que reciba dos argumentos:

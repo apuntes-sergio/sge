@@ -3,9 +3,13 @@ title: Estructuras condicionales y control de flujo
 description: Introducción a Python. Estructuras condicionales y control de flujo
 ---
 
-# Unidad 2: Estructuras condicionales y control de flujo
+En esta sesión se exploran las herramientas fundamentales que permiten tomar decisiones dentro de un programa. Las estructuras condicionales como `if`, `elif` y `else` permiten ejecutar diferentes bloques de código según se cumplan ciertas condiciones, lo que aporta flexibilidad y dinamismo al comportamiento del programa. Este tipo de lógica es esencial para modelar situaciones reales como validaciones, bifurcaciones o respuestas ante distintos escenarios.
 
-## Objetivos
+También se aborda el control de flujo, que incluye instrucciones como `break`, `continue` y `pass`, utilizadas para modificar el comportamiento de los bucles o gestionar casos especiales. Estas herramientas permiten controlar con precisión cómo se ejecuta el código, evitando repeticiones innecesarias o errores en estructuras incompletas. Se explicará cómo y cuándo interrumpir o saltar partes del flujo de ejecución para mantener la lógica del programa clara y eficiente.
+
+Por último, se introducen los **bucles** como estructuras que permiten repetir acciones de forma controlada. Se trabajará con `for` y `while`, analizando cómo recorrer colecciones, repetir tareas hasta que se cumpla una condición, y cómo combinar bucles con condicionales para construir programas más expresivos. 
+
+El objetivo es dominar el flujo de ejecución completo: decidir, repetir y controlar:
 
 - Comprender el uso de condicionales en Python.
 - Aplicar estructuras de control para tomar decisiones en el código.
@@ -14,12 +18,9 @@ description: Introducción a Python. Estructuras condicionales y control de fluj
 - Crear scripts interactivos que respondan a diferentes entradas del usuario.
 
 
-El control de flujo permite que un programa tome decisiones y ejecute diferentes bloques de código según ciertas condiciones. En Python, esto se logra principalmente con las estructuras `if`, `elif` y `else`.
-
-
 ## Condicionales en Python
 
-Las estructuras condicionales permiten ejecutar diferentes bloques de código según se cumplan o no ciertas condiciones. Son fundamentales para controlar el flujo de un programa.
+El control de flujo permite que un programa tome decisiones y ejecute diferentes bloques de código según ciertas condiciones. En Python, esto se logra principalmente con las estructuras `if`, `elif` y `else`.
 
 ### Sintaxis básica
 
@@ -216,11 +217,9 @@ Aunque `if` sigue siendo más flexible, `match` es más limpio cuando se evalúa
 
     Este ejemplo muestra cómo agrupar varios valores en un mismo `case`. Es útil cuando varios valores deben producir la misma salida.
 
----
-
 ### Uso con tuplas y desestructuración
 
-En la siguiente sesión veremos veremos datos más avanzados como duplas, pero, en este punto enunciaremos que una de las características más potentes de `match` es su capacidad para trabajar con estructuras de datos como tuplas o listas.
+En la siguiente sesión veremos veremos datos más avanzados como duplas que veremos en la siguiente sesión, pero, aun así en este punto enunciaremos que una de las características más potentes de `match` es su capacidad para trabajar con estructuras de datos como tuplas o listas.
 
 
 !!!examole "Evaluación con tuplas"
@@ -331,7 +330,18 @@ Realmente la función `range()` se define de con dos parámetros, de forma que s
 
     Este bucle imprime los números del 1 al 5, uno por línea
 
-  
+pero `range()` también se puede invocar con **3 parámetros**, siendo el tercer parámetro el incremento del rango:
+
+
+!!!example "`range()` con tres parámetros"
+
+    ```python
+    for i in range(1, 11, 2):
+        print("Número:", i)
+    ```
+
+    Este bucle imprime los números impares del 1 al 10, uno por línea
+
 y para acabar con `range()` veamos el ejemplo típico de la tabla de multiplicar:
 
 !!!example "Tabla de multiplicar con `for` y `range()` "
@@ -341,9 +351,9 @@ y para acabar con `range()` veamos el ejemplo típico de la tabla de multiplicar
     for i in range(1, 11):
         print(f"{tabla_del} x {i} = {tabla_del * i}")
     ```
-De nuevo vamos a utilizar una estructura que veremos en la siguiente sesión com son las *listas*, pero el siguiente ejemplo visualiza que podemos iterar por los elementos de una lista.
+De nuevo vamos a utilizar una estructura que veremos en la siguiente sesión como son las *listas*, así pues, siguiente ejemplo visualiza que podemos iterar por los elementos de una lista.
 
-!!!example  "Ejemplo de interación sobre una lista"
+!!!example  "Ejemplo de interacción sobre una lista"
 
     ```python
     frutas = ["manzana", "plátano", "cereza"]
@@ -387,7 +397,7 @@ Se pueden colocar **bucles dentro de otros bucles**. Por supuesto, en Python pod
         for i in range(1, 11):
             print(f"{numero} x {i} = {numero * i}")
         ```
-
+    > **Variante**: Consigue que la tabla multiplicar la imprima al revés, del 10 al 1
 
 ### Bucle `while`
 
@@ -503,5 +513,45 @@ y **`continue`**
             print()  # Línea en blanco para separar tablas
         ```
 
-    > Introduce una variante para que si pides las tablas del 5 al 7, solo haga hasta el 5 y no hasta el 10
+    > **Variante**: si pides las tablas del 5 al 7, solo haga hasta el 5 y no hasta el 10
 
+
+
+## 🧩 Ejemplo y ejercicio de uso
+
+```python
+# Mostrar si los números del 1 al 10 son pares o impares
+for numero in range(1, 11):
+    if numero % 2 == 0:
+        print(f"{numero} es par")
+    else:
+        print(f"{numero} es impar")
+```
+
+Este ejemplo combina un bucle `for` con una estructura `if-else` para analizar cada número y mostrar su tipo.
+
+!!!question "Ejercicio: Contador de positivos y negativos"
+
+    Escribe un programa que:
+
+    1. Pida al usuario 5 números (uno por uno).
+    2. Use un bucle para recoger los datos.
+    3. Use condiciones para contar cuántos son positivos y cuántos negativos.
+    4. Al final, muestre los totales.
+
+    ???quote "Solución"
+
+        ```python
+        positivos = 0
+        negativos = 0
+
+        for i in range(5):
+            numero = int(input("Introduce un número: "))
+            if numero > 0:
+                positivos += 1
+            elif numero < 0:
+                negativos += 1
+
+        print(f"Números positivos: {positivos}")
+        print(f"Números negativos: {negativos}")
+        ```

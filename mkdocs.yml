@@ -2,26 +2,31 @@
 # Configuración de MkDocs para el sitio de Apuntes Sistemas de Gestión Empresarial
 site_name: Apuntes Sistemas de Gestión Empresarial
 site_url: https://sergio-apuntes.github.io/sge/
+site_author: Sergio Rey Martínez
 
+copyright: Sergio Rey Martínez - DAM - SGE - 2025
 
 theme:
   name: material
   language: es
   palette:
-    - scheme: default
-      primary: indigo
-      accent: indigo
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep orange
+      accent: deep orange
       toggle:
         icon: material/weather-night
         name: Cambiar a modo oscuro
-    - scheme: slate
-      primary: indigo
-      accent: indigo
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep orange
+      accent: deep orange
       toggle:
         icon: material/weather-sunny
         name: Cambiar a modo claro
   features:
     - navigation.indexes
+    - navigation.footer
     - navigation.instant
     - navigation.instant.progress
     - toc.follow

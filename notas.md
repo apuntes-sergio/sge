@@ -164,11 +164,71 @@ Revisando el fichero de configuración, podemos ver por ejemplo las carpetas de 
 
 
 
-
-
-
-
-
-
 - https://edube.org/study/pe1
 - https://edube.org/study/pe2
+
+
+
+Para que no funcione el autocompletado en VSCode:
+
+Configuración de proyecto para Visual Studio Code que **desactiva todas las ayudas automáticas**, **impide sugerencias de extensiones**, y **usa un color de tema distintivo** para que los alumnos vean claramente que están en un entorno controlado. Además, puedes combinar esto con una actividad reflexiva sobre cómo el entorno afecta su forma de programar.
+
+---
+
+### 📁 Estructura del proyecto
+
+```
+mi_proyecto/
+├── .vscode/
+│   ├── settings.json
+│   └── extensions.json
+├── main.py
+```
+
+---
+
+### 🧼 `.vscode/settings.json` — sin ayudas, con tema visual claro
+
+```json
+{
+  "workbench.colorTheme": "Monokai", 
+  "editor.quickSuggestions": {
+    "other": false,
+    "comments": false,
+    "strings": false
+  },
+  "editor.suggestOnTriggerCharacters": false,
+  "editor.parameterHints.enabled": false,
+  "editor.hover.enabled": false,
+  "editor.wordBasedSuggestions": false,
+  "editor.inlineSuggest.enabled": false,
+  "editor.lightbulb.enabled": false,
+  "editor.codeActionsOnSave": {},
+  "python.languageServer": "None",
+  "python.analysis.autoImportCompletions": false,
+  "python.analysis.typeCheckingMode": "off",
+  "files.autoSave": "onFocusChange"
+  "telemetry.enableTelemetry": false,
+  "telemetry.enableCrashReporter": false
+}
+```
+
+🔸 **Tema Monokai**: sirve como señal visual clara de que están en el entorno “sin ayudas”. Puedes elegir otro tema distintivo si lo prefieres.
+
+---
+
+### 🚫 `.vscode/extensions.json` — sin recomendaciones
+
+```json
+{
+  "recommendations": [],
+  "unwantedRecommendations": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-vscode.intellicode",
+    "ms-toolsai.jupyter"
+  ]
+}
+```
+
+Esto evita que VSCode recomiende extensiones que podrían reactivar ayudas como autocompletado, notebooks o sugerencias inteligentes.
