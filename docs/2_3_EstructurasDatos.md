@@ -34,7 +34,7 @@ Las listas se definen entre corchetes `[]` y los elementos se separan por comas.
 Las listas son **mutables**, lo que significa que sus elementos pueden cambiar después de haber sido creados. Esto permite actualizar valores fácilmente sin tener que crear una nueva lista.
 
 
-!!!example "Ejemplo de modificación de listas
+!!!example "Ejemplo de modificación de listas"
 
     ```python
     # Cambiamos el segundo elemento
