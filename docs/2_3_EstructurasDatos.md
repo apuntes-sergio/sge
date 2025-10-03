@@ -123,9 +123,11 @@ Las listas en Python no solo permiten almacenar múltiples elementos, sino que t
 | `copy()`       | Devuelve una copia superficial de la lista                                  | `nueva_lista = lista.copy()`                 | `["manzana", "pera", "uva"]`     |
 
 
-!!!example "Ejemplo combinado"
+### 🧩 Ejemplo y ejercicio de uso
 
-    Este ejemplo muestra cómo combinar varios métodos para construir y modificar una lista paso a paso. El resultado final sería una lista ordenada con los elementos actualizados.
+Este ejemplo muestra cómo combinar varios métodos para construir y modificar una lista paso a paso. El resultado final sería una lista ordenada con los elementos actualizados.
+
+!!!example "Ejemplo combinado"
 
     ```python
     # Lista inicial
@@ -147,32 +149,32 @@ Las listas en Python no solo permiten almacenar múltiples elementos, sino que t
     print(frutas)
     ```
 
-### Ejercicio básico
-
 Para finalizar con las listas, vamos a realizar un ejercicio para practicar los métodos `append()`, `insert()`, `pop()` y la modificación por índice, consolidando el uso básico de listas en Python.
 
-???question "Crea una lista con tres colores. Añade un cuarto color, cambia el segundo por otro, inserta uno en la primera posición, elimina el último y muestra la lista final por pantalla."
+!!!question "Ejercicio básico de listas"
 
-    ```python
-    # Lista inicial
-    colores = ["rojo", "verde", "azul"]
+    Crea una lista con tres colores. Añade un cuarto color, cambia el segundo por otro, inserta uno en la primera posición, elimina el último y muestra la lista final por pantalla.
 
-    # Añadir un cuarto color
-    colores.append("amarillo")
+    ???quote "Solucion"
+        ```python
+        # Lista inicial
+        colores = ["rojo", "verde", "azul"]
 
-    # Cambiar el segundo color
-    colores[1] = "morado"
+        # Añadir un cuarto color
+        colores.append("amarillo")
 
-    # Insertar en la primera posición
-    colores.insert(0, "negro")
+        # Cambiar el segundo color
+        colores[1] = "morado"
 
-    # Eliminar el último color
-    colores.pop()
+        # Insertar en la primera posición
+        colores.insert(0, "negro")
 
-    # Mostrar la lista final
-    print(colores)
-    ```
+        # Eliminar el último color
+        colores.pop()
 
+        # Mostrar la lista final
+        print(colores)
+        ```
 
 ---
 
