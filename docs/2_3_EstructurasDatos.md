@@ -5,6 +5,25 @@ description: Introducción a Python. Estructuras de datos o colecciones en Pytho
 
 Python ofrece estructuras de datos versátiles que permiten organizar y manipular información de forma eficiente. En esta sesión trabajaremos con listas, diccionarios, tuplas y conjuntos, y aprenderemos a recorrerlos e incluso transformarlos con comprensiones de listas.
 
+
+## Tabla resumen de estructuras de datos o colecciones
+
+Sintetizando, estas son las estructuras que vamos a ver.
+
+| Tipo         | Nombre técnico         | Mutabilidad | Orden | Duplicados | Ejemplo               |
+|--------------|------------------------|-------------|-------|------------|------------------------|
+| Lista        | `list`                 | Mutable     | Sí    | Sí         | `["a", "b", "c"]`      |
+| Diccionario  | `dict`                 | Mutable     | Sí    | No (claves únicas) | `{"a": 1, "b": 2}` |
+| Tupla        | `tuple`                | Inmutable   | Sí    | Sí         | `("a", "b", "c")`      |
+| Conjunto     | `set`                  | Mutable     | No    | No         | `{"a", "b", "c"}`      |
+
+Donde 
+
+- **Mutabilidad**: indica si una colección puede modificarse después de creada. Las listas, diccionarios y conjuntos son mutables; las tuplas no lo son.
+- **Orden**: determina si los elementos mantienen el orden en que fueron añadidos. Listas, tuplas y diccionarios (desde Python 3.7) conservan el orden; los conjuntos no.
+- **Duplicados**: señala si se permiten elementos repetidos. Listas y tuplas sí los permiten; conjuntos y diccionarios no (las claves deben ser únicas).
+
+
 ## Listas en Python
 
 Las listas son una de las estructuras de datos más utilizadas en Python. Permiten almacenar múltiples elementos en una sola variable, manteniendo el orden en que fueron añadidos y ofreciendo gran flexibilidad para modificarlos, recorrerlos o aplicar operaciones sobre ellos.
@@ -122,6 +141,28 @@ Las listas en Python no solo permiten almacenar múltiples elementos, sino que t
 | `clear()`      | Elimina todos los elementos de la lista                                     | `lista.clear()`                              | `[]`                             |
 | `copy()`       | Devuelve una copia superficial de la lista                                  | `nueva_lista = lista.copy()`                 | `["manzana", "pera", "uva"]`     |
 
+Además de los métodos propios del tipo `list`, Python ofrece **instrucciones y funciones integradas que permiten manipular listas desde fuera**. Estas operaciones no se invocan con punto (`.`), pero son igualmente útiles para eliminar, consultar o transformar listas.
+
+| Instrucción / Función | Descripción                                                                 | Ejemplo                                      | Resultado                        |
+|-----------------------|------------------------------------------------------------------------------|----------------------------------------------|----------------------------------|
+| `del lista[i]`        | Elimina el elemento en la posición `i`                                      | `del lista[1]`                               | `["manzana", "uva"]`             |
+| `del lista[a:b]`      | Elimina un segmento de la lista entre las posiciones `a` y `b`               | `del lista[0:2]`                             | `["uva"]`                        |
+| `len(lista)`          | Devuelve el número de elementos en la lista                                  | `len(lista)`                                 | `3`                              |
+| `sum(lista)`          | Devuelve la suma de los elementos numéricos de la lista                      | `sum([1, 2, 3])`                              | `6`                              |
+| `max(lista)`          | Devuelve el valor máximo de la lista                                         | `max([1, 5, 3])`                              | `5`                              |
+| `min(lista)`          | Devuelve el valor mínimo de la lista                                         | `min([1, 5, 3])`                              | `1`                              |
+| `sorted(lista)`       | Devuelve una nueva lista ordenada sin modificar la original                  | `sorted(["pera", "manzana", "uva"])`         | `["manzana", "pera", "uva"]`     |
+| `enumerate(lista)`    | Devuelve un objeto iterable con pares `(índice, valor)`                      | `for i, v in enumerate(lista): ...`          | `(0, "manzana"), (1, "pera")...` |
+| `zip(lista1, lista2)` | Combina dos listas en pares `(x, y)`                                         | `zip(["a", "b"], [1, 2])`                     | `[("a", 1), ("b", 2)]`           |
+
+!!!info "Más info"
+    - [Documentación oficial del tipo `list`](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists)  
+      Explica los métodos como `append()`, `insert()`, `remove()`, `pop()`, `sort()`, `reverse()`, `clear()`, `copy()`, etc.
+    - [Funciones integradas de Python (`built-in functions`)](https://docs.python.org/3/library/functions.html)  
+      Aquí encontrarás `len()`, `sum()`, `max()`, `min()`, `sorted()`, `enumerate()`, `zip()`, entre muchas otras.
+
+    - [Referencia del lenguaje Python](https://docs.python.org/3/reference/index.html)  
+      Incluye instrucciones como `del`, estructuras de control, y detalles sobre cómo funciona el lenguaje.
 
 ### 🧩 Ejemplo y ejercicio de uso
 
@@ -747,7 +788,15 @@ Ahora intenta realizar el siguiente ejercicio sin mirar la solución.
 
 ---
 
-## Iteración sobre colecciones
+## Apendice sobre estructuras.
+
+Una vez vistas las 4 estructuras podemos crear todo tipo de combinaciones entre ellas e incluso utilizar el concepto de iteración que tiene python con `for` para ampliar su utilidad. 
+
+Este campo es muy extenso y que da a vuestra curiosidad su ampliación. 
+
+Veamos tan solo un par de posibilidades.
+
+### Iteración sobre colecciones
 
 Tal y como hemos visto en las listas, todas estas estructuras pueden recorrerse con bucles `for`, lo que permite procesar sus elementos uno a uno.
 
@@ -761,20 +810,36 @@ for nombre in nombres:
 
 Recorrer una colección permite aplicar lógica sobre cada elemento, como mostrarlo, modificarlo o filtrarlo.
 
+### lListas de diccionarios
 
-## Tabla resumen de estructuras de datos o colecciones
+Las listas de diccionarios en Python constituyen una estructura de datos especialmente útil cuando se necesita representar colecciones de elementos complejos, donde cada elemento tiene múltiples atributos. Esta combinación permite organizar la información de forma clara, flexible y fácilmente manipulable, tanto en programas sencillos como en aplicaciones más avanzadas.
 
-Sintetizando, estas son las estructuras que hemos visto.
+El resultado de utilizar listas de diccionarios es una estructura que se comporta como una tabla en memoria: cada diccionario representa una fila (una entidad), y cada clave dentro del diccionario representa una columna (un atributo). Esto facilita la lectura, modificación, filtrado y análisis de datos de forma estructurada.
 
-| Tipo         | Nombre técnico         | Mutabilidad | Orden | Duplicados | Ejemplo               |
-|--------------|------------------------|-------------|-------|------------|------------------------|
-| Lista        | `list`                 | Mutable     | Sí    | Sí         | `["a", "b", "c"]`      |
-| Diccionario  | `dict`                 | Mutable     | Sí    | No (claves únicas) | `{"a": 1, "b": 2}` |
-| Tupla        | `tuple`                | Inmutable   | Sí    | Sí         | `("a", "b", "c")`      |
-| Conjunto     | `set`                  | Mutable     | No    | No         | `{"a", "b", "c"}`      |
+Las razones por las que esta estructura es ampliamente utilizada son las siguientes:
 
-Donde 
+- **Permite agrupar múltiples objetos** similares en una sola colección.
+- **Cada objeto puede tener múltiples propiedades**, accesibles por nombre.
+- Es **compatible** con formatos externos como **JSON**, lo que facilita la exportación e importación de datos.
+- Permite realizar **búsquedas**, **filtrados** y **ordenaciones** basadas en cualquier atributo.
+- Es **especialmente útil** en contextos como gestión de usuarios, inventarios, registros académicos o cualquier sistema que maneje entidades con campos definidos.
 
-- **Mutabilidad**: indica si una colección puede modificarse después de creada. Las listas, diccionarios y conjuntos son mutables; las tuplas no lo son.
-- **Orden**: determina si los elementos mantienen el orden en que fueron añadidos. Listas, tuplas y diccionarios (desde Python 3.7) conservan el orden; los conjuntos no.
-- **Duplicados**: señala si se permiten elementos repetidos. Listas y tuplas sí los permiten; conjuntos y diccionarios no (las claves deben ser únicas).
+!!!example "Lista de diccionarios"
+
+    ```python
+    empleados = [
+        {"nombre": "Ana", "sueldo": 1800, "años": 12, "activo": True},
+        {"nombre": "Luis", "sueldo": 1500, "años": 5, "activo": True},
+        {"nombre": "María", "sueldo": 2000, "años": 20, "activo": False}
+    ]
+    ```
+
+Esta estructura permite recorrer la lista para mostrar empleados activos, calcular la media de sueldos, añadir nuevos registros o modificar campos específicos. Por ejemplo, para mostrar solo los empleados activos:
+
+```python
+for emp in empleados:
+    if emp["activo"]:
+        print(emp["nombre"], emp["sueldo"])
+```
+
+Las listas de diccionarios son, por tanto, una herramienta fundamental para modelar datos estructurados en Python de forma clara y eficaz.
