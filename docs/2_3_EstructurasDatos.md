@@ -810,7 +810,7 @@ for nombre in nombres:
 
 Recorrer una colección permite aplicar lógica sobre cada elemento, como mostrarlo, modificarlo o filtrarlo.
 
-### lListas de diccionarios
+### Listas de diccionarios
 
 Las listas de diccionarios en Python constituyen una estructura de datos especialmente útil cuando se necesita representar colecciones de elementos complejos, donde cada elemento tiene múltiples atributos. Esta combinación permite organizar la información de forma clara, flexible y fácilmente manipulable, tanto en programas sencillos como en aplicaciones más avanzadas.
 
