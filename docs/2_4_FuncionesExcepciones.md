@@ -52,6 +52,19 @@ También se pueden usar argumentos nombrados para mayor claridad:
 saludar(nombre="Lucía")
 ```
 
+!!!example "Ejemplo de función con argumentos nombrados (y con valores por defecto)"
+
+    ```python
+    def saludar( nombre = "Sergio", apellido = "Rey" ):
+        print(f"Hola, {nombre} {apellido}!")
+
+    saludar()                                           # Hola, Sergio Rey
+    saludar( "Carlos", "Alcaraz")                       # Hola, Carlos Alcaraz
+    saludar( nombre = "Carlos", apellido = "Alcaraz")   # Hola, Carlos Alcaraz
+    saludar( nombre = "Andrés")                         # Hola, Andrés Rey
+    saludar( apellido = "López")                        # Hola, Sergio López
+```
+
 En Python, **no puedes definir un valor por defecto para un parámetro si hay otro parámetro sin valor por defecto después de él**. Es decir, los parámetros con valores por defecto deben ir **al final** de la lista de parámetros.
 
 Por ejemplo, esto **no es válido**:
