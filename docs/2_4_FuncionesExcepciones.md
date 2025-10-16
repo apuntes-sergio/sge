@@ -63,7 +63,7 @@ saludar(nombre="Lucía")
     saludar( nombre = "Carlos", apellido = "Alcaraz")   # Hola, Carlos Alcaraz
     saludar( nombre = "Andrés")                         # Hola, Andrés Rey
     saludar( apellido = "López")                        # Hola, Sergio López
-```
+    ```
 
 En Python, **no puedes definir un valor por defecto para un parámetro si hay otro parámetro sin valor por defecto después de él**. Es decir, los parámetros con valores por defecto deben ir **al final** de la lista de parámetros.
 

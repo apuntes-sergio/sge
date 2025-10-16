@@ -20,7 +20,11 @@ Básicamente, los contenidos que vamos a abordar en esta sección son:
 
 ## Introducción a los módulos
 
-Un **módulo** en Python es simplemente un archivo `.py` que contiene funciones, clases o variables que pueden ser reutilizadas en otros programas. Python incluye muchos módulos estándar como `math`, `random` o `datetime`, y también permite crear los tuyos propios.
+Un **módulo** en Python es simplemente un archivo `.py` que contiene funciones, clases o variables que pueden ser reutilizadas en otros programas. 
+
+Python incluye muchos **módulos estándar** como `math`, `random` o `datetime`, y también permite crear los tuyos **propios**.
+
+Para poder trabajar con un módulo, en la cabecera del fichero de código lo debemos importar mediante el comando `import`;
 
 !!!example "Importación de módulo `math`"
 
@@ -29,7 +33,7 @@ Un **módulo** en Python es simplemente un archivo `.py` que contiene funciones,
     print(math.sqrt(25))  # 5.0
     ```
 
-También puedes importar solo una parte del módulo:
+También se puede importar solo una parte del módulo mediante `from <módulo> import <funcion>`:
 
 !!!example "Importación de función `pi` de módulo `math`"
 
@@ -37,8 +41,9 @@ También puedes importar solo una parte del módulo:
     from math import pi
     print(pi)  # 3.141592...
     ```
+Observar que en el primer caso para el uso de una función concreta necesitamos indicar `modulo.funcion()` mientras que al importar una función directamente, no es necesario indicar el módulo al que pertenece.
 
-Y puedes usar alias para acortar nombres:
+Y también se puede usar alias para acortar nombres de los módulos:
 
 !!!example "Ejemplo de uso de alias para identificar un módulo"
 
@@ -46,6 +51,8 @@ Y puedes usar alias para acortar nombres:
     import datetime as dt
     print(dt.datetime.now())
     ```
+
+Por supuestos, python dispone de una serie de módulos de todo tipo que podemos usar, a parte de los que podamos desarrollar o usar de otros desarrolladores.
 
 !!!tip "Información sobre los módulos en Python"
 
@@ -60,13 +67,13 @@ Y puedes usar alias para acortar nombres:
 
 ## Uso de módulos propios en Python
 
-Compro programadores, podemos crear módulos (archivos) donde definimos funciones que después vamos a reutilizar en nuestro/s proyectos. 
+Como programadores, podemos crear módulos (archivos) donde definimos funciones que después vamos a reutilizar en nuestro/s proyectos. 
 
-Cuando tienes funciones definidas en un archivo como `utils.py`, puedes reutilizarlas en otros archivos del mismo proyecto importándolas. No necesitas hacer nada especial para “exportarlas”: basta con que estén definidas correctamente y que el archivo esté en la misma carpeta (o en una ruta accesible).
+Cuando tenemos funciones definidas en un archivo como `utils.py`, podemos reutilizarlas en otros archivos del mismo proyecto importándolas. No es necesario hacer nada especial para “exportarlas”: basta con que estén definidas correctamente y que el archivo esté en la misma carpeta (o en una ruta accesible).
 
 Por ejemplo, veamos el caso de si tenemos un fichero para módulos y otro principal
 
-!!!example "Uso de modulos propios"
+!!!example "Uso de módulos propios"
 
     Supongamos que tenemos esta estructura:
 
@@ -86,7 +93,7 @@ Por ejemplo, veamos el caso de si tenemos un fichero para módulos y otro princi
         return a + b
     ```
 
-    Entonces en `main.py` puedes importar esas funciones así:
+    Entonces en `main.py` podemos importar estas funciones así:
 
     ```python
     from utils import saludar, sumar
@@ -95,7 +102,7 @@ Por ejemplo, veamos el caso de si tenemos un fichero para módulos y otro princi
     print(sumar(3, 5))
     ```
 
-    También puedes importar todo el módulo:
+    También podemos importar todo el módulo completo:
 
     ```python
     import utils
@@ -152,6 +159,7 @@ Este ejemplo muestra cómo separar funciones en un módulo y usarlas desde otro 
     > - Usa `input()` para recoger datos.  
     > - Usa `from utils import ...` para importar funciones.  
     > - Usa `int()` para convertir el número.
+    > - Calcula el resto para saber si es por o no y utiliza la funcion `texto.capitaliza()` para pasar solo la primera letra a mayusculas  
 
     ???quote "Solución"
 
@@ -184,7 +192,7 @@ Este ejemplo muestra cómo separar funciones en un módulo y usarlas desde otro 
 
 ## Instalación de paquetes con `pip`
 
-`pip` es el gestor de paquetes oficial de Python. Permite instalar librerías externas que no vienen incluidas por defecto. Por ejemplo, para instalar la librería `requests`:
+**`pip`** es el gestor de paquetes oficial de Python. Permite instalar librerías externas que no vienen incluidas por defecto. Por ejemplo, para instalar la librería `requests`:
 
 ```bash
 pip install requests
@@ -194,11 +202,11 @@ Una vez instalada, puedes usarla en tu código:
 
 !!!example "Ejemplo de uso de librería `request`
 
-```python
-import requests
-respuesta = requests.get("https://www.google.com")
-print(respuesta.status_code)
-```
+    ```python
+    import requests
+    respuesta = requests.get("https://www.google.com")
+    print(respuesta.status_code)
+    ```
 
 Si intentamos hacer el `import` de un paquete no instalado en el sistema, entonces tendremos un error.
 
@@ -331,7 +339,7 @@ Esta estructura permite que el entorno virtual esté contenido dentro del proyec
     ```python
     from utilidades.texto import formatear_mensaje
 
-    print(formatear_mensaje("hola desde Enguera"))
+    print(formatear_mensaje("hola desde Valencia"))
     ```
 
     Recuerda que la carpeta `utilidades` debe contener un archivo `__init__.py` para que Python la reconozca como paquete.
@@ -367,20 +375,43 @@ pip install -r requirements.txt
 
 Esto es muy útil para compartir proyectos con otros desarrolladores o para desplegar en servidores. En vez de estar instalando manualmente todos los paquetes, mediante este fichero el servidor sabe qué paquetes debe instalar (automáticamente).
 
+
+!!!note "Instalación automática en despliegues"
+
+    En ejecución local, Python **no instala automáticamente** los paquetes aunque estén en `requirements.txt`. Pero en entornos de despliegue sí se automatiza:
+
+    - **Docker**
+    ```dockerfile
+    COPY requirements.txt .
+    RUN pip install -r requirements.txt
+    ```
+
+    - Plataformas como **Heroku** o **GitHub Actions**
+    Detectan el fichero y ejecutan automáticamente:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+    - **Script de arranque personalizado**
+    ```bash
+    pip install -r requirements.txt && python main.py
+    ```
+
+
 ## 🧩 Ejemplo y ejercicio de uso
 
 El siguiente ejemplo permite crear un flujo que prepara un proyecto web con *Flask* sin afectar otros proyectos.
 
 !!!example "Ejemplo de uso"
 
-    Contenido de fichero `requirements.txt`
+    Los siguiente pasos crean en entorno virtual, lo activa, instala el paquete flask y genera el fichero requirements.txt
 
     ```bash
     # Crear entorno virtual
     python -m venv entorno_web
 
     # Activar entorno (Windows)
-    entorno_web\Scripts\activate
+    entorno_web/Scripts/activate
 
     # Instalar Flask
     pip install flask
@@ -409,7 +440,7 @@ El siguiente ejemplo permite crear un flujo que prepara un proyecto web con *Fla
         python -m venv analisis
 
         # Activar entorno (Windows)
-        analisis\Scripts\activate
+        analisis/Scripts/activate
 
         # Instalar paquetes
         pip install pandas matplotlib
