@@ -119,3 +119,129 @@ Veamos un ejemplo básico que muestra cómo una clase hija puede sobrescribir el
         mi_coche = Coche("Toyota", "Corolla", 2020)
         mi_coche.mostrar_info()  # Toyota Corolla (2020)
         ```
+
+
+
+## Encapsulamiento y visibilidad
+
+En Python, no existe una protección estricta de atributos como en otros lenguajes, pero se usan **convenciones** para indicar que un atributo no debe modificarse directamente.
+
+- `_atributo`: indica que es de uso interno (convención).
+- `__atributo`: activa name *mangling* (ocultación parcial).
+- `@property`: permite acceder a atributos como si fueran públicos, pero controlando su lectura y escritura.
+
+!!!example "Ejemplo de encapsulamiento con `@property`"
+
+    ```python
+    class Persona:
+        def __init__(self, nombre):
+            self._nombre = nombre
+
+        @property
+        def nombre(self):
+            return self._nombre
+
+        @nombre.setter
+        def nombre(self, nuevo):
+            if nuevo:
+                self._nombre = nuevo
+    ```
+
+Esto permite validar o controlar el acceso a los atributos sin exponerlos directamente.
+
+---
+
+## Relación entre objetos
+
+Una clase puede contener instancias de otras clases como atributos. Esto permite modelar relaciones entre entidades.
+
+!!!example "Ejemplo de composición: Coche con Motor"
+
+    ```python
+    class Motor:
+        def __init__(self, tipo):
+            self.tipo = tipo
+
+    class Coche:
+        def __init__(self, marca, motor):
+            self.marca = marca
+            self.motor = motor
+
+    m = Motor("eléctrico")
+    c = Coche("Tesla", m)
+    print(c.motor.tipo)  # eléctrico
+    ```
+
+Este patrón se llama **composición** y es clave para construir sistemas complejos a partir de componentes simples.
+
+---
+
+## Diagrama conceptual básico
+
+!!!info "Esquema de clases con herencia"
+
+```mermaid
+classDiagram
+    class Persona {
+        -nombre: str
+        -edad: int
+        +saludar(): void
+    }
+
+    class Empleado {
+        -puesto: str
+        +saludar(): void
+    }
+
+    Persona <|-- Empleado
+```
+
+Este diagrama muestra cómo `Empleado` hereda de `Persona` y añade nuevos atributos y métodos.
+
+---
+
+## 🧪 Actividad de refuerzo: Biblioteca
+
+!!!question "Ejercicio: Composición y listas de objetos"
+
+    Crea una clase `Libro` con los siguientes atributos:
+
+    - `titulo`
+    - `autor`
+    - `anio`
+
+    Luego crea una clase `Biblioteca` que contenga una lista de libros y un método `mostrar_catalogo()` que imprima todos los títulos disponibles.
+
+    > Pistas  
+    > - Usa una lista como atributo interno (`self.libros = []`).  
+    > - Añade libros con un método `agregar_libro(libro)`.  
+    > - Recorre la lista con un bucle `for`.
+
+    ???quote "Solución"
+
+        ```python
+        class Libro:
+            def __init__(self, titulo, autor, anio):
+                self.titulo = titulo
+                self.autor = autor
+                self.anyo = anio
+
+        class Biblioteca:
+            def __init__(self):
+                self.libros = []
+
+            def agregar_libro(self, libro):
+                self.libros.append(libro)
+
+            def mostrar_catalogo(self):
+                for libro in self.libros:
+                    print(f"{libro.titulo} ({libro.anio}) - {libro.autor}")
+
+        # Ejemplo de uso
+        biblio = Biblioteca()
+        biblio.agregar_libro(Libro("1984", "George Orwell", 1949))
+        biblio.agregar_libro(Libro("El Principito", "Antoine de Saint-Exupéry", 1943))
+        biblio.mostrar_catalogo()
+        ```
+
+

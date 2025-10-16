@@ -451,3 +451,315 @@ El siguiente ejemplo permite crear un flujo que prepara un proyecto web con *Fla
         # Desactivar entorno
         deactivate
         ```
+Genial, Sergio. Aquí tienes el listado de módulos típicos instalables con `pip`, presentado como tarjetas visuales para MkDocs Material. Puedes integrarlo directamente en tu documentación:
+
+---
+
+## Apéndice: Módulos comunes
+
+A continuación se presentan algunos módulos externos populares en Python, con su utilidad y ejemplos de funciones clave. 
+
+Lor primeros viene incluidos dentro de la propia instalacion de Python:
+
+=== "json"
+    **Utilidad**: Trabajar con datos en formato JSON (muy usado en APIs y persistencia).
+
+    **Funciones destacadas**:
+
+    - `dump(obj, file)`: Guarda un objeto Python en un fichero `.json`.
+    - `load(file)`: Carga datos desde un fichero `.json`.
+    - `dumps(obj)`: Convierte un objeto Python a cadena JSON.
+    - `loads(str)`: Convierte una cadena JSON a objeto Python.
+
+    **Ejemplo**:
+    ```python
+    import json
+
+    datos = {"nombre": "Ana", "edad": 30}
+    cadena = json.dumps(datos)
+    print(cadena)
+    ```
+
+=== "datetime"
+    **Utilidad**: Gestionar fechas, horas y diferencias temporales.
+
+    **Funciones destacadas**:
+
+    - `datetime.now()`: Fecha y hora actual.
+    - `datetime.strptime()`: Convertir cadena a fecha.
+    - `timedelta`: Representa una duración.
+    - `date.today()`: Fecha actual sin hora.
+
+    **Ejemplo**:
+    ```python
+    from datetime import datetime
+    ahora = datetime.now()
+    print(ahora.strftime("%d/%m/%Y %H:%M"))
+    ```
+
+=== "os"
+    **Utilidad**: Interactuar con el sistema operativo (rutas, entorno, procesos).
+
+    **Funciones destacadas**:
+
+    - `os.getcwd()`: Directorio actual.
+    - `os.listdir()`: Archivos en una carpeta.
+    - `os.path.join()`: Unir rutas.
+    - `os.environ`: Variables de entorno.
+
+    **Ejemplo**:
+    ```python
+    import os
+    print("Carpeta actual:", os.getcwd())
+    ```
+
+=== "sys"
+    **Utilidad**: Acceder a parámetros del sistema y controlar la ejecución.
+
+    **Funciones destacadas**:
+
+    - `sys.argv`: Argumentos pasados al script.
+    - `sys.exit()`: Finaliza el programa.
+    - `sys.path`: Rutas de búsqueda de módulos.
+
+    **Ejemplo**:
+    ```python
+    import sys
+    print("Argumentos:", sys.argv)
+    ```
+
+=== "random"
+    **Utilidad**: Generar números aleatorios y seleccionar elementos.
+
+    **Funciones destacadas**:
+
+    - `random.randint(a, b)`: Entero aleatorio entre `a` y `b`.
+    - `random.choice(lista)`: Elemento aleatorio.
+    - `random.shuffle(lista)`: Mezcla la lista.
+    - `random.random()`: Número decimal entre 0 y 1.
+
+    **Ejemplo**:  
+    ```python
+    import random
+    print("Número aleatorio:", random.randint(1, 10))
+    ```
+
+=== "math"
+    **Utilidad**: Operaciones matemáticas básicas y avanzadas.
+
+    **Funciones destacadas**:
+
+    - `math.sqrt(x)`: Raíz cuadrada.
+    - `math.pow(x, y)`: Potencia.
+    - `math.floor(x)`: Redondeo hacia abajo.
+    - `math.pi`: Constante π.
+
+    **Ejemplo**:
+    ```python
+    import math
+    print("Raíz de 25:", math.sqrt(25))
+    ```
+
+=== "time"
+    **Utilidad**: Medir tiempos, pausas y temporizadores.
+
+    **Funciones destacadas**:
+
+    - `time.sleep(segundos)`: Pausa.
+    - `time.time()`: Timestamp actual.
+    - `time.strftime()`: Formatear fecha/hora.
+
+    **Ejemplo**:
+    ```python
+    import time
+    print("Inicio")
+    time.sleep(2)
+    print("Fin tras 2 segundos")
+    ```
+
+
+
+
+Y ahora otros que necesitan ser instalados usando `pip`
+
+```bash
+pip install nombre_del_paquete
+```
+
+=== "requests"
+    **Utilidad**: Realiza peticiones HTTP.
+
+    **Funciones destacadas**:
+
+    - `get(url)`: Realiza una petición GET.
+    - `post(url, data)`: Envía datos con POST.
+    - `json()`: Convierte la respuesta en diccionario.
+    - `status_code`: Código de estado HTTP.
+
+    **Ejemplo**:
+    ```python
+    import requests
+    r = requests.get("https://api.github.com")
+    print(r.status_code)
+    print(r.json())
+    ```
+
+=== "pytest"
+    **Utilidad**: Automatiza pruebas unitarias.
+
+    **Funciones destacadas**:
+
+    - `assert`: Verifica condiciones esperadas.
+    - `raises`: Comprueba excepciones.
+    - `fixture`: Prepara contexto de prueba.
+    - `mark.parametrize`: Ejecuta con múltiples valores.
+
+    **Ejemplo**:
+    ```python
+    def suma(a, b): return a + b
+
+    def test_suma():
+        assert suma(2, 3) == 5
+    ```
+
+=== "pandas"
+    **Utilidad**: Manipula datos tabulares.
+
+    **Funciones destacadas**:
+
+    - `read_csv()`: Carga datos desde CSV.
+    - `head()`: Primeras filas.
+    - `describe()`: Estadísticas básicas.
+    - `groupby()`: Agrupación por columna.
+
+    **Ejemplo**:
+    ```python
+    import pandas as pd
+    df = pd.read_csv("datos.csv")
+    print(df.describe())
+    ```
+
+=== "matplotlib"
+    **Utilidad**: Genera gráficos 2D.
+
+    **Funciones destacadas**:
+
+    - `plot()`: Línea simple.
+    - `bar()`: Barras.
+    - `scatter()`: Dispersión.
+    - `hist()`: Histograma.
+    - `show()`: Muestra el gráfico.
+
+    **Ejemplo**:
+    ```python
+    import matplotlib.pyplot as plt
+    plt.plot([1, 2, 3], [4, 1, 7])
+    plt.title("Gráfico de ejemplo")
+    plt.show()
+    ```
+
+=== "numpy"
+    **Utilidad**: Cálculo numérico con arrays.
+
+    **Funciones destacadas**:
+
+    - `array()`: Crea un array.
+    - `mean()`: Media.
+    - `reshape()`: Cambia forma.
+    - `dot()`: Producto matricial.
+    - `random.rand()`: Array aleatorio.
+
+    **Ejemplo**:
+    ```python
+    import numpy as np
+    a = np.array([1, 2, 3])
+    print(np.mean(a))
+    ```
+
+=== "flask"
+    **Utilidad**: Aplicaciones web ligeras.
+
+    **Funciones destacadas**:
+
+    - `Flask()`: Crea la app.
+    - `route()`: Define rutas.
+    - `render_template()`: Usa HTML.
+    - `request`: Accede a datos enviados.
+
+    **Ejemplo**:
+    ```python
+    from flask import Flask
+    app = Flask(__name__)
+
+    @app.route("/")
+    def inicio():
+        return "Hola desde Flask"
+    ```
+
+=== "colorama"
+    **Utilidad**: Colorea texto en terminal.
+
+    **Funciones destacadas**:
+
+    - `Fore`: Colores de texto.
+    - `Back`: Colores de fondo.
+    - `Style`: Estilos como negrita.
+    - `init()`: Inicializa colorama.
+
+    **Ejemplo**:
+    ```python
+    from colorama import Fore, Style
+    print(Fore.RED + Style.BRIGHT + "Error crítico")
+    ```
+
+=== "emoji"
+    **Utilidad**: Muestra emojis en texto.
+
+    **Funciones destacadas**:
+
+    - `emojize()`: Convierte texto en emoji.
+    - `demojize()`: Convierte emoji en texto.
+    - `replace_emoji()`: Sustituye emojis.
+
+    **Ejemplo**:
+    ```python
+    import emoji
+    print(emoji.emojize("Python es divertido :snake:"))
+    ```
+
+=== "bcrypt"
+    **Utilidad**: Cifrado seguro de contraseñas.
+
+    **Funciones destacadas**:
+
+    - `hashpw()`: Cifra una contraseña.
+    - `gensalt()`: Genera sal aleatoria.
+    - `checkpw()`: Verifica contraseña.
+
+    **Ejemplo**:
+    ```python
+    import bcrypt
+    clave = b"secreta123"
+    hashed = bcrypt.hashpw(clave, bcrypt.gensalt())
+    print(bcrypt.checkpw(clave, hashed))
+    ```
+
+=== "python-dotenv"
+    **Utilidad**: Carga variables desde `.env`.
+
+    **Funciones destacadas**:
+
+    - `load_dotenv()`: Carga las variables.
+    - `dotenv_values()`: Devuelve diccionario.
+    - `find_dotenv()`: Localiza el fichero `.env`.
+
+    **Ejemplo**:
+    ```python
+    from dotenv import load_dotenv
+    import os
+
+    load_dotenv()
+    print(os.getenv("API_KEY"))
+    ```
+
+
