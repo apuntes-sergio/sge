@@ -57,6 +57,11 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true  
 
+  # anotaciones adicionales
+  - attr_list
+  - md_in_html
+  - pymdownx.superfences
+
 
 plugins:
   - search
@@ -89,7 +94,9 @@ nav:
     - 2_6_ProgramacionOrientadaObjetos.md
 
   - 3 Git:  
-    - 3_1_Guia_Git_Github.md
+    - 3_1_introduccion.md
+    - 3_2_ramas.md
+    - 3_3_remotos.md    
 
   - 4 Docker:
     - 4_1_Guia_Docker.md
