@@ -99,7 +99,11 @@ nav:
     - 3_3_remotos.md    
 
   - 4 Docker:
-    - 4_1_Guia_Docker.md
+    - 4_1_introduccion.md
+    - 4_2_docker_basico.md
+    - 4_3_imagenes_docker.md
+    - 4_4_redes_volumenes_docker.md
+    - 4_5_docker_compose.md
 
   - 5 Instalacion de Odoo: 
     - 5_1_InstalarOdoo.md
