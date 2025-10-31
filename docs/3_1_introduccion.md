@@ -195,6 +195,7 @@ git commit -m "Descripción del cambio"
 Guarda los cambios en el historial.
 
 ### Ver historial
+
 ```bash
 git log
 ```
@@ -207,11 +208,18 @@ Muestra los commits realizados.
 
 En esta ilustración guardamos los cambios mediante `commit` y podemos observar como esto cambios se han guardado correctamente.
 
+Si el historial es muy largo, podemos utilizar el parámetro `-n` para indicar la cantidad de commits que queremos ver, e incluso si utilizamos --oneline tenemos esta información en un única líneas para que sea más sencillo buscar el cambio deseado
+
+```bash
+git log -n3 --oneline
+```
+
+
 ### Revertir cambios
 ```bash
 git checkout -- archivo.txt
 ```
-Revierte cambios en un archivo.
+Revierte cambios en un archivo desde el último commit
 
 ### Revertir commit
 ```bash
@@ -224,6 +232,8 @@ Crea un nuevo commit que revierte el anterior.
 git reset --hard ID_commit
 ```
 Vuelve el repositorio al estado de un commit anterior.
+
+La diferencia entre las dos últimas ordenes, es que la primera revierte creando un nuevo commit en el historial, mientras que la segunda elimina los commits desde el punto indicado.
 
 ## El archivo `.gitignore`
 

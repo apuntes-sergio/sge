@@ -81,6 +81,17 @@ En este gráfico podemos ver que podemos tener varias ramas en nuestro proyecto 
 git branch nueva-rama
 git switch nueva-rama
 ```
+o también en un único paso
+
+```bash
+git switch -c nueva-rama
+```
+
+!!!note "git switch vs git checkout"
+
+    En Git, `git switch` es el comando moderno y recomendado para cambiar de rama, mientras que `git checkout` es el comando más antiguo que también permite hacerlo, pero con funciones adicionales que pueden generar confusión. 
+
+
 
 ### Fusionar ramas
 ```bash
