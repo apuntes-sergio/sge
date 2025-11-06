@@ -98,6 +98,113 @@ docker network disconnect redtest prueba1
 
 > Más documentación: [`docker network connect`](https://docs.docker.com/engine/reference/commandline/network_connect/)
 
+
+## 🧩 Ejemplo de uso guiado
+
+!!!example "Comprobar comunicación entre dos contenedores"
+  
+    Vamos a usar dos contenedores ubuntu (imagen `ubuntu`) y una **red bridge propia** para que las IPs estén en el mismo segmento y tengas resolución por nombre.
+
+    1. Crear la red y arrancar los dos contenedores (cada uno en un terminal)
+
+        En **una terminal** (Terminal A), crea la red y lanza los contenedores en segundo plano:
+
+        ```bash
+        # Crear una red bridge aislada
+        docker network create demo-net
+
+        # Lanzar dos contenedores en esa red, en background
+        docker run -d --name c1 --network demo-net ubuntu sleep infinity
+        docker run -d --name c2 --network demo-net ubuntu sleep infinity
+
+        # Verifica que están en marcha
+        docker ps 
+        ```
+
+        - Usamos `sleep infinity` para que queden ejecutándose en segundo plano.
+        - Con `--name` fijas nombres para luego poder entrar por `docker exec`.
+        - Ambos están conectados a `demo-net`.
+
+    2. Entrar en **cada contenedor desde dos terminales**
+
+        - **Terminal A** → entra en `c1`:
+        ```bash
+        docker exec -it c1 bash
+        ```
+
+        - **Terminal B** → entra en `c2`:
+        ```bash
+        docker exec -it c2 bash
+        ```
+
+    3. Instalar utilidades dentro de cada contenedor
+
+        En **cada** contenedor (tanto en `c1` como en `c2`), ejecuta:
+
+        ```bash
+        apt update && apt install -y iproute2 iputils-ping
+        ```
+
+        - `iproute2` → para usar `ip a` o `ip -brief addr`.
+        - `iputils-ping` → para poder hacer `ping`.
+
+        Este paso se hace una sola vez por contenedor (si los destruyes y recreas, habrá que repetirlo; o puedes construir una imagen propia que ya lo traiga instalado).
+
+    4. Ver la IP de cada contenedor
+
+        En cada terminal:
+        ```bash
+        hostname -I
+        ip -brief addr
+        ping -c 3 c2
+        ```
+
+        - La interfaz típica será `eth0` con una IP del rango de `demo-net`.
+
+    5. Limpieza (cuando termines la demo)
+        ```bash
+        docker rm -f c1 c2
+        docker network rm demo-net
+        ```
+
+    !!!tip "Variante rápida con Alpine (sin `apt`)"
+
+        Si prefieres evitar la instalación, Alpine trae `ping` (busybox) y puedes usar `ip` instalando `iproute2` vía `apk` si lo necesitas:
+
+        ```bash
+        docker network create demo-net
+        docker run -d --name c1 --network demo-net alpine sleep infinity
+        docker run -d --name c2 --network demo-net alpine sleep infinity
+
+        # En cada una de las contenedores entramos y ejecutamos el ping
+        docker exec -it c1 sh
+        ```
+
+
+
+!!!tip "Listar las IPs de los contenedores activos"
+
+    Hay varias formas de ver las IPs de los servidores activos, por ejemplo aquí tenemos suna: 
+    ```bash
+    # IP por defecto de cada contenedor (todas las redes)
+    docker ps -q | xargs -n1 -I {} docker inspect -f '{{.Name}} -> {{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}' {}
+    ```
+
+
+!!!note "Mantener contenedores en ejecución"
+
+    Cuando se ejecuta un contenedor, si no tiene nada que hacer quedará parado automáticamente. Si al hacer el `run` entramos en su terminal, finalizará al salir de el. 
+    Para que esto no ocurra tenemos el truco `sleep infinity` que dejará el contenedor activo hasta que lo finalicemos explicitamente
+
+    ```bash
+    docker run -d --name c1 --network demo-net alpine sleep infinity
+    ```
+
+
+
+
+
+
 ## Persistencia de datos
 
 La persistencia de datos en Docker permite conservar información más allá del ciclo de vida de los contenedores, asegurando que los archivos, configuraciones o resultados generados no se pierdan al detener o eliminar un contenedor. Esta funcionalidad es esencial cuando se trabaja con servicios que requieren almacenamiento duradero, como bases de datos, servidores web o aplicaciones que gestionan archivos. Docker ofrece varias estrategias para lograr esta persistencia, cada una con características técnicas y casos de uso específicos: los montajes directos desde el sistema anfitrión (binding mounts), los volúmenes gestionados por Docker y los volúmenes temporales en memoria (`tmpfs`). 
@@ -126,6 +233,17 @@ docker run -d -it --name appcontainer --mount type=bind,source=/home/alumno/targ
 
 > Más documentación: [`bind mounts`](https://docs.docker.com/storage/bind-mounts/)
 
+
+???exercise "Crea una carpeta en y arranca un contenedor ubuntu enlazando esta carpeta a una carpeta del contendor, por ejemplo `/home`. Añade un fichero a la carpeta y comprueba que es accesible desde el contenedor."
+
+    ```bash
+    mkdir carpeta
+    echo "Fichero visible desde contenedor" > carpeta/fichero.txt
+    docker run -it --name my_ubuntu -v ./carpeta:/home ubuntu /bin/bash
+    ```
+
+    Comprueba que si creas un fichero en tu carpeta esta
+
 ### Volúmenes Docker
 
 Montaje de un volumen gestionado por Docker:
@@ -143,9 +261,10 @@ docker run -d -it --name appcontainer --mount source=mivolumen,target=/app nginx
 Gestión de volúmenes:
 
 ```bash
-docker volume create mivolumen
-docker volume ls
-docker volume rm mivolumen
+docker volume create mivolumen      # crea un volumen
+docker volume ls                    # lista todos los volúmenes
+docker volume inspect mivolumen     # obtiene información sobre un volumen
+docker volume rm mivolumen          # elimina un volumen
 ```
 
 > Más documentación: [`volumes`](https://docs.docker.com/storage/volumes/)
@@ -182,28 +301,31 @@ Este comando lanza un contenedor temporal que accede al volumen montado en `/dat
 
 ### Redes
 
-| Comando | Descripción | Ejemplo |
-|--------|-------------|---------|
-| `docker network create redtest` | Crea una red personalizada llamada `redtest`. | `docker network create redtest` |
-| `docker network ls` | Lista todas las redes disponibles en el sistema. | `docker network ls` |
-| `docker network rm redtest` | Elimina la red `redtest` (si no está en uso). | `docker network rm redtest` |
-| `docker run -it --network redtest ubuntu /bin/bash` | Crea un contenedor conectado a la red `redtest`. | `docker run -it --network redtest ubuntu /bin/bash` |
-| `docker network connect redtest prueba1` | Conecta el contenedor `prueba1` a la red `redtest`. | `docker network connect redtest prueba1` |
-| `docker network disconnect redtest prueba1` | Desconecta el contenedor `prueba1` de la red `redtest`. | `docker network disconnect redtest prueba1` |
-
+| Comando Docker | Descripción |
+|----------------|-------------|
+| `docker network ls` | Lista todas las redes disponibles en Docker. |
+| `docker network inspect <nombre_red>` | Muestra detalles de una red, incluyendo contenedores conectados y configuración IP. |
+| `docker network create <nombre_red>` | Crea una nueva red personalizada. |
+| `docker network create --driver bridge <nombre_red>` | Crea una red tipo bridge (la más común). |
+| `docker network create --subnet 192.168.100.0/24 <nombre_red>` | Crea una red con una subred específica en formato CIDR. |
+| `docker network rm <nombre_red>` | Elimina una red Docker. |
+| `docker run --network <nombre_red> <imagen>` | Ejecuta un contenedor conectado a una red específica. |
+| `docker network connect <nombre_red> <contenedor>` | Conecta un contenedor existente a una red. |
+| `docker network disconnect <nombre_red> <contenedor>` | Desconecta un contenedor de una red. |
 
 ### Volúmenes
 
-| Comando | Descripción | Ejemplo |
-|--------|-------------|---------|
-| `docker run -d -it --name appcontainer -v /home/alumno/target:/app nginx:latest` | Crea un contenedor con volumen tipo binding mount. | `docker run -d -it --name appcontainer -v /home/alumno/target:/app nginx:latest` |
-| `docker run -d -it --name appcontainer -v micontenedor:/app nginx:latest` | Crea un contenedor con volumen gestionado por Docker. | `docker run -d -it --name appcontainer -v micontenedor:/app nginx:latest` |
-| `docker volume create mivolumen` | Crea un volumen vacío llamado `mivolumen`. | `docker volume create mivolumen` |
-| `docker volume ls` | Lista todos los volúmenes existentes. | `docker volume ls` |
-| `docker volume rm mivolumen` | Elimina el volumen `mivolumen` (si no está en uso). | `docker volume rm mivolumen` |
-| `docker volume rm $(docker volume ls -q)` | Elimina todos los volúmenes del sistema. | `docker volume rm $(docker volume ls -q)` |
-| `docker run -d -it --tmpfs /app nginx` | Crea un contenedor con volumen temporal en memoria (`tmpfs`). | `docker run -d -it --tmpfs /app nginx` |
-| `docker run --rm --volumes-from contenedor1 -v /home/alumno/backup:/backup ubuntu bash -c "cd /datos && tar cvf /backup/copiaseguridad.tar ."` | Realiza una copia de seguridad del volumen montado en `/datos` del contenedor `contenedor1`. | Ver comando completo a la izquierda |
+| Comando Docker | Descripción |
+|----------------|-------------|
+| `docker volume ls` | Lista todos los volúmenes existentes. |
+| `docker volume create <nombre_volumen>` | Crea un nuevo volumen. |
+| `docker volume inspect <nombre_volumen>` | Muestra detalles del volumen, incluyendo su ruta en el sistema. |
+| `docker volume rm <nombre_volumen>` | Elimina un volumen (solo si no está en uso). |
+| `docker volume prune` | Elimina todos los volúmenes no utilizados. |
+| `docker run -v <nombre_volumen>:/ruta/en/contenedor <imagen>` | Ejecuta un contenedor montando un volumen en una ruta específica. |
+| `docker run --mount source=<nombre_volumen>,target=/ruta <imagen>` | Alternativa moderna para montar volúmenes usando `--mount`. |
+| `docker inspect <contenedor>` | Permite ver qué volúmenes están montados en un contenedor. |
+
 
 ## 🧩 Ejemplo de uso guiado
 

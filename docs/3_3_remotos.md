@@ -154,9 +154,6 @@ git remote prune origin
 5. Crea un *pull request* en GitHub.
 6. Si alguien actualiza `main`: `git pull`
 
-Perfecto, Sergio. Aquí tienes una documentación clara, modular y lista para incluir en tus apuntes o como guía institucional para estudiantes y docentes. Está pensada para un uso básico y efectivo de GitHub con Git desde línea de comandos.
-
----
 
 ## Uso de **GitHub** con Git
 
@@ -386,7 +383,7 @@ Los patrones pueden incluir comodines (`*`, `?`) y rutas relativas. Los comentar
 
 ### Consideraciones prácticas
 
-El uso de `.gitignore` debe guiarse por criterios técnicos y pedagógicos que favorezcan la reproducibilidad del proyecto y la claridad del repositorio. Se recomienda:
+El uso de `.gitignore` debe guiarse por criterios técnicos que favorezcan la reproducibilidad del proyecto y la claridad del repositorio. Se recomienda:
 
 - Excluir archivos que no aportan valor al código fuente ni a la documentación compartida.
 - Evitar la exclusión de archivos necesarios para la ejecución o comprensión del proyecto por parte de otros usuarios.
@@ -404,7 +401,7 @@ git rm --cached nombre-del-archivo.ext
 
 Una vez ejecutado este comando, Git respetará la regla definida en `.gitignore` y omitirá dicho archivo en futuros commits.
 
-  El uso correcto de `.gitignore` no solo mejora la calidad técnica del repositorio, sino que también facilita la colaboración entre estudiantes y docentes, al evitar la propagación de configuraciones locales, archivos innecesarios o elementos que dificulten la evaluación y el mantenimiento del proyecto. En entornos de Formación Profesional, donde los proyectos pueden ser reutilizados, compartidos o evaluados en distintas plataformas, esta práctica adquiere especial relevancia.
+  El uso correcto de `.gitignore` no solo mejora la calidad técnica del repositorio, sino que también facilita la colaboración entre estudiantes y docentes, al evitar la propagación de configuraciones locales, archivos innecesarios o elementos que dificulten la evaluación y el mantenimiento del proyecto. 
 
 
 ## Actividad práctica

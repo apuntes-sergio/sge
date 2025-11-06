@@ -229,6 +229,7 @@ docker rename antiguo_nombre nuevo_nombre
 
         - Comprueba que el contenedor está en ejecución con `docker ps`.
         - Este contenedor permanecerá activo sin hacer nada, útil para pruebas.
+        - Para entrar en el terminal de este contenedor `docker exec it cont1 /bin/bash`
 
 
     2. Crear un contenedor con puerto expuesto
@@ -263,6 +264,10 @@ docker rename antiguo_nombre nuevo_nombre
         ```
 
         - Observa cómo se enlaza la terminal al proceso activo.
+            - `docker start`: Inicia un contenedor detenido
+            - `-a`: Adjunta (attach) la salida estándar y error del contenedor a la terminal actual
+            - `-i`: Mantiene abierta la entrada estándar (STDIN) para permitir interacción
+            - `cont1`: Es el nombre o ID del contenedor que se desea iniciar
 
     6. Ejecutar comandos dentro de un contenedor
 
@@ -271,6 +276,8 @@ docker rename antiguo_nombre nuevo_nombre
         ```
 
         - Accede a una shell dentro del contenedor `cont1`.
+            - `-i` de nuevo significa interactivo
+            - `-t` asigna un terminal donde ejecutar el comando que le sigue
 
         ```bash
         docker exec -it -e FICHERO=prueba cont1 bash
@@ -283,6 +290,8 @@ docker rename antiguo_nombre nuevo_nombre
         ```
 
         - Verifica que el archivo se ha creado con `ls /tmp`.
+            - `-d`: (detached) Ejecuta el comando en segundo plano, sin bloquear la terminal actual
+            - `touch /tmp/prueba`: Es el comando que se ejecutará, en este caso creará un archivo vacío llamado "prueba" en el directorio /tmp
 
     7. Adjuntar y consultar logs
 
@@ -298,7 +307,7 @@ docker rename antiguo_nombre nuevo_nombre
 
         - Muestra las últimas líneas del log del contenedor.
 
-    8. Copiar archivos entre anfitrión y contenedor
+    3. Copiar archivos entre anfitrión y contenedor
 
         ```bash
         docker cp cont1:/tmp/prueba ./

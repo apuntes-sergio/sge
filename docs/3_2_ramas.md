@@ -69,6 +69,7 @@ En este gráfico podemos ver que podemos tener varias ramas en nuestro proyecto 
 | `git switch nombre_rama`  |  Cambia la rama activa a `nombre_rama` (antes era `git checkout nombre_rama`). |
 | `git switch -c nombre_rama` |  Crea y cambia a la rama nueva en un solo paso. |
 | `git branch` | Muestra ramas de repositorio actual |
+| `git show-branch` | Muestra ramas de repositorio actual de una forma pseudo gráfica. |
 | `git branch -d nombre_rama`  |  Elimina la rama local `nombre_rama` si ya ha sido fusionada o no tiene cambios pendientes.|
 | `git merge` | Combina cambios de otra rama en la actual |
 | `git diff` | Muestra diferencias entre dos ramas |
