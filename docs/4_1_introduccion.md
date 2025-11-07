@@ -165,54 +165,54 @@ Por defecto, Docker requiere permisos de root para ejecutarse. En entornos educa
 
 Si aparecen errores relacionados con `~/.docker/config.json`, puedes solucionarlo con:
 
-    ```bash
-    sudo rm -rf ~/.docker/
-    ```
+```bash
+sudo rm -rf ~/.docker/
+```
 
 O bien:
 
-    ```bash
-    sudo chown "$USER":"$USER" ~/.docker -R
-    sudo chmod g+rwx ~/.docker -R
-    ```
+```bash
+sudo chown "$USER":"$USER" ~/.docker -R
+sudo chmod g+rwx ~/.docker -R
+```
 
 #### Control del arranque automático
 
 Aunque en WSL el arranque automático no siempre es relevante, en sistemas Linux completos puedes configurar el servicio Docker para que se inicie al arrancar:
 
-    ```bash
-    sudo systemctl enable docker.service
-    sudo systemctl enable containerd.service
-    ```
+```bash
+sudo systemctl enable docker.service
+sudo systemctl enable containerd.service
+```
 
 Para desactivarlo:
 
-    ```bash
-    sudo systemctl disable docker.service
-    sudo systemctl disable containerd.service
-    ```
+```bash
+sudo systemctl disable docker.service
+sudo systemctl disable containerd.service
+```
 
 Para gestionar manualmente el servicio:
 
-    ```bash
-    sudo systemctl start docker.service
-    sudo systemctl stop docker.service
-    sudo systemctl restart docker.service
-    ```
+```bash
+sudo systemctl start docker.service
+sudo systemctl stop docker.service
+sudo systemctl restart docker.service
+```
 
 #### Desinstalación completa
 
 Si necesitas eliminar Docker por completo:
 
-    ```bash
-    sudo apt purge docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-ce-rootless-extras
-    ```
+```bash
+sudo apt purge docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-ce-rootless-extras
+```
 
 Y para eliminar contenedores, imágenes y configuraciones:
 
-    ```bash
-    sudo rm -rf /var/lib/docker
-    sudo rm -rf /var/lib/containerd
-    sudo rm /etc/apt/sources.list.d/docker.list
-    sudo rm /etc/apt/keyrings/docker.asc
-    ```
+```bash
+sudo rm -rf /var/lib/docker
+sudo rm -rf /var/lib/containerd
+sudo rm /etc/apt/sources.list.d/docker.list
+sudo rm /etc/apt/keyrings/docker.asc
+```
