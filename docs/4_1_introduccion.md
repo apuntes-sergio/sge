@@ -90,6 +90,14 @@ Además de contenedores Linux, Docker puede lanzar contenedores con Windows Serv
 
 Durante el curso, utilizaremos Docker sobre Ubuntu instalado en WSL (Windows Subsystem for Linux). Esta configuración permite trabajar con contenedores Linux desde sistemas Windows, manteniendo compatibilidad con el kernel y acceso a herramientas CLI. Todas las instrucciones que siguen están verificadas para distribuciones basadas en Ubuntu 22.04 o 24.04, y se ejecutarán desde la terminal de WSL.
 
+
+!!!note "Nota sobre la instalación"
+
+    A continuación se detalla un proceso de instalación de Docker en Ubuntu dentro de WSL. A menudo cambian las versiones, por lo que se pueden producir errores al seguir este proceso.
+    
+    Se recomienda consultar la documentación oficial para evitar errores: [DockerDocs: Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/) 
+
+
 #### Eliminación de versiones anteriores
 
 Antes de instalar Docker, es recomendable eliminar cualquier versión previa que pueda generar conflictos. Ejecuta el siguiente comando en tu terminal WSL:
