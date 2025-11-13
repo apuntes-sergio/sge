@@ -105,11 +105,11 @@ nav:
     - 4_4_redes_volumenes_docker.md
     - 4_5_docker_compose.md
 
-  - 5 Instalacion de Odoo: 
-    - 5_1_InstalarOdoo.md
+  - 5 Introducción a Odoo: 
+    - 5_1_IntroduccionOdoo.md
     - 5_2_InstalarDocker.md
     - 5_3_InstalarUbuntu.md
-  - 6 Introducción a odoo:
+  - 6 Arquitectura de odoo:
     - 6_1_ArquitecturaOdoo.md
     - 6_2_PrimerModulo.md
   - 7 Desarrollo módulo ejemplo:

@@ -14,47 +14,12 @@ Desplegar `Odoo` con Docker permite instalar y gestionar el sistema de manera m�
 !!! Nota
     En clase trabajaremos finalmente con Docker Compose, el texto siguiente sirve para entender la configuración final, pero no es necesario hacerlos en el trabajo diario. La configuración definitiva la haremos con Docker Compose.
 
-## Instalación de *docker*
-
-[https://docs.docker.com/engine/install/ubuntu/](https://docs.docker.com/engine/install/ubuntu/)
-
-> Si queremos GUI, podemos utilizar Docker Desktop para contenedores locales o Portainer para gestionar también contenedores remotos.
-
-Se puede instalar Docker de muchas maneras, pero vamos a hacerlo de la manera más recomendable para nuestro caso, que es la de la web oficial:
-
-
-
-```bash
-# Add Docker's official GPG key:
-sudo apt-get update
-sudo apt-get install ca-certificates curl
-sudo install -m 0755 -d /etc/apt/keyrings
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-# Add the repository to Apt sources:
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
-
-# Instalación
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-# Probar docker
-sudo docker run hello-world
-
-# Gestionar docker sin ser root:
-sudo usermod -aG docker $USER
-
-```
-
 ## Instalar un *docker* con `Odoo`
 
 En *Docker* es muy sencillo desplegar `Odoo`, aunque debemos tener en cuenta que para que Odoo funcione necesitamos tener instada la base de datos PostgreSQL. Así pues debemos:
 
 1. Instalamos ***PosggreSQL*** y la ponemos en marcha
-2. Instalamos ***Odoo**, le dicemos quien es la base de datos y lo ponemos en marcha.
+2. Instalamos ***Odoo***, le decimos quien es la base de datos y lo ponemos en marcha.
 
 Para hacer esto,  tan solo hace falta estos comandos:
 
@@ -230,39 +195,64 @@ Para evitar errores, podemos usar un [docker compose](https://docs.docker.com/co
 
 ```yaml
 services:
-  odoo:
-    container_name: odoo
-    image: odoo:18.0
+#Definimos el servicio Web, en este caso Odoo
+  odoo_dev_dam:
+    #Indicamos que imagen de Docker Hub utilizaremos
+    image: odoo:19
+    container_name: odoo_dev_dam
+    #Indicamos que depende de "db", por lo cual debe ser procesada primero "db"
     depends_on:
-      - db
+        - postgres_dev_dam
+
+    # Port Mapping: indicamos que el puerto 8069 del contenedor se mapeara con el mismo puerto en el anfritrion
+    # Permitiendo acceder a Odoo mediante http://localhost:8069
     ports:
-      - "8069:8069"
+      - 8069:8069
+
+    # Mapeamos el directorio de los contenedores (como por ejemplo" /mnt/extra-addons" )
+    # en un directorio local (como por ejemplo en un directorio "./volumesOdoo/addons")
+    # situado en el lugar donde ejecutemos "Docker compose"
     volumes:
-      - odoo-web-data:/var/lib/odoo
-      - ./config:/etc/odoo
-      - ./addons:/mnt/extra-addons
+      - ./data/addons:/mnt/extra-addons
+      - ./data/odoo_config:/etc/odoo
+      - ./data/odoo/filestore:/var/lib/odoo/filestore
+      - ./data/odoo/sessions:/var/lib/odoo/sessions
+    #Indicamos que el contenedor funcionara con usuario root y no con usuario odoo
+    user: root
+    # Definimos variables de entorno de Odoo
     environment:
-      - HOST=db
+      - HOST=postgres_dev_dam
       - USER=odoo
       - PASSWORD=odoo
-    command: --dev=all
-    tty: true
+    # Indica que pasa ese parametro al arrancar el servicio Odoo
+    command: -c /etc/odoo/odoo.conf --dev=all  
+    networks:
+      - network_dev_dam
 
-  db:
-    container_name: postgresql
+#Definimos el servicio de la base de datos
+  postgres_dev_dam:
     image: postgres:15
+    container_name: postgres_dev_dam
+    # Definimos variables de entorno de PostgreSQL
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=odoo
       - POSTGRES_PASSWORD=odoo
-    ports:
-      - "5432:5432"
+      - POSTGRES_USER=odoo
+      - POSTGRES_DB=postgres
+    # Mapeamos el directorio del contenedor "var/lib/postgresql/data" en un directorio "./volumesOdoo/dataPostgreSQL"
+    # situado en el lugar donde ejecutemos "Docker compose"
     volumes:
-      - odoo-db-data:/var/lib/postgresql/data
+      - postgres_data_volume:/var/lib/postgresql/data    
+      #  - ./data/dataPostgreSQL:/var/lib/postgresql/data
+      - ./data/backups:/backups                                    # Para guardar backups de la base de datos directamente
+    networks:
+      - network_dev_dam
 
 volumes:
-  odoo-web-data:
-  odoo-db-data:
+  postgres_data_volume:
+
+networks:
+  network_dev_dam:
+    driver: bridge
 ```
 
 Observamos que declaramos dos servicios y que **odoo** depende de **db**. También hay que indicar qué red utilizan y el resto de datos que normalmente ponemos en el **run**.
