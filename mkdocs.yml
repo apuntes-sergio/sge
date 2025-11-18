@@ -9,6 +9,9 @@ copyright: Sergio Rey Martínez - DAM - SGE - 2025
 theme:
   name: material
   language: es
+  font: 
+    text: Roboto
+    code: DejaVu Sans Mono
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -106,13 +109,10 @@ nav:
     - 4_5_docker_compose.md
 
   - 5 Introducción a Odoo: 
-    - 5_1_IntroduccionOdoo.md
+    - 5_1_introduccion_odoo.md
     - 5_2_instalacion_odoo.md
-    # - 5_2_InstalarDocker.md
-    # - 5_3_InstalarUbuntu.md
-    - 5_3_ArquitecturaOdoo.md
     - 5_3_arquitectura_odoo.md
-    - 5_4_PrimerModulo.md
+    - 5_4_primer_modulo.md
   - 7 Desarrollo módulo ejemplo:
     - 7_1_EjemploCreacionModeloBasico.md
     - 7_2_EjemploCamposBasicos.md
