@@ -1,5 +1,5 @@
 ---
-title: 6.1. Arquitectura de Odoo
+title: Arquitectura de Odoo
 description: Pasos para la instalación y configuración de Odoo
 ---
 
@@ -16,7 +16,7 @@ El *framework* de ***Odoo*** facilita diversos componentes que permiten construi
 
 <figure markdown="span" align="center">
   ![Image title](./imgs/desarrollo/odoo_ORM.png){ width="85%"  }
-  <figcaption>Diagrama ***Odoo*** ORM (Object Relational Mapping)</figcaption>
+  <figcaption>Diagrama Odoo ORM (Object Relational Mapping)</figcaption>
 </figure>
 
 -   Una arquitectura **MVC** ([modelo-vista-controlador](http://es.wikipedia.org/wiki/Modelo_Vista_Controlador)), en la que el ***modelo*** reside en los datos de las clases diseñadas con Python, la ***vista*** reside en los formularios, listas, calendarios, gráficos... definidos en archivos *XML*, y el ***controlador*** reside en los métodos definidos en las clases que proporcionan la lógica de negocio.

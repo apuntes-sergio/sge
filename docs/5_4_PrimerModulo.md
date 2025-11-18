@@ -1,5 +1,5 @@
 ---
-title: 6.2. Primer módulo en Odoo
+title: Primer módulo en Odoo
 description: Creación del primer módulo en Odoo
 ---
 
@@ -91,7 +91,7 @@ Para que el servidor reconozca el nuevo módulo, debemos reiniciar:
 docker compose restart odoo
 ```
 
-o pulsamos sobre el botón que hemos añadido en en VSCode mediante **VS Code Action Buttons" en la sección anterior.
+o pulsamos sobre el botón que hemos añadido en en VSCode mediante **VS Code Action Buttons*" en la sección anterior.
 
 En estos momentos, también es aconsejable ver los *logs* que va generando ***Ddoo***, por lo que en un terminal es aconsejable ejecutar:
 

@@ -1,6 +1,6 @@
 ---
-title: 5.1. Odoo. Introducción e instalación.
-description: Pasos para la instalación y configuración de Odoo
+title: Introducción a Odoo.
+description: Introducción al ecosistema de Odoo
 ---
 
 
