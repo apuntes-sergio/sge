@@ -451,6 +451,14 @@ Este comando:
 
 Después de crear el módulo, ajusta los permisos para poder editarlo:
 
+Para dar permisos podemos hacer que el módulo sea propiedad del desarrollador, tal vez así evitaremos problemas en el futuro de acceso o copias de seguridad. Para ello:
+
+```bash
+sudo chown -R sergio:sergio hola_mundo__v3/
+```
+
+También se puede hacer desde el propio contenedor dando permisos a todos:
+
 ```bash
 docker exec -it odoo_dev_dam chmod 777 -R /mnt/extra-addons/HolaMundo_V3
 ```
