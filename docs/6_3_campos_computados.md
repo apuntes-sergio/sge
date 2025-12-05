@@ -39,16 +39,18 @@ El parámetro `compute` indica el nombre del método que calculará el valor del
 
 ### Implementación del Método
 
-```python
-def _get_codigo(self):
-    for tarea in self:
-        # Si la tarea no tiene un sprint asignado
-        if not tarea.sprint:
-            tarea.codigo = "TSK_" + str(tarea.id)
-        else:
-            # Si tiene sprint, usamos su nombre
-            tarea.codigo = str(tarea.sprint.nombre).upper() + "_" + str(tarea.id)
-```
+!!! example "ejemplo de implementación de método"
+
+    ```python
+    def _get_codigo(self):
+        for tarea in self:
+            # Si la tarea no tiene un sprint asignado
+            if not tarea.sprint:
+                tarea.codigo = "TSK_" + str(tarea.id)
+            else:
+                # Si tiene sprint, usamos su nombre
+                tarea.codigo = str(tarea.sprint.nombre).upper() + "_" + str(tarea.id)
+    ```
 
 **Explicación del código**:
 
@@ -104,37 +106,37 @@ Supongamos que en el modelo `Sprint` tenemos:
 - `duracion`: Duración en días (tipo Integer)
 - `fecha_fin`: **Campo computado** que se calcula automáticamente
 
-### Implementación
+!!!example "Implementación"
 
-```python
-from datetime import timedelta
-from odoo import models, fields, api
+    ```python
+    from datetime import timedelta
+    from odoo import models, fields, api
 
-class sprints_sergio(models.Model):
-    _name = 'gestion_tareas_sergio.sprints_sergio'
-    _description = 'Modelo de Sprints para Gestión de Proyectos'
+    class sprints_sergio(models.Model):
+        _name = 'gestion_tareas_sergio.sprints_sergio'
+        _description = 'Modelo de Sprints para Gestión de Proyectos'
 
-    nombre = fields.Char(string="Nombre", required=True)
-    fecha_ini = fields.Datetime(string="Fecha Inicio", required=True)
-    duracion = fields.Integer(
-        string="Duración", 
-        help="Cantidad de días que tiene asignado el sprint")
-    
-    fecha_fin = fields.Datetime(
-        compute='_compute_fecha_fin', 
-        store=True,
-        string="Fecha Fin")
+        nombre = fields.Char(string="Nombre", required=True)
+        fecha_ini = fields.Datetime(string="Fecha Inicio", required=True)
+        duracion = fields.Integer(
+            string="Duración", 
+            help="Cantidad de días que tiene asignado el sprint")
+        
+        fecha_fin = fields.Datetime(
+            compute='_compute_fecha_fin', 
+            store=True,
+            string="Fecha Fin")
 
-    @api.depends('fecha_ini', 'duracion')
-    def _compute_fecha_fin(self):
-        for sprint in self:
-            if sprint.fecha_ini and sprint.duracion and sprint.duracion > 0:
-                sprint.fecha_fin = sprint.fecha_ini + timedelta(days=sprint.duracion)
-            else:
-                sprint.fecha_fin = sprint.fecha_ini
-```
+        @api.depends('fecha_ini', 'duracion')
+        def _compute_fecha_fin(self):
+            for sprint in self:
+                if sprint.fecha_ini and sprint.duracion and sprint.duracion > 0:
+                    sprint.fecha_fin = sprint.fecha_ini + timedelta(days=sprint.duracion)
+                else:
+                    sprint.fecha_fin = sprint.fecha_ini
+    ```
 
-### Aspectos Clave de la Implementación
+Aspectos Clave de la Implementación
 
 **1. Decorador `@api.depends`**:
 ```python

@@ -205,13 +205,14 @@ Intenta generar el código tú mismo antes de mirar la solución. Es muy sencill
 
 Una vez tenemos el modelo Sprint, podemos relacionarlo con Tareas. Añadimos un campo `sprint` en el modelo `tareas_sergio`:
 
-```python
-sprint = fields.Many2one(
-    'gestion_tareas_sergio.sprints_sergio', 
-    string='Sprint relacionado', 
-    ondelete='set null', 
-    help='Sprint al que pertenece esta tarea')
-```
+!!!example "Ejemplo de creación de campo Many2one"
+    ```python
+    sprint = fields.Many2one(
+        'gestion_tareas_sergio.sprints_sergio', 
+        string='Sprint relacionado', 
+        ondelete='set null', 
+        help='Sprint al que pertenece esta tarea')
+    ```
 
 **Explicación de los parámetros**:
 
@@ -270,12 +271,13 @@ En la práctica, esto significa que desde el formulario de un sprint podremos ve
 
 Añadimos un campo `tareas` en el modelo `sprint`:
 
-```python
-tareas = fields.One2many(
-    'gestion_tareas_sergio.tareas_sergio', 
-    'sprint', 
-    string='Tareas del Sprint')
-```
+!!!example "Ejemplo de creación de campo One2many"
+    ```python
+    tareas = fields.One2many(
+        'gestion_tareas_sergio.tareas_sergio', 
+        'sprint', 
+        string='Tareas del Sprint')
+    ```
 
 **Explicación de los parámetros**:
 
@@ -351,14 +353,15 @@ Ahora creamos campos en ambos modelos para establecer la relación bidireccional
 
 **En el modelo Tareas**:
 
-```python
-rel_tecnologias = fields.Many2many(
-    comodel_name='gestion_tareas_sergio.tecnologias_sergio',
-    relation='relacion_tareas_tecnologias',
-    column1='rel_tareas',
-    column2='rel_tecnologias',
-    string='Tecnologías')
-```
+!!!example "Ejemplo de creación de campo Many2many. Tecnologías"
+    ```python
+    rel_tecnologias = fields.Many2many(
+        comodel_name='gestion_tareas_sergio.tecnologias_sergio',
+        relation='relacion_tareas_tecnologias',
+        column1='rel_tareas',
+        column2='rel_tecnologias',
+        string='Tecnologías')
+    ```
 
 **Explicación de los parámetros**:
 
@@ -370,14 +373,15 @@ rel_tecnologias = fields.Many2many(
 
 **En el modelo Tecnologías** (relación inversa):
 
-```python
-rel_tareas = fields.Many2many(
-    comodel_name='gestion_tareas_sergio.tareas_sergio',
-    relation='relacion_tareas_tecnologias',
-    column1='rel_tecnologias',
-    column2='rel_tareas',
-    string='Tareas')
-```
+!!!example "Ejemplo de creación de campo Many2many. Tareas"
+    ```python
+    rel_tareas = fields.Many2many(
+        comodel_name='gestion_tareas_sergio.tareas_sergio',
+        relation='relacion_tareas_tecnologias',
+        column1='rel_tecnologias',
+        column2='rel_tareas',
+        string='Tareas')
+    ```
 
 !!! warning "Mismo nombre de tabla"
     El parámetro `relation` debe ser **idéntico** en ambos modelos. Así Odoo sabe que es la misma relación.
@@ -467,33 +471,12 @@ Aplicarás los tres tipos de relaciones:
 
 7. **Crear relación Many2many bidireccional**
     
-    En Plato:
-    ```python
-    rel_ingredientes = fields.Many2many(
-        comodel_name='gestion_restaurante_tunombre.ingredientes_tunombre',
-        relation='relacion_platos_ingredientes',
-        column1='plato_id',
-        column2='ingrediente_id',
-        string='Ingredientes')
-    ```
-    
-    En Ingrediente:
-    ```python
-    rel_platos = fields.Many2many(
-        comodel_name='gestion_restaurante_tunombre.platos_tunombre',
-        relation='relacion_platos_ingredientes',
-        column1='ingrediente_id',
-        column2='plato_id',
-        string='Platos')
-    ```
+    - En Plato tenemos que crear la relación con los ingredientes. 
+    - En Ingrediente creamos la relación inversa con los platos.
 
 8. **Configurar permisos para los nuevos modelos**
     
-    Añadir en `ir.model.access.csv`:
-    ```csv
-    access_menus,acceso_menus,model_gestion_restaurante_tunombre_menus_tunombre,base.group_user,1,1,1,1
-    access_ingredientes,acceso_ingredientes,model_gestion_restaurante_tunombre_ingredientes_tunombre,base.group_user,1,1,1,1
-    ```
+    - Añadir en `ir.model.access.csv` una nueva líneas para asignar permisos y así poder acceder al modelo
 
 9. **Crear vistas y menús para los nuevos modelos**
     

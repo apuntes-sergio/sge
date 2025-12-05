@@ -22,9 +22,10 @@ Para comenzar, puesto que ya tenemos el sistema configurado, procedemos a la cre
 
 Debemos tener claro el nombre de nuestra aplicación que será **gestion_tareas_sergio** en mi caso.
 
-```bash
-docker exec -it odoo_dev_dam odoo scaffold gestion_tareas_sergio /mnt/extra-addons
-```
+!!!example "Creación de estructura mediante `scaffold` para nuestro nuevo módulo" 
+    ```bash
+    docker exec -it odoo_dev_dam odoo scaffold gestion_tareas_sergio /mnt/extra-addons
+    ```
 
 Comprobamos que se ha generado toda la estructura:
 
@@ -34,9 +35,13 @@ Comprobamos que se ha generado toda la estructura:
 </figure>
 
 !!! tip "Permisos"
-    En caso de tener problemas de permisos, recuerda añadir permisos a todos los elementos:
+    En caso de tener problemas de permisos, recuerda modificar propietarios o añadir permisos a todos los elementos:
     
     ```bash
+    # o cambiamos el propietario para poder editar los contenidos
+    sudo chown -R sergio:sergio hola_mundo__v3/
+
+    # o modificamos los permisos
     docker exec -it odoo_dev_dam chmod 777 -R /mnt/extra-addons/gestion_tareas_sergio
     ```
 
@@ -375,12 +380,12 @@ Cada línea define:
 - **Grupo**
 - **Permisos**: leer (`perm_read`), escribir (`perm_write`), crear (`perm_create`), borrar (`perm_unlink`)
 
-Ejemplo:
+!!! example "Ejemplo `security/ir.model.access.csv` permisos" 
 
-```csv
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_gestion_tareas_sergio_tareas_sergio,acceso_tareas_sergio,model_gestion_tareas_sergio_tareas_sergio,base.group_user,1,1,1,1
-```
+    ```csv
+    id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+    access_gestion_tareas_sergio_tareas_sergio,acceso_tareas_sergio,model_gestion_tareas_sergio_tareas_sergio,base.group_user,1,1,1,1
+    ```
 
 Donde cada línea representa un conjunto de permisos para un grupo sobre un modelo. Los campos son:
 
@@ -460,9 +465,8 @@ En esta primera sesión crearás el módulo básico con el modelo **Platos**, co
     ```
 
 2. **Ajustar permisos**
-    ```bash
-    docker exec -it odoo_dev_dam chmod 777 -R /mnt/extra-addons/gestion_restaurante_tunombre
-    ```
+
+    - Recuerda que tienes que cambiar o el propietario de las carpetas o los permisos, como más cómodo te sientas.
 
 3. **Configurar el `__manifest__.py`**
     - Actualiza el nombre a algo como "Gestión de Restaurante"
@@ -497,7 +501,7 @@ En esta primera sesión crearás el módulo básico con el modelo **Platos**, co
     - Submenú: "Menú"
     - Opción: "Platos" (vinculada al action)
 
-9. **Configurar permisos en `security/ir.model.access.csv`**
+9.  **Configurar permisos en `security/ir.model.access.csv`**
     ```csv
     id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
     access_gestion_restaurante_tunombre_platos,acceso_platos,model_gestion_restaurante_tunombre_platos_tunombre,base.group_user,1,1,1,1
