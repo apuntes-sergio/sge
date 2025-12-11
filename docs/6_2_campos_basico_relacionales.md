@@ -127,6 +127,7 @@ Para personalizar la vista, vamos a editar el archivo `views/views.xml` y defini
     ```
 
 Observa que no todos los campos aparecen en todas las vistas. En este ejemplo:
+
 - **Vista lista**: 3 campos (nombre, descripción, finalizado)
 - **Vista formulario**: 6 campos (todos)
 
@@ -256,10 +257,28 @@ Para que el nuevo modelo sea accesible, debemos:
 
 3. **Opcional**: Crear vistas y menús para el modelo Sprint (si no, Odoo usará vistas por defecto)
 
-Prueba y observa que:
-- Ya tienes el nuevo campo `sprint` en el formulario de tareas
-- Puedes seleccionar un sprint existente
+Prueba y observa que:  
+
+- Ya tienes el nuevo campo `sprint` en el formulario de tareas  
+- Puedes seleccionar un sprint existente  
 - Puedes crear nuevos sprints directamente desde el formulario de tareas (botón "+")
+
+!!!warning "si no sale bien el nombre del sprint en la tarea"
+
+    Si al indicar el nombre del sprint en la tarea, en vez de mostrar el nombre del sprint sale algo así como `gestion_tareas_sergio.tareas_sergio,1` es debido a que el primer campo que identifica el sprint debe ser `name`y no `nombre`.
+
+    Cambia en el modelo de `sprints_sergio`
+
+    ```python
+        nombre = fields.Char(
+    ```
+    por 
+    ```python
+        name = fields.Char(
+    ```
+    > Es aconsejable que en TODOS los modelos tener el campo `name` que lo identifique, cosa que no hicimos en el modelo `tareas_sergio`. ¿Crees que deberías cambiarlo?
+
+
 
 ## Campos Relacionales: One2many
 
@@ -328,7 +347,7 @@ Crea un modelo **Tecnología** con los siguientes campos:
         _name = 'gestion_tareas_sergio.tecnologias_sergio'
         _description = 'Modelo de Tecnologías'
 
-        nombre = fields.Char(
+        name = fields.Char(
             string="Nombre", 
             required=True, 
             help="Nombre de la tecnología")
@@ -429,7 +448,8 @@ En esta sesión ampliarás el modelo **Plato** con más campos y crearás dos nu
 - **Menús**: Agrupaciones de platos (menú del día, menú de fin de semana, etc.)
 - **Ingredientes**: Ingredientes/alérgenos que contiene cada plato
 
-Aplicarás los tres tipos de relaciones:
+Aplicarás los tres tipos de relaciones: 
+
 - **Many2one**: Plato → Menú
 - **One2many**: Menú → Platos
 - **Many2many**: Plato ↔ Ingredientes

@@ -12,12 +12,14 @@ En esta sección abordaremos la creación de **campos computados** en Odoo, es d
 Un campo computado es un campo cuyo valor se calcula mediante una función Python en lugar de ser ingresado directamente por el usuario.
 
 **Características**:
+
 - El valor se genera automáticamente
 - Se calcula mediante un método del modelo
 - Puede almacenarse en la base de datos o calcularse dinámicamente
 - Puede depender de otros campos del modelo
 
 **Casos de uso comunes**:
+
 - Códigos automáticos (referencias, SKU)
 - Totales y subtotales
 - Fechas calculadas
@@ -65,11 +67,13 @@ El parámetro `compute` indica el nombre del método que calculará el valor del
 ### Características de Este Campo
 
 **Sin almacenamiento en base de datos**:
+
 - El valor se recalcula dinámicamente cada vez que se visualiza
 - No ocupa espacio en la base de datos
 - Se actualiza automáticamente si cambian los valores de los que depende
 
 **Para visualizarlo**:
+
 - Debe añadirse explícitamente en la vista XML
 
 ```xml
@@ -92,6 +96,7 @@ Para comprobar que el campo no se almacena:
 ## Campo Computado Con Almacenamiento y Dependencias
 
 En situaciones más complejas, necesitamos campos computados que:
+
 - Se almacenen en la base de datos
 - Solo se recalculen cuando cambien sus dependencias
 - Estén disponibles para búsquedas y filtros
@@ -211,22 +216,20 @@ Al crear o editar un sprint:
 | **Uso de disco** | Ninguno | Ocupa espacio |
 | **Uso típico** | Cálculos simples y rápidos | Cálculos costosos o indexables |
 
-## Cuándo Usar Cada Tipo
+**Cuándo Usar Cada Tipo:** 
 
-**Campos computados sin almacenamiento** (sin `store`):
+- Campos **computados sin almacenamiento** (sin `store`):
+    - Cálculos muy simples y rápidos
+    - Valores que cambian constantemente
+    - No necesitas buscar o filtrar por ese campo
+    - Ejemplo: Formateo de texto, concatenaciones simples
 
-- Cálculos muy simples y rápidos
-- Valores que cambian constantemente
-- No necesitas buscar o filtrar por ese campo
-- Ejemplo: Formateo de texto, concatenaciones simples
-
-**Campos computados con almacenamiento** (`store=True`):
-
-- Cálculos complejos o costosos
-- Necesitas buscar o filtrar por ese campo
-- El valor no cambia frecuentemente
-- Quieres usar el campo en vistas pivot o gráficas
-- Ejemplo: Totales, fechas calculadas, contadores
+- Campos **computados con almacenamiento** (`store=True`):
+    - Cálculos complejos o costosos
+    - Necesitas buscar o filtrar por ese campo
+    - El valor no cambia frecuentemente
+    - Quieres usar el campo en vistas pivot o gráficas
+    - Ejemplo: Totales, fechas calculadas, contadores
 
 ## Solución de Problemas
 
