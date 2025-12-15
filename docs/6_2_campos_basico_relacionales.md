@@ -470,7 +470,7 @@ Aplicarás los tres tipos de relaciones:
     - Vista formulario: todos los campos organizados en un `<group>`
 
 3. **Crear el modelo Menú**
-    - `nombre`: Char (obligatorio)
+    - `name`: Char (obligatorio)
     - `descripcion`: Text
     - `fecha_inicio`: Date (obligatorio)
     - `fecha_fin`: Date
@@ -486,7 +486,7 @@ Aplicarás los tres tipos de relaciones:
     - Tipo `One2many` apuntando a platos usando el campo inverso `menu`
 
 6. **Crear el modelo Ingrediente**
-    - `nombre`: Char (obligatorio)
+    - `name`: Char (obligatorio)
     - `es_alergeno`: Boolean
     - `descripcion`: Text
 

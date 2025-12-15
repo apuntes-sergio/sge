@@ -382,6 +382,14 @@ Añadir tres campos computados al modelo Plato y uno al modelo Menú:
     - Usa la función `sum()` de Python
     - Itera sobre `self` para cada menú
     - Recuerda que `platos` es una relación One2many
+    !!!tip "calculos de suma"
+
+        ```python
+        # Suma el precio_final de todos los platos relacionados
+        # La función map() extrae los valores y sum() los agrega.
+        precios = menu.platos_ids.mapped('precio_final')
+        menu.precio_total = sum(precios)
+        ``` 
 
 6. **Actualizar vistas para mostrar los campos computados**
     
