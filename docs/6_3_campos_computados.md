@@ -51,7 +51,7 @@ El parámetro `compute` indica el nombre del método que calculará el valor del
                 tarea.codigo = "TSK_" + str(tarea.id)
             else:
                 # Si tiene sprint, usamos su nombre
-                tarea.codigo = str(tarea.sprint.nombre).upper() + "_" + str(tarea.id)
+                tarea.codigo = str(tarea.sprint.name).upper() + "_" + str(tarea.id)
     ```
 
 **Explicación del código**:
@@ -64,7 +64,7 @@ El parámetro `compute` indica el nombre del método que calculará el valor del
 !!! note "Campo id automático"
     El campo `id` es la clave primaria generada automáticamente en todos los modelos de Odoo. Puedes comprobarlo revisando las tablas en PostgreSQL.
 
-### Características de Este Campo
+### Características de este Campo
 
 **Sin almacenamiento en base de datos**:
 
@@ -93,7 +93,7 @@ Para comprobar que el campo no se almacena:
 - Al crear una tarea sin sprint: código `TSK_<id>`
 - Al asignar un sprint y guardar: código se actualiza a `<SPRINT>_<id>`
 
-## Campo Computado Con Almacenamiento y Dependencias
+## Campo Computado con Almacenamiento y Dependencias
 
 En situaciones más complejas, necesitamos campos computados que:
 
@@ -265,38 +265,38 @@ Errores Comunes
 - No uses el propio campo computado dentro de `@api.depends`
 - No modifiques campos que disparan el mismo método compute
 
-## Buenas Prácticas
+!!! tip "Buenas Prácticas"
 
-1. **Nombra los métodos con prefijo `_compute_`**:
-   ```python
-   def _compute_total(self):
-   def _compute_codigo(self):
-   ```
+    1. **Nombra los métodos con prefijo `_compute_`**:
+       ```python
+       def _compute_total(self):
+       def _compute_codigo(self):
+       ```
 
-2. **Usa `@api.depends` siempre que sea posible**:
-    - Mejora el rendimiento
-    - Hace el código más mantenible
-    - Evita cálculos innecesarios
+    2. **Usa `@api.depends` siempre que sea posible**:
+        - Mejora el rendimiento
+        - Hace el código más mantenible
+        - Evita cálculos innecesarios
 
-3. **Maneja casos nulos o vacíos**:
-   ```python
-   if sprint.fecha_ini and sprint.duracion:
-       # cálculo
-   else:
-       # valor por defecto
-   ```
+    3. **Maneja casos nulos o vacíos**:
+       ```python
+       if sprint.fecha_ini and sprint.duracion:
+           # cálculo
+       else:
+           # valor por defecto
+       ```
 
-4. **Almacena solo cuando sea necesario**:
-    - Solo usa `store=True` si necesitas búsquedas/filtros
-    - Considera el espacio en disco
+    4. **Almacena solo cuando sea necesario**:
+        - Solo usa `store=True` si necesitas búsquedas/filtros
+        - Considera el espacio en disco
 
-5. **Documenta la lógica compleja**:
-   ```python
-   def _compute_total(self):
-       """Calcula el total sumando precio * cantidad para cada línea"""
-       for record in self:
-           # ...
-   ```
+    5. **Documenta la lógica compleja**:
+       ```python
+       def _compute_total(self):
+           """Calcula el total sumando precio * cantidad para cada línea"""
+           for record in self:
+               # ...
+       ```
 
 ---
 

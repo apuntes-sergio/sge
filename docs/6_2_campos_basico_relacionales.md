@@ -309,6 +309,7 @@ Añadimos un campo `tareas` en el modelo `sprint`:
     El segundo parámetro (`'sprint'`) es **imprescindible** y debe coincidir exactamente con el nombre del campo Many2one en el modelo de tareas. Si no existe o está mal escrito, dará error.
 
 Gracias a esta definición, desde el formulario de un sprint podemos:
+
 - Ver todas las tareas relacionadas
 - Crear nuevas tareas directamente
 - Editar o eliminar tareas existentes
