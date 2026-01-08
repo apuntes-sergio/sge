@@ -178,6 +178,7 @@ _logger = logging.getLogger(__name__)
 ```
 
 **Explicación**:
+
 - `logging.getLogger(__name__)`: Crea un logger con el nombre del módulo actual
 - `_logger`: Variable para acceder al logger en todo el archivo
 - Permite identificar fácilmente de dónde provienen los mensajes
@@ -243,66 +244,66 @@ docker logs odoo_dev_dam -f | grep "gestion_tareas"
 
     **Usa Excepciones Específicas**
 
-        ```python
-        # Mal
-        raise Exception("Error")
+    ```python
+    # Mal
+    raise Exception("Error")
 
-        # Bien
-        raise ValidationError("La fecha de fin debe ser posterior a la fecha de inicio")
-        ```
+    # Bien
+    raise ValidationError("La fecha de fin debe ser posterior a la fecha de inicio")
+    ```
 
     **Mensajes Claros y Útiles**
 
-        ```python
-        # Mal
-        raise ValidationError("Error en los datos")
+    ```python
+    # Mal
+    raise ValidationError("Error en los datos")
 
-        # Bien
-        raise ValidationError(
-            f"El sprint '{sprint.nombre}' ya ha finalizado. "
-            "No se pueden añadir tareas a sprints finalizados."
-        )
-        ```
+    # Bien
+    raise ValidationError(
+        f"El sprint '{sprint.nombre}' ya ha finalizado. "
+        "No se pueden añadir tareas a sprints finalizados."
+    )
+    ```
 
     **Registra Información Relevante**
 
-        ```python
-        # Registra antes de operaciones importantes
-        _logger.info(f"Creando sprint: {sprint.nombre}, duración: {sprint.duracion} días")
+    ```python
+    # Registra antes de operaciones importantes
+    _logger.info(f"Creando sprint: {sprint.nombre}, duración: {sprint.duracion} días")
 
-        # Registra advertencias ante situaciones anormales
-        if not tarea.descripcion:
-            _logger.warning(f"Tarea {tarea.id} creada sin descripción")
+    # Registra advertencias ante situaciones anormales
+    if not tarea.descripcion:
+        _logger.warning(f"Tarea {tarea.id} creada sin descripción")
 
-        # Registra errores con contexto
-        _logger.error(f"Fallo al calcular fecha_fin para sprint {sprint.id}: {str(e)}")
-        ```
+    # Registra errores con contexto
+    _logger.error(f"Fallo al calcular fecha_fin para sprint {sprint.id}: {str(e)}")
+    ```
 
     **No Registres Información Sensible**
 
-        ```python
-        # Mal - expone contraseñas
-        _logger.info(f"Usuario login: {user.login}, password: {user.password}")
+    ```python
+    # Mal - expone contraseñas
+    _logger.info(f"Usuario login: {user.login}, password: {user.password}")
 
-        # Bien
-        _logger.info(f"Usuario login exitoso: {user.login}")
-        ```
+    # Bien
+    _logger.info(f"Usuario login exitoso: {user.login}")
+    ```
 
     **Usa el Nivel Apropiado**
 
-        ```python
-        # DEBUG - solo en desarrollo
-        _logger.debug(f"Valor de variable x: {x}")
+    ```python
+    # DEBUG - solo en desarrollo
+    _logger.debug(f"Valor de variable x: {x}")
 
-        # INFO - eventos normales importantes
-        _logger.info("Módulo inicializado correctamente")
+    # INFO - eventos normales importantes
+    _logger.info("Módulo inicializado correctamente")
 
-        # WARNING - situación anormal pero no crítica
-        _logger.warning("Base de datos sin datos de demo")
+    # WARNING - situación anormal pero no crítica
+    _logger.warning("Base de datos sin datos de demo")
 
-        # ERROR - operación fallida
-        _logger.error("No se pudo conectar al servidor externo")
-        ```
+    # ERROR - operación fallida
+    _logger.error("No se pudo conectar al servidor externo")
+    ```
 
 !!!example "Validaciones Comunes"
 
