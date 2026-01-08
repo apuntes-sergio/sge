@@ -38,12 +38,22 @@ Odoo proporciona excepciones específicas para diferentes situaciones. Para más
 
 ### Tipos de Excepciones Principales
 
-| Excepción | Uso | Cuándo Usarla |
-|-----------|-----|---------------|
-| **ValidationError** | Errores de validación | Datos incorrectos o reglas de negocio violadas |
-| **UserError** | Errores del usuario | Acciones no permitidas o datos faltantes |
-| **AccessError** | Errores de permisos | Usuario sin permisos para la acción |
-| **Warning** | Advertencias | Situaciones que no son errores pero requieren atención |
+En el desarrollo de módulos de Odoo, el manejo de errores no se limita a detener la ejecución del código. El framework utiliza excepciones específicas definidas en `odoo.exceptions` para gestionar la **integridad de la base de datos** (mediante *rollbacks* automáticos) y la **comunicación con la interfaz de usuario**.
+
+Utilizar la excepción correcta garantiza que el usuario reciba un mensaje claro y que el sistema se comporte de manera previsible según los estándares de Odoo.
+
+| Excepción | Impacto en la Interfaz (UI) | Caso de Uso Correcto |
+| --- | --- | --- |
+| **`ValidationError`** | Ventana emergente de error de validación. | **Reglas de negocio estrictas.** Ej: "La fecha de fin no puede ser anterior a la de inicio". Se usa mucho con `@api.constrains`. |
+| **`UserError`** | Ventana emergente de advertencia. | **Acciones ilógicas del usuario.** Ej: Intentar cancelar una factura que ya está pagada o confirmar un pedido sin productos. |
+| **`AccessError`** | Mensaje de restricción de seguridad. | **Permisos y ACLs.** Ej: Un usuario intenta modificar un registro de un departamento al que no pertenece. |
+| **`RedirectWarning`** | Ventana con un botón de acción. | **Errores con solución guiada.** Ej: "No has configurado una cuenta de ingresos. [Ir a configuración]". |
+| **`MissingError`** | Mensaje de registro no encontrado. | **Registros eliminados.** Cuando el código intenta acceder a un ID que ya no existe en la base de datos. |
+
+!!!tip "Notas sobre los diferentes tipos de excepciones"
+    * **Diferencia entre `ValidationError` y `UserError`:** Aunque visualmente son similares, `ValidationError` se lanza automáticamente al intentar guardar un registro que no cumple los requisitos (normalmente mediante restricciones de Python), mientras que `UserError` se suele lanzar dentro de botones o métodos de acción.
+    * **La excepción `Warning` (Obsoleta):** En versiones modernas de Odoo (v13+), se prefiere el uso de `UserError` en lugar de `Warning`, ya que esta última ha sido marcada para desaparecer en el núcleo del framework.
+
 
 ### Importar Excepciones
 
@@ -195,7 +205,7 @@ def _get_codigo(self):
                 _logger.warning(f"Tarea {tarea.id} sin sprint asignado")
                 raise ValueError("El campo 'sprint' es obligatorio.")
             
-            tarea.codigo = str(tarea.sprint.nombre).upper() + "_" + str(tarea.id)
+            tarea.codigo = str(tarea.sprint.name).upper() + "_" + str(tarea.id)
             _logger.debug(f"Código generado: {tarea.codigo}")
             
         except Exception as e:
@@ -229,15 +239,39 @@ docker logs odoo_dev_dam -f
 
 **Filtrar logs de tu módulo**:
 ```bash
-docker logs odoo_dev_dam -f | grep "gestion_tareas"
+docker logs odoo_dev_sge -f 2>&1 | grep --line-buffered DEBUG | grep "gestion_tareas"
 ```
+
+!!! tip "Filtrado de salida de docker"
+
+    Para filtrar logs de un contenedor en tiempo real de forma efectiva, la estructura ideal es:
+
+    `docker logs <contenedor> -f 2>&1 | grep --line-buffered "FILTRO1" | grep "FILTRO2"`
+
+    donde:
+
+    - **`2>&1` (Redirección de stderr a stdout):**
+        * Docker y muchas aplicaciones (como Odoo/Python) envían los mensajes de log y errores al flujo de **Error Estándar (stderr)**, mientras que `grep` solo analiza la **Salida Estándar (stdout)** por defecto.
+        * Este comando une ambos flujos para que `grep` pueda "leerlo" todo.
+
+
+    - **`--line-buffered`:**
+        * Por defecto, cuando `grep` detecta que su salida va hacia una tubería (`|`), espera a llenar un búfer de memoria (unos 4KB) antes de soltar los datos. Esto causa un retraso o "congelamiento" aparente.
+        * Esta bandera fuerza a `grep` a imprimir cada línea en el momento exacto en que la encuentra, permitiendo el monitoreo en tiempo real.
+
+
+    - **Encadenamiento de `grep`:**
+        * Al usar varios `| grep`, actúan como un operador lógico **AND**. Solo se mostrarán las líneas que contengan estrictamente todos los términos buscados.
+
+
 
 ### Ejemplo de Salida de Logs
 
 ```
-2024-11-24 10:23:45,123 12345 INFO gestion_tareas_sergio.models.tareas: Iniciando generación de códigos
-2024-11-24 10:23:45,145 12345 WARNING gestion_tareas_sergio.models.tareas: Tarea 42 sin sprint asignado
-2024-11-24 10:23:45,167 12345 ERROR gestion_tareas_sergio.models.tareas: Error generando código para tarea 42: El campo 'sprint' es obligatorio
+2026-01-08 18:12:45,816 1 DEBUG odoo odoo.addons.gestion_tareas_sergio.models.models: Código generado: SPRINT SEMANA 1_2 
+2026-01-08 18:21:04,123 1 DEBUG odoo odoo.service.model: call gestion_tareas_sergio.tareas_sergio(4,).web_read(specification={'codigo': {}, 'name': {}, 'descripcion': {}, 'sprint': {'fields': {'display_name': {}}}, 'fecha_creacion': {}, 'fecha_ini': {}, 'fecha_fin': {}, 'finalizado': {}, 'rel_tecnologias': {'fields': {'display_name': {}}}, 'display_name': {}}) 
+2026-01-08 18:21:04,129 1 DEBUG odoo odoo.addons.gestion_tareas_sergio.models.models: Código generado: SPRINT SEMANA 1_4 
+
 ```
 
 !!!tip "Buenas Prácticas"
