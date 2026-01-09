@@ -85,10 +85,6 @@ def _get_codigo(self):
 def _get_codigo(self):
     for tarea in self:
         try:
-            # Verificamos que tenga sprint asignado
-            if not tarea.sprint:
-                raise ValueError("El campo 'sprint' es obligatorio para generar el código.")
-            
             # Generamos el código
             tarea.codigo = str(tarea.sprint.nombre).upper() + "_" + str(tarea.id)
             
@@ -109,16 +105,34 @@ def _get_codigo(self):
 
 ### Provocar un Error para Pruebas
 
-Si quieres probar el manejo de excepciones, puedes forzar un error. Por ejemplo, cambiando:
+Vamos a provocar un error en nuestro código, para ver como funciona esta gestión de excepciones.
+
+Vamos a modificar el cálculo de la fecha final de y vamos poner mal el nombre del campo. En el código inicial
 
 ```python
-tarea.codigo = str(tarea.sprint.nombre).upper() + "_" + str(tarea.id)
+@api.depends('fecha_ini', 'duracion')
+def _compute_fecha_fin(self):
+    for sprint in self:
+        if sprint.fecha_ini and sprint.duracion and sprint.duracion > 0:
+            sprint.fecha_fin = sprint.fecha_ini + timedelta(days=sprint.duracion)
+        else:
+            sprint.fecha_fin = sprint.fecha_ini
 ```
 
-por (error intencional):
+cambiamos cualquier variablem para ver cómo reacciona e incluimos el bloque `try-excetp`
 
 ```python
-tarea.codigo = str(tarea.sprint.nombre).upper() + "_" + str(tarea.id_)  # id_ no existe
+@api.depends('fecha_ini', 'duracion')
+def _compute_fecha_fin(self):
+    for sprint in self:
+        try:
+            if sprint.fecha_ini and sprint.duracion and sprint.duracion > 0:
+                sprint.fecha_fin = sprint.fecha_inicial + timedelta(days=sprint.duracion)
+            else:
+                sprint.fecha_fin = sprint.fecha_inicial #campo erróneo
+        except Exception as e:            
+            raise ValidationError(f"Error al generar el código: {str(e)}")
+            # raise UserError(f"Error al generar el código: {str(e)}")
 ```
 
 Esto provocará un error que será capturado por el `except` y mostrado al usuario de forma controlada.
@@ -198,20 +212,40 @@ _logger = logging.getLogger(__name__)
 ```python
 def _get_codigo(self):
     _logger.info("Iniciando generación de códigos de tareas")
-    
+
     for tarea in self:
         try:
             if not tarea.sprint:
                 _logger.warning(f"Tarea {tarea.id} sin sprint asignado")
-                raise ValueError("El campo 'sprint' es obligatorio.")
-            
-            tarea.codigo = str(tarea.sprint.name).upper() + "_" + str(tarea.id)
+                tarea.codigo = "TSK_" + str(tarea.id)
+
+            else:
+                # Si tiene sprint, usamos su nombre
+                tarea.codigo = str(tarea.sprint.name).upper() + "_" + str(tarea.id)
+
             _logger.debug(f"Código generado: {tarea.codigo}")
-            
+
         except Exception as e:
             _logger.error(f"Error generando código para tarea {tarea.id}: {str(e)}")
             raise ValidationError(f"Error al generar el código: {str(e)}")
 ```
+
+Por cierto, ejecutando al anterior código y revisando los logs, veremos que constantemente estamos cambiando el código de la tarea, lo cual no parece muy eficiente y por lo tanto deberíamos poner remedio, por ejemplo indicando que solo se calculará el código en caso de que el cambie el sprint asociado. Así añadimos la siguiente linea con un `@api.depends`:
+
+```python
+    @api.depends('sprint', 'sprint.name')   # solo se ejecuta si cambia el sprint.
+    def _get_codigo(self):
+        ....
+```
+
+!!!tip "Compute & Depends en la Creación (Create)"
+    
+    Odoo ejecuta **todos** los métodos `compute` durante la creación de un registro, incluso si los campos del `@api.depends` no han cambiado o están vacíos. Esto lo hace para dar un valor inicial al campo.
+
+    Así pues, lo que sucede en el método anterior con el campo `id` de propia tarea es que antes de guardar, el `id` es un "Virtual ID" (ej. `NewId_1`). El compute se ejecuta para mostrar una previsualización, y al al Guardar (Flush) Odoo asigna el ID real de la base de datos y **vuelve a ejecutar** el `compute` automáticamente antes de hacer el commit final.
+
+    O sea, Odoo gestiona la creación como un evento especial. El `depends` solo sirve para **actualizaciones futuras** de registros que ya existen.
+
 
 ### Configurar Nivel de Log
 
