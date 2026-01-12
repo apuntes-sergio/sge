@@ -92,6 +92,13 @@ Añadimos una nueva relación:
 
 - `historia`: Relación Many2one con historia de usuario. *"Una tarea pertenece a una historia de usuario y una historia tiene muchas tareas"*
 
+
+### Modificación del Modelo Sprint
+
+Añadimos una nueva relación:
+
+- `proyecto`: Relación Many2one con proyecto. *"Un proyecto se divide en varios Sprints"*
+
 ## Implementación de los Nuevos Modelos
 
 ??? example "models.py - Nuevos modelos"
@@ -101,7 +108,7 @@ Añadimos una nueva relación:
         _name = 'gestion_tareas_sergio.proyectos_sergio'
         _description = 'Modelo de Proyectos'
 
-        nombre = fields.Char(
+        name = fields.Char(
             string="Nombre", 
             required=True, 
             help="Nombre del proyecto")
@@ -120,7 +127,7 @@ Añadimos una nueva relación:
         _name = 'gestion_tareas_sergio.historias_sergio'
         _description = 'Modelo de Historias de Usuario'
 
-        nombre = fields.Char(
+        name = fields.Char(
             string="Nombre", 
             required=True, 
             help="Nombre de la historia")
@@ -146,9 +153,19 @@ Añadimos una nueva relación:
         historia = fields.Many2one(
             'gestion_tareas_sergio.historias_sergio', 
             string='Historia de Usuario')
+
+    # SPRINT (modificacion)
+    class sprints_sergio(models.Model):
+        _name = 'gestion_tareas_sergio.sprints_sergio'
+        # ... campos existentes ...
+
+        proyecto = fields.Many2one(
+            'gestion_tareas_sergio.proyectos_sergio', 
+            string="Proyecto")    
+
     ```
 
-!!! tip "Relación One2many"
+!!! tip "Recuerda : Relación One2many"
     Cuando defines una relación One2many en un modelo, el segundo parámetro debe ser el nombre del campo Many2one en el modelo relacionado. Por ejemplo:
     ```python
     # En Proyecto
@@ -160,45 +177,61 @@ Añadimos una nueva relación:
 
 ### Permisos de Seguridad
 
-Añade en `security/ir.model.access.csv`:
+Añade en `security/ir.model.access.csv` las líneas necesarias para permite acceso a los nuevos modelos.
 
-```csv
-access_proyectos,acceso_proyectos,model_gestion_tareas_sergio_proyectos_sergio,base.group_user,1,1,1,1
-access_historias,acceso_historias,model_gestion_tareas_sergio_historias_sergio,base.group_user,1,1,1,1
-```
+??? example "security/ir.model.access.csv - Nuevos modelos. Intenta hacerlo sin mirar"
+    ```csv
+    access_proyectos,acceso_proyectos,model_gestion_tareas_sergio_proyectos_sergio,base.group_user,1,1,1,1
+    access_historias,acceso_historias,model_gestion_tareas_sergio_historias_sergio,base.group_user,1,1,1,1
+    ```
 
 ### Vistas y Menús
 
-Añade en `views/views.xml`:
+Añade en `views/views.xml` los menús y acciones necesarios:
 
-```xml
-<!-- Actions para los nuevos modelos -->
-<record model="ir.actions.act_window" id="action_proyectos">
-    <field name="name">Proyectos</field>
-    <field name="res_model">gestion_tareas_sergio.proyectos_sergio</field>
-    <field name="view_mode">list,form</field>
-</record>
+??? example "views/views.xml - Nuevos menús. Intenta hacerlo sin mirar"
+    ```xml
+    <!-- Actions para los nuevos modelos -->
+    <record model="ir.actions.act_window" id="gestion_tareas_sergio.proyectos_action_window">
+        <field name="name">Proyectos</field>
+        <field name="res_model">gestion_tareas_sergio.proyectos_sergio</field>
+        <field name="view_mode">list,form</field>
+    </record>
 
-<record model="ir.actions.act_window" id="action_historias">
-    <field name="name">Historias de Usuario</field>
-    <field name="res_model">gestion_tareas_sergio.historias_sergio</field>
-    <field name="view_mode">list,form</field>
-</record>
+    <record model="ir.actions.act_window" id="gestion_tareas_sergio.historias_action_window">
+        <field name="name">Historias de Usuario</field>
+        <field name="res_model">gestion_tareas_sergio.historias_sergio</field>
+        <field name="view_mode">list,form</field>
+    </record>
 
-<!-- Menús -->
-<menuitem name="Proyectos" 
-          id="menu_proyectos" 
-          parent="menu_gestion"
-          action="action_proyectos"/>
 
-<menuitem name="Historias" 
-          id="menu_historias" 
-          parent="menu_gestion"
-          action="action_historias"/>
-```
+    <!-- Menús -->
+    <!-- Nuevas Categorias -->
+    <menuitem name="Proyectos" 
+              id="gestion_tareas_sergio.proyectos" 
+              parent="gestion_tareas_sergio.menu_root" 
+              sequence="10"/>
+    <menuitem name="Historias" 
+              id="gestion_tareas_sergio.historias" 
+              parent="gestion_tareas_sergio.menu_root" 
+              sequence="20"/>
+    <!-- Nuevas acciones -->
+    <menuitem name="Listado" 
+              id="gestion_tareas_sergio.proyectos_list" 
+              parent="gestion_tareas_sergio.proyectos"
+              action="gestion_tareas_sergio.proyectos_action_window"/>
+    <menuitem name="Listado" 
+              id="gestion_tareas_sergio.historias_list" 
+              parent="gestion_tareas_sergio.historias"
+              action="gestion_tareas_sergio.historias_action_window"/>
+    ```
+    Observa que en los `<menuitem>` se ha introducido un valor para `sequence` para asegurar el orden correcto
 
 ## Campo Computado Relacional Many2one
 
+Supongamos que en las tareas queremos asignar automáticamente el spring activo, pero basándonos en el proyecto de su historia de usuario
+
+Esto lo implementaremos mediante un campo al que llamaremos `spring_computado` en el modelo tarea, que 
 Ahora implementaremos un campo computado que asigna automáticamente una tarea al sprint activo, basándose en el proyecto de su historia de usuario.
 
 **Objetivo**: Queremos que cada tarea se asigne automáticamente al sprint que:
@@ -206,45 +239,70 @@ Ahora implementaremos un campo computado que asigna automáticamente una tarea a
 - Pertenece al mismo proyecto que la historia de usuario
 - Está actualmente abierto (fecha de fin posterior a hoy)
 
-**Implementación**
+Recapitulando vamos a obtener las siguientes relaciones:
 
-```python
-from datetime import datetime
-
-class tareas_sergio(models.Model):
-    _name = 'gestion_tareas_sergio.tareas_sergio'
-    # ... campos existentes ...
-    
-    sprint_computado = fields.Many2one(
-        'gestion_tareas_sergio.sprints_sergio', 
-        string='Sprint Activo', 
-        compute='_compute_sprint', 
-        store=True)
-
-    @api.depends('historia', 'historia.proyecto')
-    def _compute_sprint(self):
-        for tarea in self:
-            tarea.sprint_computado = False
-            
-            # Verificar que la tarea tiene historia y proyecto
-            if tarea.historia and tarea.historia.proyecto:
-                # Buscar sprints del proyecto
-                sprints = self.env['gestion_tareas_sergio.sprints_sergio'].search([
-                    ('proyecto.id', '=', tarea.historia.proyecto.id)
-                ])
-                
-                # Buscar el sprint activo (fecha_fin > ahora)
-                for sprint in sprints:
-                    if isinstance(sprint.fecha_fin, datetime) and sprint.fecha_fin > datetime.now():
-                        tarea.sprint_computado = sprint.id
-                        break
+```textplain
+PROYECTO (1) 
+   └──< HISTORIA (N) 
+          └──< TAREA (N)
+                 ├──< SPRINT (Computado/Relacionado)
+                 └──< TECNOLOGÍAS (M:N)
 ```
+
+!!! example "Implementación"
+    ```python
+    from datetime import datetime
+
+    class tareas_sergio(models.Model):
+        _name = 'gestion_tareas_sergio.tareas_sergio'
+        # ... campos existentes ...
+
+
+        # Quitamos la anterior relación
+        # sprint = fields.Many2one(
+        #     'gestion_tareas_sergio.sprints_sergio', 
+        #     string='Sprint relacionado', 
+        #     ondelete='set null', 
+        #     help='Sprint al que pertenece esta tarea')
+
+        # Lo hacemos computado
+        sprint = fields.Many2one(
+            'gestion_tareas_sergio.sprints_sergio', 
+            string='Sprint Activo', 
+            compute='_compute_sprint', 
+            store=True)    
+
+        @api.depends('historia', 'historia.proyecto')
+        def _compute_sprint(self):
+            for tarea in self:
+                tarea.sprint = False
+                
+                # Verificar que la tarea tiene historia y proyecto
+                if tarea.historia and tarea.historia.proyecto:
+                    # Buscar sprints del proyecto
+                    sprints = self.env['gestion_tareas_sergio.sprints_sergio'].search([
+                        ('proyecto.id', '=', tarea.historia.proyecto.id)
+                    ])
+                    
+                    # Buscar el sprint activo (fecha_fin > ahora) 
+                    # de entre todos los sprints asociados al proyecto
+                    # en teoría solo hay un sprint activo, por eso es el que no ha vencido
+                    for sprint in sprints:
+                        if (isinstance(sprint.fecha_fin, datetime) and 
+                                sprint.fecha_ini <= datetime.now() and   
+                                sprint.fecha_fin > datetime.now()):
+                            tarea.sprint = sprint.id
+                            break
+    ```
+
+    Cuidado, debemos importar la función datetime en el módulo datetime
+
 
 !!!note "Explicación Detallada"
 
     **1. Definición del campo**:
     ```python
-    sprint_computado = fields.Many2one(
+    sprint = fields.Many2one(
         'gestion_tareas_sergio.sprints_sergio',  # Modelo destino
         compute='_compute_sprint',                 # Método que lo calcula
         store=True)                                # Se almacena en BD
@@ -265,7 +323,7 @@ class tareas_sergio(models.Model):
     - Inicializa el sprint a `False`
     - Verifica que tenga historia y proyecto
     - Busca todos los sprints del proyecto
-    - Asigna el primer sprint que esté activo (fecha_fin > ahora)
+    - Asigna el primer sprint que esté activo (fecha_fin > ahora >= fecha_ini)
 
     **4. Búsqueda con `self.env`**:
     ```python
@@ -278,38 +336,39 @@ class tareas_sergio(models.Model):
 
 ## Campo Computado Relacional Many2many
 
-Implementaremos un campo que recopila automáticamente todas las tecnologías utilizadas en las tareas de una historia de usuario.
+Ahora implementaremos un campo que `tecnologías` en las *historias de usuario* que recopilará automáticamente todas las tecnologías utilizadas en las tareas asociadas a una historia de usuario.
 
 **Objetivo**: Queremos que cada historia de usuario muestre automáticamente:
+
 - Todas las tecnologías de todas sus tareas
 - Sin duplicados
 - Actualizado automáticamente
 
-**Implementación**
+!!! example "Implementación"
 
-```python
-class historias_sergio(models.Model):
-    _name = 'gestion_tareas_sergio.historias_sergio'
-    # ... campos existentes ...
-    
-    tecnologias = fields.Many2many(
-        "gestion_tareas_sergio.tecnologias_sergio", 
-        compute="_compute_tecnologias", 
-        string="Tecnologías Utilizadas")
+    ```python
+    class historias_sergio(models.Model):
+        _name = 'gestion_tareas_sergio.historias_sergio'
+        # ... campos existentes ...
+        
+        tecnologias = fields.Many2many(
+            "gestion_tareas_sergio.tecnologias_sergio", 
+            compute="_compute_tecnologias", 
+            string="Tecnologías Utilizadas")
 
-    @api.depends('tareas', 'tareas.rel_tecnologias')
-    def _compute_tecnologias(self):
-        for historia in self:
-            tecnologias_acumuladas = self.env['gestion_tareas_sergio.tecnologias_sergio']
-            
-            # Recorrer todas las tareas de la historia
-            for tarea in historia.tareas:
-                # Sumar (concatenar) tecnologías de cada tarea
-                tecnologias_acumuladas = tecnologias_acumuladas + tarea.rel_tecnologias
-            
-            # Asignar el resultado
-            historia.tecnologias = tecnologias_acumuladas
-```
+        @api.depends('tareas', 'tareas.rel_tecnologias')
+        def _compute_tecnologias(self):
+            for historia in self:
+                tecnologias_acumuladas = self.env['gestion_tareas_sergio.tecnologias_sergio']
+                
+                # Recorrer todas las tareas de la historia
+                for tarea in historia.tareas:
+                    # Sumar (concatenar) tecnologías de cada tarea
+                    tecnologias_acumuladas = tecnologias_acumuladas + tarea.rel_tecnologias
+                
+                # Asignar el resultado
+                historia.tecnologias = tecnologias_acumuladas
+    ```
 
 !!!note "Explicación Detallada"
 
@@ -352,7 +411,7 @@ class historias_sergio(models.Model):
 
 A veces necesitamos mostrar un campo que ya existe en un modelo relacionado, sin duplicar datos ni calcular nada.
 
-El ***problema*** es que queremos mostrar el **proyecto** en el formulario de **tarea**, pero:
+Supongamos que en la **tarea**, donde hemos seleccionado la **historia** que esta implementando, queremos mostrar el **proyecto** al que esta asociada dicha **historia** y por tanto la **tarea**, pero:
 
 - La tarea no tiene relación directa con proyecto
 - La tarea → historia → proyecto
@@ -360,19 +419,21 @@ El ***problema*** es que queremos mostrar el **proyecto** en el formulario de **
 
 Y la ***solución***: **Campo Related**
 
-```python
-class tareas_sergio(models.Model):
-    _name = 'gestion_tareas_sergio.tareas_sergio'
-    # ... campos existentes ...
-    
-    historia = fields.Many2one('gestion_tareas_sergio.historias_sergio', string='Historia')
-    
-    proyecto = fields.Many2one(
-        'gestion_tareas_sergio.proyectos_sergio',
-        string='Proyecto',
-        related='historia.proyecto',
-        readonly=True)
-```
+!!! example "Implementación"
+
+    ```python
+    class tareas_sergio(models.Model):
+        _name = 'gestion_tareas_sergio.tareas_sergio'
+        # ... campos existentes ...
+        
+        historia = fields.Many2one('gestion_tareas_sergio.historias_sergio', string='Historia')
+        
+        proyecto = fields.Many2one(
+            'gestion_tareas_sergio.proyectos_sergio',
+            string='Proyecto',
+            related='historia.proyecto',
+            readonly=True)
+    ```
 
 **Ventajas del Campo Related**:
 
@@ -542,7 +603,38 @@ Implementarás:
 
     - Recuerda actualizar las vistas para usar el nuevo campo
 
-4. **Campo computado Many2one: Asignar chef automáticamente**
+4. **Actualizar permisos**
+    
+    Añade en `ir.model.access.csv`:
+
+    ```csv
+    access_categoria,acceso_categoria,model_..._categoria,base.group_user,1,1,1,1
+    access_chef,acceso_chef,model_..._chef,base.group_user,1,1,1,1
+    ```
+
+5. **Crear vistas y menús para los nuevos modelos**
+    
+    Estructura sugerida:
+    ```
+    Gestión Restaurante
+    ├── Menú
+    │   ├── Platos
+    │   ├── Menús
+    │   ├── Ingredientes
+    │   ├── Categorías
+    │   └── Chefs
+    ```
+
+6. **Actualizar vista de Plato**
+    
+    Añade los nuevos campos:
+
+    - `categoria` (en lugar del Selection anterior)
+    - `chef_especializado`
+    
+    Elimina el campo `categoria` tipo Selection si lo tenías.
+
+7. **Campo computado Many2one: Asignar chef automáticamente**
     
     En el modelo Plato, crea un campo `chef_especializado` que:
 
@@ -562,7 +654,7 @@ Implementarás:
     - Dominio: `[('especialidad', '=', plato.categoria.id)]`
     - No olvides verificar que existe categoría
 
-5. **Campo computado Many2many: Ingredientes por categoría**
+8. **Campo computado Many2many: Ingredientes por categoría**
     
     En el modelo Categoría, crea un campo `ingredientes_comunes` que:
 
@@ -581,7 +673,7 @@ Implementarás:
     - Suma recordsets: `acumulado = acumulado + plato.rel_ingredientes`
     - Depende de: `@api.depends('platos', 'platos.rel_ingredientes')`
 
-6. **Campo related: Categoría desde Menú**
+9. **Campo related: Categoría desde Menú**
     
     En el modelo Menú, añade un campo `categorias_platos` que:
 
@@ -594,36 +686,6 @@ Implementarás:
     - Sintaxis: `related='platos.categoria'`
     - Odoo automáticamente recopila todas las categorías
 
-7. **Actualizar permisos**
-    
-    Añade en `ir.model.access.csv`:
-
-    ```csv
-    access_categoria,acceso_categoria,model_..._categoria,base.group_user,1,1,1,1
-    access_chef,acceso_chef,model_..._chef,base.group_user,1,1,1,1
-    ```
-
-8. **Crear vistas y menús para los nuevos modelos**
-    
-    Estructura sugerida:
-    ```
-    Gestión Restaurante
-    ├── Menú
-    │   ├── Platos
-    │   ├── Menús
-    │   ├── Ingredientes
-    │   ├── Categorías
-    │   └── Chefs
-    ```
-
-9. **Actualizar vista de Plato**
-    
-    Añade los nuevos campos:
-
-    - `categoria` (en lugar del Selection anterior)
-    - `chef_especializado`
-    
-    Elimina el campo `categoria` tipo Selection si lo tenías.
 
 10. **Probar el comportamiento**
     
