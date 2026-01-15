@@ -650,8 +650,9 @@ Implementarás:
     
     Pistas:
 
-    - Usa `self.env['modelo.chef'].search([dominio])`
+    - Usa `self.env['modelo.chef'].search([dominio], limit=1)`
     - Dominio: `[('especialidad', '=', plato.categoria.id)]`
+    - `limit=1`, porque al ser una relación Many2one, solo necesitamos un chef (en caso se haber más), así que solo seleccionamos el primero.
     - No olvides verificar que existe categoría
 
 8. **Campo computado Many2many: Ingredientes por categoría**
@@ -673,18 +674,16 @@ Implementarás:
     - Suma recordsets: `acumulado = acumulado + plato.rel_ingredientes`
     - Depende de: `@api.depends('platos', 'platos.rel_ingredientes')`
 
-9. **Campo related: Categoría desde Menú**
+9. **Campo related: Especialidad del chef desde Plato**
     
-    En el modelo Menú, añade un campo `categorias_platos` que:
-
-    - Sea de tipo Many2many
+    En el modelo Plato, añade un campo `especialidad_chef` que:
+íia
     - Use `related` para mostrar las categorías de todos los platos del menú
     - Sea readonly
     
     Pistas:
 
-    - Sintaxis: `related='platos.categoria'`
-    - Odoo automáticamente recopila todas las categorías
+    - Debes obtener la especialidad del chef
 
 
 10. **Probar el comportamiento**
