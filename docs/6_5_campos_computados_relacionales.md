@@ -677,7 +677,7 @@ Implementarás:
 9. **Campo related: Especialidad del chef desde Plato**
     
     En el modelo Plato, añade un campo `especialidad_chef` que:
-íia
+
     - Use `related` para mostrar las categorías de todos los platos del menú
     - Sea readonly
     
@@ -726,4 +726,6 @@ Comprueba que:
     3. Tiramisú - Categoría: Postres → Chef asignado: Pedro
 
     Verifica que el chef se asigna automáticamente al seleccionar la categoría.
+
+
 
