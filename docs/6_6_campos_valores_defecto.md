@@ -180,13 +180,13 @@ Cuándo usar lambda vs función normal:
 
 Un caso común es asignar el usuario actual como valor por defecto:
 
-!!! example "Asiganando el usuario actual a la acción realizada"
+!!! example "Asignación del usuario actual a la acción realizada"
 
     ```python
     responsable = fields.Many2one(
         'res.users',
         string='Responsable',
-        default=lambda self: self.env.user)
+        default=lambda self: self.env.user.id)
     ```
 
 **Explicación**:
@@ -195,24 +195,38 @@ Un caso común es asignar el usuario actual como valor por defecto:
 - `self.env.user`: Usuario actual
 - Se asigna automáticamente al crear el registro
 
+
 ### 5. Valores por Defecto con Búsquedas
 
 También puedes buscar registros existentes para usar como valor por defecto:
 
 !!! example "Resultado de búsqueda como valor por defecto"
 
+    Añadimos al proyecto un campo para indicar si esta o no activo
+
+    ```python
+    activo = fields.Boolean(
+        string= "Estado del proyecto",
+        default = True
+    )    
+    ```
+
+    y ahora en la tarea calculamos el proyecto activo 
+
     ```python
     def _get_proyecto_activo(self):
         """Retorna el proyecto marcado como activo"""
         return self.env['gestion_tareas_sergio.proyectos_sergio'].search(
             [('activo', '=', True)], 
-            limit=1)
+            limit=1, order='create_date desc')
 
     proyecto = fields.Many2one(
         'gestion_tareas_sergio.proyectos_sergio',
         string='Proyecto',
         default=_get_proyecto_activo)
     ```
+
+    - `create_date` es un campo propio de odoo donde tenemos la fecha de creación del registro.
 
 ## Comparativa: Default vs Compute
 
@@ -279,7 +293,7 @@ Al crear un nuevo registro, estos campos aparecerán pre-rellenados con sus valo
   <figcaption>Campos con valores por defecto pre-rellenados</figcaption>
 </figure>
 
-## Casos / Ejemplos de Uso Comunes
+## Casos de Uso Comunes
 
 !!! example "1. Fecha Actual"
 
@@ -299,7 +313,7 @@ Al crear un nuevo registro, estos campos aparecerán pre-rellenados con sus valo
     creado_por = fields.Many2one(
         'res.users',
         string='Creado por',
-        default=lambda self: self.env.user,
+        default=lambda self: self.env.user.id
         readonly=True)
     ```
 
@@ -344,114 +358,98 @@ Al crear un nuevo registro, estos campos aparecerán pre-rellenados con sus valo
     ], default='2')
     ```
 
-## Buenas Prácticas
+!!!tip "Buenas Prácticas"
 
-1. Usa el Tipo Correcto
+    !!! example "1. Usa el Tipo Correcto"
+        ```python
+        # Mal - tipo incorrecto
+        cantidad = fields.Integer(default="1")  # String en lugar de int
 
-!!! example 
-    ```python
-    # Mal - tipo incorrecto
-    cantidad = fields.Integer(default="1")  # String en lugar de int
+        # Bien
+        cantidad = fields.Integer(default=1)
+        ```
 
-    # Bien
-    cantidad = fields.Integer(default=1)
-    ```
+    !!! example "2. Funciones vs Lambda"
+        ```python
+        # Usa lambda para lógica simple
+        fecha = fields.Date(default=lambda self: fields.Date.today())
 
-### 2. Funciones vs Lambda
+        # Usa función para lógica compleja
+        def _get_codigo(self):
+            # Múltiples líneas de código
+            # ...
+            return codigo
 
-!!! example 
-    ```python
-    # Usa lambda para lógica simple
-    fecha = fields.Date(default=lambda self: fields.Date.today())
+        codigo = fields.Char(default=_get_codigo)
+        ```
 
-    # Usa función para lógica compleja
-    def _get_codigo(self):
-        # Múltiples líneas de código
-        # ...
-        return codigo
+    !!! example "3. No Calcules Valores Caros"
+        ```python
+        # Mal - operación costosa en valor por defecto
+        def _get_estadisticas_complejas(self):
+            # Consulta pesada a BD
+            # Cálculos complejos
+            return resultado
 
-    codigo = fields.Char(default=_get_codigo)
-    ```
+        campo = fields.Char(default=_get_estadisticas_complejas)  # Lento
 
-3. No Calcules Valores Caros
+        # Bien - usa campo computado para cálculos costosos
+        campo = fields.Char(compute='_compute_estadisticas')
+        ```
 
-!!! example 
-    ```python
-    # Mal - operación costosa en valor por defecto
-    def _get_estadisticas_complejas(self):
-        # Consulta pesada a BD
-        # Cálculos complejos
-        return resultado
+    !!! example "4. Documenta Valores No Obvios"
+        ```python
+        duracion = fields.Integer(
+            string="Duración",
+            default=14,
+            help="Duración predeterminada del sprint en días (2 semanas)")
+        ```
 
-    campo = fields.Char(default=_get_estadisticas_complejas)  # Lento
+    !!! example "5. Considera la Zona Horaria"
+        ```python
+        # Para fechas con hora, considera la zona horaria del usuario
+        def _get_fecha_hora(self):
+            return fields.Datetime.now()  # UTC por defecto
 
-    # Bien - usa campo computado para cálculos costosos
-    campo = fields.Char(compute='_compute_estadisticas')
-    ```
+        # O usa la zona horaria del usuario
+        def _get_fecha_hora_local(self):
+            from datetime import datetime
+            import pytz
+            
+            tz = pytz.timezone(self.env.user.tz or 'UTC')
+            return datetime.now(tz)
+        ```
 
-4. Documenta Valores No Obvios
+!!! warning "Errores Comunes"
 
-!!! example 
-    ```python
-    duracion = fields.Integer(
-        string="Duración",
-        default=14,
-        help="Duración predeterminada del sprint en días (2 semanas)")
-    ```
+    !!! example "1. Pasar Función con Paréntesis"
+        ```python
+        # Mal - ejecuta la función inmediatamente
+        fecha = fields.Date(default=fields.Date.today())
 
-5. Considera la Zona Horaria
+        # Bien - pasa la función sin ejecutar
+        fecha = fields.Date(default=lambda self: fields.Date.today())
+        ```
 
-!!! example 
-    ```python
-    # Para fechas con hora, considera la zona horaria del usuario
-    def _get_fecha_hora(self):
-        return fields.Datetime.now()  # UTC por defecto
+    !!! example "2. Usar Comillas con Funciones"
+        ```python
+        # Mal - esto es para compute, no para default
+        fecha = fields.Date(default='_get_fecha')
 
-    # O usa la zona horaria del usuario
-    def _get_fecha_hora_local(self):
-        from datetime import datetime
-        import pytz
-        
-        tz = pytz.timezone(self.env.user.tz or 'UTC')
-        return datetime.now(tz)
-    ```
+        # Bien
+        fecha = fields.Date(default=_get_fecha)
+        # o
+        fecha = fields.Date(default=lambda self: fields.Date.today())
+        ```
 
-## Errores Comunes
+    !!! example "3. Valores Mutables"
+        ```python
+        # Mal - lista mutable compartida entre instancias
+        valores = fields.Char(default=[])  # ¡Peligro!
 
-1. Pasar Función con Paréntesis
-
-!!! example 
-    ```python
-    # Mal - ejecuta la función inmediatamente
-    fecha = fields.Date(default=fields.Date.today())
-
-    # Bien - pasa la función sin ejecutar
-    fecha = fields.Date(default=lambda self: fields.Date.today())
-    ```
-
-2. Usar Comillas con Funciones
-
-!!! example 
-    ```python
-    # Mal - esto es para compute, no para default
-    fecha = fields.Date(default='_get_fecha')
-
-    # Bien
-    fecha = fields.Date(default=_get_fecha)
-    # o
-    fecha = fields.Date(default=lambda self: fields.Date.today())
-    ```
-
-3. Valores Mutables
-
-!!! example 
-    ```python
-    # Mal - lista mutable compartida entre instancias
-    valores = fields.Char(default=[])  # ¡Peligro!
-
-    # Bien - usa lambda para crear nueva instancia
-    valores = fields.Char(default=lambda self: [])
-    ```
+        # Bien - usa lambda para crear nueva instancia
+        valores = fields.Char(default=lambda self: [])
+        ```
 
 ---
 
@@ -491,28 +489,7 @@ Añadirás valores por defecto a varios campos para mejorar la usabilidad:
     
     Pista: Usa valor numérico directo
 
-4. **Estado inicial de Menús**
-    
-    El campo `activo` en Menús debe ser `False` por defecto (para que se active manualmente).
-
-5. **Cantidad por defecto en una hipotética línea de pedido**
-    
-    Si creas un modelo de línea de pedido con campo `cantidad`, establece default=1.
-
-6. **Usuario creador en Menús**
-    
-    Añade un campo `creado_por` de tipo `Many2one` a `res.users` con valor por defecto del usuario actual.
-    
-    Pistas:
-
-    - `default=lambda self: self.env.user`
-    - Marca el campo como `readonly=True`
-
-7. **Duración por defecto de disponibilidad de Menú**
-    
-    Si añades un campo `dias_disponible` (Integer) a Menú, establece default=7 (una semana).
-
-8. **Categoría por defecto para Platos**
+4. **Categoría por defecto para Platos**
     
     Crea una función que busque la categoría "Sin Clasificar" y la asigne por defecto.
     
@@ -522,17 +499,38 @@ Añadirás valores por defecto a varios campos para mejorar la usabilidad:
     - Usa `self.env['modelo.categoria'].search([('nombre', '=', 'Sin Clasificar')], limit=1)`
     - Primero crea la categoría "Sin Clasificar" para que exista
 
-9. **Precio base por defecto**
+5. **Precio base por defecto**
     
     El campo `precio` en Platos debe tener un valor mínimo sugerido de 5.0.
 
+
+6. **Estado inicial de Menús**
+    
+    El campo `activo` en Menús debe ser `False` por defecto (para que se active manualmente).
+
+7. **Usuario creador en Menús**
+    
+    Añade un campo `creado_por` de tipo `Many2one` a `res.users` con valor por defecto del usuario actual.
+    
+    Haz que este campo no se pueda cambiar
+    
+    Pistas:
+
+    - función lambda: `self.env.user`
+    - Marca el campo como `readonly`
+
+8. **Duración por defecto de disponibilidad de Menú**
+    
+    Si añades un campo `dias_disponible` (Integer) a Menú, establece default=7 (una semana).
+
+9. **Calcula automáticamente la fecha de finalización del menú**
+
+    A partir del campo anteior `dias_disponible` calcula de forma automática el valor de `fecha_fin`
+
+
 10. **Actualizar vistas**
     
-    Añade los nuevos campos a las vistas para que sean visibles:
-    
-    - `fecha_alta` en vista de lista y formulario de Plato
-    - `creado_por` en vista de formulario de Menú
-    - Verifica que los valores por defecto aparecen al crear registros
+    Añade los nuevos campos a las vistas para que sean visible.
 
 ### Verificaciones y Resultado Esperado
 
