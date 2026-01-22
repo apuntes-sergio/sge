@@ -26,6 +26,7 @@ Odoo proporciona tres mecanismos de herencia diferentes, cada uno con propósito
 Es el tipo más común. Extiende un modelo existente añadiendo campos o métodos. El modelo original se modifica pero las vistas siguen funcionando.
 
 **Características**:
+
 - No crea nueva tabla en PostgreSQL
 - Los nuevos campos se añaden a la tabla existente
 - Las vistas del modelo original siguen funcionando

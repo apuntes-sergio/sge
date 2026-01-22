@@ -56,28 +56,67 @@ Para crear un modelo que represente a los desarrolladores y permita asociarles t
 
 Por ejemplo, para asociar tecnologías a los desarrolladores, se añade un campo `Many2many` relacionado con el modelo de tecnologías:
 
-```python
-# DESARROLLADORES
-class desarrollador(models.Model):
-    _name = 'res.partner'
-    _inherit = 'res.partner'
+!!! example "models.py"
 
-    tecnologias = fields.Many2many(
-        'gestion_tareas_sergio.tecnologias_sergio',
-        relation='relacion_desarrollador_technologies',
-        column1='rel_desarrollador',
-        column2='rel_tecnologias',
-        string='Tecnologías'
-    )
-```
+    ```python
+    # DESARROLLADOR, Hereda de res.partner
+    class desarrollador_sergio(models.Model):
+        _name = 'res.partner'
+        _inherit = 'res.partner'                                    # Hereda toda la estructura de contactos
+
+        es_desarrollador = fields.Boolean(
+            string="Es Desarrollador")
+
+        tecnologia_ids = fields.Many2many(
+            comodel_name='gestion_tareas_sergio.tecnologias_sergio',# Modelo destino
+            relation='rel_dev_tec',                                 # Tabla intermedia
+            column1='desarrollador_id',                             # Columna para esta clase
+            column2='tecnologia_id',                                # Columna para tecnologías
+            string="Tecnologías"
+        )
+    ```
+
+!!! example "models.py - Tecnologías"
+
+    ```python
+    # TECNOLOGIAS   
+    class tecnologias_sergio(models.Model):
+        _name = 'gestion_tareas_sergio.tecnologias_sergio'
+        ....
+
+        # Nueva relación con desarrolladorees
+        desarrolladores_ids = fields.Many2many(
+            comodel_name='res.partner',                             # Modelo destino
+            relation='rel_dev_tec',                                 # Tabla intermedia
+            column1='tecnologia_id',                                # Columna para tecnologías
+            column2='desarrollador_id',                             # Columna para esta clase
+            string="Tecnologías")
+
+
+    ```
 
 **Aspectos clave de la implementación**:
 
+
 - `_name`: No es imprescindible especificarlo al heredar, pero es común incluirlo por claridad y hábito
 - `_inherit`: Fundamental, indica el modelo del que heredamos (`res.partner`)
-- `tecnologias`: Nuevo campo Many2many que se añade al modelo heredado
+- `tecnologia_ids`: Nuevo campo Many2many que se añade al modelo heredado
 
 Con esta implementación, no se crea una nueva tabla para desarrolladores. El campo `tecnologias` se añade directamente a la tabla `res_partner` existente.
+
+
+!!! Tip "Estructura Many2many en Odoo"
+    Para configurar un campo Many2many seguimos este esquema de 4 parámetros:
+
+    ```Python
+    campo_ids = fields.Many2many(
+        'modelo.destino',      # 1. ¿Con qué modelo conecto?
+        'tabla_intermedia',    # 2. Nombre de la tabla física en la BD
+        'mi_id',               # 3. Mi ID en esa tabla
+        'su_id',               # 4. El ID del otro modelo en esa tabla
+        string="Etiqueta"
+    )
+    ```
 
 ### Verificación en Base de Datos
 
@@ -96,11 +135,11 @@ El modelo `res.partner` contiene muchos campos adicionales de diferentes módulo
 
 Para facilitar el acceso a los desarrolladores desde nuestro módulo, creamos una acción y una opción de menú que apunten al modelo `res.partner`:
 
-??? Example "views.xml"
+!!! Example "views.xml"
     ```xml
     <!-- Nueva acción -->
-    <record model="ir.actions.act_window" id="gestion_tareas_sergio.action_desarrolladores">
-        <field name="name">Gestión Tareas Sergio Desarrolladores</field>
+    <record model="ir.actions.act_window" id="desarrolladores_action_window">
+        <field name="name">Desarrolladores</field>
         <field name="res_model">res.partner</field>
         <field name="view_mode">list,form</field>
     </record>
@@ -108,8 +147,9 @@ Para facilitar el acceso a los desarrolladores desde nuestro módulo, creamos un
     <!-- Nuevo menú -->
     <menuitem name="Desarrolladores" 
               id="gestion_tareas_sergio.gestion_desarrolladores" 
-              parent="gestion_tareas_sergio.gestion" 
-              action="gestion_tareas_sergio.action_desarrolladores"/>
+              action="desarrolladores_action_window"
+              parent="gestion_tareas_sergio.menu_root" 
+              sequence="50"/>
     ```
 
 Con esta configuración básica, al acceder al menú "Desarrolladores" veremos todos los contactos del sistema, no solo los desarrolladores. Necesitamos personalizar las vistas y añadir filtros para mostrar únicamente los contactos que nos interesan.
@@ -121,6 +161,144 @@ Para visualizar correctamente los desarrolladores, debemos heredar y modificar l
 ### Heredar el Formulario de Contactos
 
 Vamos a heredar el formulario de `res.partner` y añadir una nueva pestaña para mostrar el campo de tecnologías. Usaremos `mode="primary"` para crear una vista alternativa sin sobrescribir la original.
+
+En este punto es esencial comprender que por una parte estamos trabajando sobre un modelo que ya existe, por lo que debemos redefinir sus vistas y adaptarlas a nuestras necesidades y **nunca tocar las vistas del modelo heredado**.
+
+Por lo tanto, lo que debemos es separa por una parte la vista del listado y la vista del formulario para poder trabajar con ellas de forma independiente, y para ello **necesitamos conocer cómo se llaman estas vistas**. Para ello, entrando en el **modo desarrollador** pulsamos sobre la `cucarachita` de la barra superior estando en el listado que queremos investigar y pulsamos sobre **Vista: List**
+
+<figure markdown="span" align="center">
+  ![Acceso a información de vista](./imgs/ejemploT/26_desarrollador_vistas_list.png){ width="80%" }
+  <figcaption>Acceso a la información de modelos y vistas</figcaption>
+</figure>
+
+Ahí podemos comprobar las características de este listado, especialmente los datos que más nos interesan:
+
+1. Nombre de la vista
+2. ID externo: Este se asociará a una nueva propiedad llamada `view_id` de la vista para indicar que se usa esa vista en concreto
+
+<figure markdown="span" align="center">
+  ![Acceso a información de vista](./imgs/ejemploT/27_respartner_vistas_list_datos.png){ width="80%" }
+  <figcaption>Acceso a la información listado res.partner.list</figcaption>
+</figure>
+
+y con estos datos, podemos añadir en nuestro fichero `views.xml` un acceso explicito a la vista en concreto:
+
+!!! example "views.xml"
+
+    Añadimos el siguiente código para determinar que vamos a invocar el listado concreto"
+
+    ```xml
+    <record model="ir.actions.act_window.view" id="action_view_desarrollador_list">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="base.view_partner_tree"/>
+        <field name="act_window_id" ref="desarrolladores_action_window"/>
+    </record>
+    ```
+donde: 
+
+- `sequence`: Orden de aplicación (1 = primero)
+- `view_mode`: Tipo de vista (list)
+- `view_id`: Referencia a la vista de árbol estándar de contactos
+- `act_window_id`: Enlace con la acción principal
+
+Ahora repetimos la misma operación para el formulario. Debemos averiguar el `view_id` para indicar que cuando queremos mostrar un formulario, queremos mostrar ese en concreto. 
+
+<figure markdown="span" align="center">
+  ![Acceso a información de vista](./imgs/ejemploT/28_respartner_vistas_form_datos.png){ width="80%" }
+  <figcaption>Acceso a la información listado res.partner.form</figcaption>
+</figure>
+
+!!! example "views.xml"
+
+    ```xml
+    <record model="ir.actions.act_window.view" id="action_view_desarrollador_form">
+      <field name="sequence" eval="2"></field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="base.view_partner_form"></field>
+      <field name="act_window_id" ref="gestion_tareas_sergio.desarrollador"></field>
+    </record>
+    ```
+
+
+Esto tiene sentido porque estamos indicando de forma explicita el formulario que se utiliza, en un primer paso a modo de prueba, utilizaremos el mismo que los contactos básicos de odoo, pero después **crearemos uno nuevo** y le diremos que lo vamos a utilizar. Debemos tener en cuenta que hasta ahora para un modelo dado, teníamos una vista para el formulario y otra para la vista, pero ahora al heredar, para el mismo modelo tenemos varias vistas del formulario y debemos indicar el que nos interesa.
+
+
+Si probamos nuestra aplicación, de momento no hay ningún cambio, pero ha llegado el momento de **modificar el formulario, sin afectar al original**. Para ello, como hemos hemos hecho siempre, definimos una nueva vista, que en este caso servirá para **modificar la vista del formulario** de `res.partner`. 
+
+Comenzamos reescribiendo como siempre, pero añadiendo nuevas propiedades: 
+
+- `inherit_it`: que nos indica de qué vista vamos a heredar
+- `mode`: que tendrá el valor `primary` e indicará que vamos a hacer cambios que no van a afectar a la vista heredada, solo a la nueva vista que estamos definiendo.
+
+Además tenemos que tener en cuenta que ahora el `action` que lanza el formulario es la nueva vista que estamos creando, en este caso `gestion_tareas_sergio_view_partner_form_inherit`
+
+Recapitulemos con todo el código completo para las vista de los desarrolladores.
+
+!!! example "views.xml"
+
+    ```xml
+
+    <!-- DESAROOLADORES - VISTAS -->
+    <!-- FORMULARIO DESARROLLADORES -->
+    <record id="gestion_tareas_sergio_view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.tareas_sergio</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="mode">primary</field> 
+        <field name="arch" type="xml">
+          <form>
+            <sheet>
+              <group>
+                <field name="tecnologia_ids" widget="many2many_tags"/>
+              </group>
+            </sheet>
+          </form>
+        </field> 
+    </record>
+
+    <!-- ACTION GENÉRICA PARA FORM Y LIST -->
+    <record model="ir.actions.act_window" id="desarrolladores_action_window">
+        <field name="name">Desarrolladores</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ACTION ESPECIFICA PARA EL LISTADO -->
+    <record model="ir.actions.act_window.view" id="action_view_desarrollador_list">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="base.view_partner_tree"/>
+        <field name="act_window_id" ref="desarrolladores_action_window"/>
+    </record>
+
+    <!-- ACTION ESPECIFICA PARA EL FORMULARIO -->
+    <record model="ir.actions.act_window.view" id="action_view_desarrollador_form">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="gestion_tareas_sergio_view_partner_form_inherit"/>
+        <field name="act_window_id" ref="desarrolladores_action_window"/>
+    </record>
+    ```
+
+**Elementos clave del código**:
+
+- `inherit_id`: Referencia la vista base que vamos a extender (`base.view_partner_form`)
+- `mode="primary"`: Indica que es una vista alternativa, no una modificación de la original
+- `xpath`: Expresión XPath que localiza dónde insertar nuestro contenido
+
+
+!!!tip "Regenerar la base de datos si hay inconsistencias"
+
+    En ocasiones, al hacer tanto cambio podemos generar inconsistencias en la base de datos. 
+
+    Para ello lo mejor es renombrar las vistas o modelos que están generando esas inconsistencias y ejecutar el comando:
+
+    ```bash
+    docker exec -u 0 -it odoo_dev_dam odoo -u gestion_tareas_sergio -d odoo --stop-after-init
+    ```
+
+Con esto, hemos puesto el campo al final del formulario, ahora el objetivo es ponerlo en el lugar específico que queramos.
 
 La localización de elementos dentro de la vista se realiza mediante expresiones **XPath**, que permiten ubicar el punto exacto donde insertar nuevos campos. Por ejemplo, para añadir una nueva pestaña después de la última existente, localizamos la página con nombre `internal_notes` y añadimos una nueva página a continuación.
 
@@ -138,27 +316,31 @@ En la información de la vista encontrarás el **ID externo**, que es el identif
   <figcaption>ID externo de la vista a heredar: base.view_partner_form</figcaption>
 </figure>
 
-Ahora ya podemos escribir nuestra vista heredada:
+Ahora ya podemos escribir de nuevo nuestra vista heredada, pero añadiendo el campo en un lugar concreto:
 
-```xml
-<record model="ir.ui.view" id="desarrolladores_form">
-    <field name="name">gestion_tareas_sergio.Desarrolladores</field>
-    <field name="model">res.partner</field>
-    <field name="inherit_id" ref="base.view_partner_form"/>
-    <field name="mode">primary</field>
-    <field name="arch" type="xml">
-        <xpath expr="//sheet/notebook/page[@name='internal_notes']" position="after">
-            <page name="desarrolladores" string="Desarrolladores">
-                <group>
+!!! example "view.xml"
+
+    ```xml
+
+    <record id="gestion_tareas_sergio_view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.tareas_sergio</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="mode">primary</field> 
+        <field name="arch" type="xml">
+          <form>
+            <xpath expr="//sheet/notebook/page[@name='internal_notes']" position="after">
+                <page name="devs" string="Datos Desarrollador">
                     <group>
-                        <field name="tecnologias"/>
+                        <group>
+                            <field name="tecnologia_ids" widget="many2many_tags"/>
+                        </group>
                     </group>
-                </group>
-            </page>
-        </xpath>
-    </field>
-</record>
-```
+                </page>
+            </xpath>
+        </field> 
+    </record>
+    ```
 
 **Elementos clave del código**:
 
@@ -174,55 +356,6 @@ La expresión XPath `//sheet/notebook/page[@name='internal_notes']` busca la pes
   <figcaption>Nueva pestaña "Desarrolladores" añadida al formulario de contactos</figcaption>
 </figure>
 
-### Configurar las Acciones de Vista
-
-Para que al acceder desde nuestro menú se muestre la vista personalizada, debemos especificar qué vistas usar tanto para el listado como para el formulario:
-
-```xml
-<!-- Acción principal desarrolladores -->
-<record model="ir.actions.act_window" id="gestion_tareas_sergio.action_desarrolladores">
-    <field name="name">Gestión Tareas Sergio Desarrolladores</field>
-    <field name="res_model">res.partner</field>
-    <field name="view_mode">list,form</field>
-</record>
-
-<!-- Vista de lista específica -->
-<record model="ir.actions.act_window.view" id="gestion_tareas_sergio.action_desarrolladores_list">
-    <field name="sequence" eval="1"/>
-    <field name="view_mode">list</field>
-    <field name="view_id" ref="base.view_partner_tree"/>
-    <field name="act_window_id" ref="gestion_tareas_sergio.action_desarrolladores"/>
-</record>
-
-<!-- Vista de formulario específica -->
-<record model="ir.actions.act_window.view" id="gestion_tareas_sergio.action_desarrolladores_form">
-    <field name="sequence" eval="2"/>
-    <field name="view_mode">form</field>
-    <field name="view_id" ref="desarrolladores_form"/>
-    <field name="act_window_id" ref="gestion_tareas_sergio.action_desarrolladores"/>
-</record>
-```
-
-**Explicación de los bloques**:
-
-El primer bloque es la acción genérica que ya teníamos, define el acceso básico al modelo.
-
-El segundo bloque configura la vista de lista:
-
-- `sequence`: Orden de aplicación (1 = primero)
-- `view_mode`: Tipo de vista (list)
-- `view_id`: Referencia a la vista de árbol estándar de contactos
-- `act_window_id`: Enlace con la acción principal
-
-El tercer bloque configura la vista de formulario:
-
-- `sequence`: Orden de aplicación (2 = segundo)
-- `view_mode`: Tipo de vista (form)
-- `view_id`: Referencia a nuestra vista personalizada `desarrolladores_form`
-- `act_window_id`: Enlace con la acción principal
-
-Con esta configuración, al acceder desde nuestro menú de desarrolladores, se mostrará la vista personalizada que hemos creado.
-
 ## Filtrado de Registros: Solo Desarrolladores
 
 Actualmente, al acceder al menú de desarrolladores vemos todos los contactos del sistema. Necesitamos una forma de identificar y filtrar únicamente los contactos que son desarrolladores.
@@ -231,7 +364,7 @@ Actualmente, al acceder al menú de desarrolladores vemos todos los contactos de
 
 Para distinguir los desarrolladores del resto de contactos, añadimos un campo booleano `es_desarrollador` al modelo heredado:
 
-??? Example "models.py - desarrollador"
+!!! Example "models.py - desarrollador"
 
     ```python
     # DESARROLLADORES
@@ -239,7 +372,9 @@ Para distinguir los desarrolladores del resto de contactos, añadimos un campo b
         _name = 'res.partner'
         _inherit = 'res.partner'
 
-        es_desarrollador = fields.Boolean(string='Desarrollador')
+        es_desarrollador = fields.Boolean(
+            string="Es Desarrollador")
+
         tecnologias = fields.Many2many(
             'gestion_tareas_sergio.tecnologias_sergio',
             relation='relacion_desarrollador_technologies',
@@ -251,25 +386,25 @@ Para distinguir los desarrolladores del resto de contactos, añadimos un campo b
 
 Ahora modificamos la vista para mostrar este campo en la pestaña de desarrolladores:
 
-??? Example "views.xml"
+!!! Example "views.xml"
     ```xml
-    <record model="ir.ui.view" id="desarrolladores_form">
-        <field name="name">gestion_tareas_sergio.Desarrolladores</field>
+    <record id="gestion_tareas_sergio_view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.tareas_sergio</field>
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
-        <field name="mode">primary</field>
+        <field name="mode">primary</field> 
         <field name="arch" type="xml">
-            <xpath expr="//sheet/notebook/page[@name='internal_notes']" position="after">
-                <page name="desarrolladores" string="Desarrolladores">
-                    <group>
-                        <group>
-                            <field name="es_desarrollador"/>
-                            <field name="tecnologias"/>
-                        </group>
-                    </group>
-                </page>
-            </xpath>
-        </field>
+          <xpath expr="//sheet/notebook/page[@name='internal_notes']" position="after">
+              <page name="devs" string="Datos Desarrollador">
+                  <group>
+                      <group>
+                          <field name="es_desarrollador"/>
+                          <field name="tecnologia_ids" widget="many2many_tags"/>
+                      </group>
+                  </group>
+              </page>
+          </xpath>
+        </field> 
     </record>
     ```
 
@@ -281,15 +416,17 @@ Para mostrar únicamente los desarrolladores en nuestro menú, utilizamos dos at
 
 **Context**: Establece valores por defecto al crear nuevos registros
 
-```xml
-<record model="ir.actions.act_window" id="gestion_tareas_sergio.action_desarrolladores">
-    <field name="name">Gestión Tareas Sergio Desarrolladores</field>
-    <field name="res_model">res.partner</field>
-    <field name="view_mode">list,form</field>
-    <field name="domain">[('es_desarrollador', '=', True)]</field>
-    <field name="context">{'default_es_desarrollador': True}</field>
-</record>
-```
+!!! example "views.xml"
+
+    ```xml
+        <record model="ir.actions.act_window" id="desarrolladores_action_window">
+            <field name="name">Desarrolladores</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('es_desarrollador', '=', True)]</field>
+            <field name="context">{'default_es_desarrollador': True}</field>        
+        </record>
+    ```
 
 **Detalles importantes de la sintaxis**:
 
@@ -305,30 +442,32 @@ Con estos cambios:
 
 Para que la pestaña de desarrollador solo sea visible cuando un contacto tiene marcado el campo `es_desarrollador`, utilizamos el atributo `modifiers`:
 
-```xml
-<record model="ir.ui.view" id="desarrolladores_form">
-    <field name="name">gestion_tareas_sergio.Desarrolladores</field>
-    <field name="model">res.partner</field>
-    <field name="inherit_id" ref="base.view_partner_form"/>
-    <field name="mode">primary</field>
-    <field name="arch" type="xml">
-        <xpath expr="//sheet/notebook/page[@name='internal_notes']" position="after">
-            <page name="desarrolladores" 
-                  string="Desarrolladores" 
-                  modifiers="{'invisible':[('es_desarrollador', '=', False)]}">
-                <group>
-                    <group>
-                        <field name="es_desarrollador"/>
-                        <field name="tecnologias"/>
-                    </group>
-                </group>
-            </page>
-        </xpath>
-    </field>
-</record>
-```
+!!! example "views.xml"
 
-El atributo `modifiers` utiliza una sintaxis similar al `domain`, definiendo condiciones que se evalúan en Python. En este caso, la pestaña será invisible cuando `es_desarrollador` sea `False`.
+    ```xml
+        <record id="gestion_tareas_sergio_view_partner_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit.tareas_sergio</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="mode">primary</field> 
+            <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook/page[@name='internal_notes']" position="after">
+                <page name="devs" 
+                        string="Datos Desarrollador"
+                        invisible="not es_desarrollador">
+                    <group>
+                        <group>
+                            <field name="es_desarrollador"/>
+                            <field name="tecnologia_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+            </field> 
+        </record>
+    ```
+
+El atributo `invisible` es una propiedad de las vistas que permite ocultar o mostrar elementos de la interfaz (campos, botones, pestañas o grupos) de forma dinámica, basándose en los valores de otros campos del modelo. En este caso también podría ser `invisible="es_desarrollador == False"`
 
 !!! note "Cambio de `attrs` a `modifiers` en Odoo 18"
     Odoo 18 ha cambiado la forma de identificar los atributos de una vista, pasando de `attrs` a `modifiers`. Si encuentras código con `attrs` en versiones anteriores, debes actualizarlo a `modifiers` para la versión 18.
@@ -343,13 +482,19 @@ Ahora que tenemos desarrolladores en nuestro sistema, estableceremos la relació
 
 Añadimos un campo de relación Many2one en el modelo de tareas para asociar cada tarea a un desarrollador:
 
-```python
-class tareas_sergio(models.Model):
-    _name = 'gestion_tareas_sergio.tareas_sergio'
-    # ... campos existentes ...
-    
-    desarrollador_mo = fields.Many2one('res.partner', string='Desarrollador')
-```
+
+!!! example "models.py - tareas"
+
+    ```python
+    class tareas_sergio(models.Model):
+        _name = 'gestion_tareas_sergio.tareas_sergio'
+        # ... campos existentes ...
+        
+        desarrollador_ids = fields.Many2one(
+            'res.partner', 
+            string='Desarrollador')
+
+    ``` 
 
 Dado que los desarrolladores son contactos (`res.partner`), la relación se establece directamente con este modelo.
 
@@ -357,7 +502,7 @@ Dado que los desarrolladores son contactos (`res.partner`), la relación se esta
 
 Añadimos el nuevo campo en la vista de formulario de tareas:
 
-??? Example "views.xml"
+!!! Example "views.xml"
     ```xml
     <record model="ir.ui.view" id="tareas_form">
         <field name="name">gestion_tareas_sergio.tareas_sergio.form</field>
@@ -367,7 +512,7 @@ Añadimos el nuevo campo en la vista de formulario de tareas:
                 <sheet>
                     <group>
                         <!-- campos existentes -->
-                        <field name="desarrollador_mo"/>
+                        <field name="desarrollador_ids"/>
                     </group>
                 </sheet>
             </form>
@@ -381,23 +526,28 @@ Si pruebas ahora la aplicación, verás que el campo funciona correctamente most
 
 Para que el campo muestre únicamente desarrolladores y además use nuestra vista personalizada al acceder al formulario, aplicamos `domain` y `context`:
 
-```xml
-<record model="ir.ui.view" id="tareas_form">
-    <field name="name">gestion_tareas_sergio.tareas_sergio.form</field>
-    <field name="model">gestion_tareas_sergio.tareas_sergio</field>
-    <field name="arch" type="xml">
-        <form>
-            <sheet>
-                <group>
-                    <!-- campos existentes -->
-                    <field name="desarrollador_mo" 
-                           domain="[('es_desarrollador', '=', True)]"
-                           context="{'form_view_ref': 'desarrolladores_form'}"/>
-                </group>
-            </sheet>
-        </form>
-    </field>
-</record>
+!!! Example "views.xml"
+
+    ```xml
+    <record model="ir.ui.view" id="tareas_form">
+        <field name="name">gestion_tareas_sergio.tareas_sergio.form</field>
+        <field name="model">gestion_tareas_sergio.tareas_sergio</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <!-- campos existentes -->
+                        <field name="desarrollador_ids" 
+                                domain="[('es_desarrollador', '=', True)]"
+                                context="{
+                                            'form_view_ref': 'gestion_tareas_sergio.gestion_tareas_sergio_view_partner_form_inherit',
+                                            'default_es_desarrollador': True
+                                        }"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
 ```
 
 **Mejoras aplicadas**:
@@ -411,35 +561,80 @@ Una mejora adicional es hacer que el campo `es_desarrollador` no sea modificable
 
 Podemos hacer el campo invisible:
 
-```xml
-<record model="ir.ui.view" id="desarrolladores_form">
-    <field name="name">gestion_tareas_sergio.Desarrolladores</field>
-    <field name="model">res.partner</field>
-    <field name="inherit_id" ref="base.view_partner_form"/>
-    <field name="mode">primary</field>
-    <field name="arch" type="xml">
-        <xpath expr="//sheet/notebook/page[@name='internal_notes']" position="after">
-            <page name="desarrolladores" 
-                  string="Desarrolladores" 
-                  modifiers="{'invisible':[('es_desarrollador', '=', False)]}">
-                <group>
+!!! Example "views.xml"
+
+    ```xml
+        <record id="gestion_tareas_sergio_view_partner_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit.tareas_sergio</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="mode">primary</field> 
+            <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook/page[@name='internal_notes']" position="after">
+                <page name="devs" 
+                        string="Datos Desarrollador"
+                        invisible="not es_desarrollador">
                     <group>
-                        <!-- Opción 1: Solo lectura -->
-                        <!-- <field name="es_desarrollador" readonly="1"/> -->
-                        
-                        <!-- Opción 2: Invisible (recomendado) -->
-                        <field name="es_desarrollador" invisible="1"/>
-                        
-                        <field name="tecnologias"/>
+                        <group>
+                            <!-- Opción 1: Solo lectura -->
+                            <!-- <field name="es_desarrollador" readonly="1"/> -->
+                            
+                            <!-- Opción 2: Invisible (recomendado) -->
+                            <field name="es_desarrollador" invisible="1"/>
+                            <field name="tecnologia_ids" widget="many2many_tags"/>
+                        </group>
                     </group>
-                </group>
-            </page>
-        </xpath>
-    </field>
-</record>
-```
+                </page>
+            </xpath>
+            </field> 
+        </record>
+    ```
 
 La opción `invisible="1"` evita que el usuario pueda modificar el campo accidentalmente, manteniendo la coherencia del formulario.
+
+
+Excelente elección. Ocultar la pestaña de **"Ventas y Compras"** es un ejemplo perfecto para los apuntes porque enseña a los alumnos cómo ocultar no solo campos individuales, sino bloques completos de información (**páginas del notebook**).
+
+Aquí tienes el código actualizado y la explicación para incluir en la guía:
+
+### Ocultar campo de formulario inicial
+
+En muchas ocasiones, los contactos de tipo "Empleado" o "Desarrollador" no necesitan ver pestañas contables o comerciales. Vamos a ocultar el campo **Sitio Web** y la pestaña completa de **Venta y Compra** para dejar una ficha mucho más limpia.
+
+#### Código XML para la vista heredada:
+
+```xml
+<record id="gestion_tareas_sergio_view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.tareas_sergio</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="mode">primary</field> 
+        <field name="arch" type="xml">
+
+          <xpath expr="//field[@name='website']" position="attributes">
+              <attribute name="invisible">1</attribute>
+          </xpath>
+
+          <xpath expr="//page[@name='sales_purchases']" position="attributes">
+              <attribute name="invisible">1</attribute>
+          </xpath>
+
+          <xpath expr="//sheet/notebook/page[@name='internal_notes']" position="after">
+              <page name="devs" 
+                    string="Datos Desarrollador"
+                    invisible="not es_desarrollador">
+                  <group>
+                      <group>
+                          <field name="es_desarrollador" invisible="1"/>
+                          <field name="tecnologia_ids" widget="many2many_tags"/>
+                      </group>
+                  </group>
+              </page>
+          </xpath>
+        </field> 
+    </record>
+
+```
 
 ## Asignación Automática de Categoría
 
@@ -447,35 +642,40 @@ Como funcionalidad adicional, vamos a asignar automáticamente la etiqueta "Desa
 
 Esto se implementa mediante un método decorado con `@api.onchange`, que se ejecuta automáticamente cuando el usuario modifica el campo `es_desarrollador`:
 
-```python
-class desarrollador(models.Model):
-    _name = 'res.partner'
-    _inherit = 'res.partner'
-    
-    es_desarrollador = fields.Boolean(string='Desarrollador')
-    tecnologias = fields.Many2many(
-        'gestion_tareas_sergio.tecnologias_sergio',
-        relation='relacion_desarrollador_technologies',
-        column1='rel_desarrollador',
-        column2='rel_tecnologias',
-        string='Tecnologías'
-    )
+!!! example "models.py" 
+    ```python
+    # DESARROLLADOR, Hereda de res.partner
+    class desarrollador_sergio(models.Model):
+        _name = 'res.partner'
+        _inherit = 'res.partner'                                    # Hereda toda la estructura de contactos
 
-    @api.onchange('es_desarrollador')
-    def _onchange_es_desarrollador(self):
-        # Buscar la categoría "Desarrollador"
-        categorias = self.env['res.partner.category'].search([('name', '=', 'Desarrollador')])
-        
-        if len(categorias) > 0:
-            # Si existe, usar la primera encontrada
-            category = categorias[0]
-        else:
-            # Si no existe, crearla
-            category = self.env['res.partner.category'].create({'name': 'Desarrollador'})
-        
-        # Asignar la categoría al contacto
-        self.category_id = [(4, category.id)]
-```
+        es_desarrollador = fields.Boolean(
+            string="Es Desarrollador")
+
+        tecnologia_ids = fields.Many2many(
+            comodel_name='gestion_tareas_sergio.tecnologias_sergio',# Modelo destino
+            relation='rel_dev_tec',                                 # Tabla intermedia
+            column1='desarrollador_id',                             # Columna para esta clase
+            column2='tecnologia_id',                                # Columna para tecnologías
+            string="Tecnologías"
+        )
+
+
+        @api.onchange('es_desarrollador')
+        def _onchange_es_desarrollador(self):
+            # Buscar la categoría "Desarrollador"
+            categorias = self.env['res.partner.category'].search([('name', '=', 'Desarrollador')])
+            
+            if len(categorias) > 0:
+                # Si existe, usar la primera encontrada
+                category = categorias[0]
+            else:
+                # Si no existe, crearla
+                category = self.env['res.partner.category'].create({'name': 'Desarrollador'})
+            
+            # Asignar la categoría al contacto
+            self.category_id = [(4, category.id)]
+    ```
 
 **Explicación del código**:
 
@@ -538,19 +738,21 @@ Vas a extender el modelo `res.partner` de Odoo para gestionar **Camareros** en t
 
 5. **Hacer pestaña visible solo para camareros**
     
-    Usa `modifiers` en la pestaña para ocultarla cuando no sea camarero.
+    Usa `invisible` en la pestaña para ocultarla cuando no sea camarero.
 
 6. **Ocultar campo es_camarero en formulario**
     
     Haz el campo invisible para evitar que se modifique accidentalmente.
 
-7. **Relación con Pedidos o Mesas (opcional)**
-    
-    Si tienes modelo de Pedidos/Mesas, añade campo Many2one a `res.partner` y filtra solo camareros.
+7. **Ocultar campos innecesarios**
 
-8. **Asignación automática de categoría (avanzado)**
+    Oculta la pestaña de **"Contactos"** y el campo **NIF** de la ficha del camarero .
+
+8. **Asignación automática de categoría**
     
     Implementa `@api.onchange` para asignar etiqueta "Camarero" automáticamente.
+
+
 
 ### Verificaciones
 
@@ -561,7 +763,6 @@ Comprueba que:
 - Al crear camarero, el campo `es_camarero` está marcado por defecto
 - La pestaña "Camarero" aparece solo en camareros
 - Puedes asignar turno, sección y menús de especialidad
-- Si implementaste Pedidos, solo aparecen camareros en el desplegable
 
 !!!example "Datos de Prueba"
 
