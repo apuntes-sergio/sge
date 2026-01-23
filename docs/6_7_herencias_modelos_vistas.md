@@ -64,9 +64,6 @@ Por ejemplo, para asociar tecnologías a los desarrolladores, se añade un campo
         _name = 'res.partner'
         _inherit = 'res.partner'                                    # Hereda toda la estructura de contactos
 
-        es_desarrollador = fields.Boolean(
-            string="Es Desarrollador")
-
         tecnologia_ids = fields.Many2many(
             comodel_name='gestion_tareas_sergio.tecnologias_sergio',# Modelo destino
             relation='rel_dev_tec',                                 # Tabla intermedia
