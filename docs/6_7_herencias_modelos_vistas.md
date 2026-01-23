@@ -548,7 +548,7 @@ Para que el campo muestre únicamente desarrolladores y además use nuestra vist
             </form>
         </field>
     </record>
-```
+    ```
 
 **Mejoras aplicadas**:
 
@@ -603,38 +603,39 @@ En muchas ocasiones, los contactos de tipo "Empleado" o "Desarrollador" no neces
 
 #### Código XML para la vista heredada:
 
-```xml
-<record id="gestion_tareas_sergio_view_partner_form_inherit" model="ir.ui.view">
-        <field name="name">res.partner.form.inherit.tareas_sergio</field>
-        <field name="model">res.partner</field>
-        <field name="inherit_id" ref="base.view_partner_form"/>
-        <field name="mode">primary</field> 
-        <field name="arch" type="xml">
+!!! Example "views.xml"
 
-          <xpath expr="//field[@name='website']" position="attributes">
-              <attribute name="invisible">1</attribute>
-          </xpath>
+    ```xml
+    <record id="gestion_tareas_sergio_view_partner_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit.tareas_sergio</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="mode">primary</field> 
+            <field name="arch" type="xml">
 
-          <xpath expr="//page[@name='sales_purchases']" position="attributes">
-              <attribute name="invisible">1</attribute>
-          </xpath>
+            <xpath expr="//field[@name='website']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
 
-          <xpath expr="//sheet/notebook/page[@name='internal_notes']" position="after">
-              <page name="devs" 
-                    string="Datos Desarrollador"
-                    invisible="not es_desarrollador">
-                  <group>
-                      <group>
-                          <field name="es_desarrollador" invisible="1"/>
-                          <field name="tecnologia_ids" widget="many2many_tags"/>
-                      </group>
-                  </group>
-              </page>
-          </xpath>
-        </field> 
-    </record>
+            <xpath expr="//page[@name='sales_purchases']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
 
-```
+            <xpath expr="//sheet/notebook/page[@name='internal_notes']" position="after">
+                <page name="devs" 
+                        string="Datos Desarrollador"
+                        invisible="not es_desarrollador">
+                    <group>
+                        <group>
+                            <field name="es_desarrollador" invisible="1"/>
+                            <field name="tecnologia_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+            </field> 
+        </record>
+    ```
 
 ## Asignación Automática de Categoría
 
