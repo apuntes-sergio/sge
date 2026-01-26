@@ -31,21 +31,22 @@ Para personalizar una vista lista, debemos definir un registro en el modelo `ir.
 
 Vamos a crear una vista lista completa para el modelo Sprint. En tu archivo `views.xml`:
 
-```xml
-<record model="ir.ui.view" id="sprints_list">
-    <field name="name">gestion_tareas_sergio.sprints_sergio.list</field>
-    <field name="model">gestion_tareas_sergio.sprints_sergio</field>
-    <field name="arch" type="xml">
-        <list>
-            <field name="nombre"/>
-            <field name="descripcion"/>
-            <field name="duracion"/>
-            <field name="fecha_ini"/>
-            <field name="fecha_fin"/>
-        </list>
-    </field>
-</record>
-```
+!!! example "views.xml"
+    ```xml
+    <record model="ir.ui.view" id="sprints_list">
+        <field name="name">gestion_tareas_sergio.sprints_sergio.list</field>
+        <field name="model">gestion_tareas_sergio.sprints_sergio</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="nombre"/>
+                <field name="descripcion"/>
+                <field name="duracion"/>
+                <field name="fecha_ini"/>
+                <field name="fecha_fin"/>
+            </list>
+        </field>
+    </record>
+    ```
 
 **Elementos de la definición**:
 
@@ -81,15 +82,17 @@ Odoo proporciona varios tipos de decoraciones predefinidas:
 
 Por ejemplo, para resaltar en amarillo los sprints con exactamente 15 días de duración:
 
-```xml
-<list decoration-warning="duracion == 15">
-    <field name="nombre"/>
-    <field name="descripcion"/>
-    <field name="duracion"/>
-    <field name="fecha_ini"/>
-    <field name="fecha_fin"/>
-</list>
-```
+!!! example "views.xml - Decorador simple por campo duración"
+
+    ```xml
+    <list decoration-warning="duracion == 15">
+        <field name="nombre"/>
+        <field name="descripcion"/>
+        <field name="duracion"/>
+        <field name="fecha_ini"/>
+        <field name="fecha_fin"/>
+    </list>
+    ```
 
 La condición `duracion == 15` se evalúa para cada registro. Si es verdadera, se aplica el estilo de advertencia (color amarillo/naranja).
 
@@ -97,18 +100,21 @@ La condición `duracion == 15` se evalúa para cada registro. Si es verdadera, s
 
 Podemos aplicar varias decoraciones a la vez. Por ejemplo, resaltar en rojo sprints muy cortos y en verde los de duración estándar:
 
-```xml
-<list decoration-danger="duracion &lt; 7" 
-      decoration-success="duracion == 14">
-    <field name="nombre"/>
-    <field name="descripcion"/>
-    <field name="duracion"/>
-    <field name="fecha_ini"/>
-    <field name="fecha_fin"/>
-</list>
-```
+!!! example "views.xml - Decoración multiple dependiendo de valor de campos duración"
 
-**Nota importante sobre el orden**: Si un registro cumple múltiples condiciones, se aplicará la última decoración que coincida. En el ejemplo anterior, un sprint de 14 días se mostrará en verde aunque también cumpla otras condiciones.
+    ```xml
+    <list decoration-danger="duracion &lt; 7" 
+        decoration-success="duracion == 14">
+        <field name="nombre"/>
+        <field name="descripcion"/>
+        <field name="duracion"/>
+        <field name="fecha_ini"/>
+        <field name="fecha_fin"/>
+    </list>
+    ```
+
+!!! note "Nota importante sobre el orden" 
+    Si un registro cumple múltiples condiciones, se aplicará la última decoración que coincida. En el ejemplo anterior, un sprint de 14 días se mostrará en verde aunque también cumpla otras condiciones.
 
 ## Uso de Operadores en Condiciones
 
@@ -129,24 +135,27 @@ Al escribir condiciones dentro de atributos XML, debemos tener cuidado con ciert
 
 Para resaltar sprints con duración menor a 15 días:
 
-```xml
-<list decoration-warning="duracion &lt; 15">
-    <!-- campos -->
-</list>
-```
+!!! example "views.xml"
+    ```xml
+    <list decoration-warning="duracion &lt; 15">
+        <!-- campos -->
+    </list>
+    ```
 
 ### Operadores Lógicos
 
 También podemos combinar condiciones con operadores lógicos:
 
-```xml
-<!-- Sprints cortos que ya han comenzado -->
-<list decoration-warning="duracion &lt; 10 and fecha_ini &lt;= context_today()">
-    <!-- campos -->
-</list>
-```
+!!! example "views.xml"
+    ```xml
+    <!-- Sprints cortos que ya han comenzado -->
+    <list decoration-warning="duracion &lt; 10 and fecha_ini &lt;= context_today()">
+        <!-- campos -->
+    </list>
+    ```
 
 Operadores lógicos disponibles:
+
 - `and`: Ambas condiciones deben cumplirse
 - `or`: Al menos una condición debe cumplirse
 - `not`: Niega la condición
@@ -159,31 +168,33 @@ Para hacer decoraciones más útiles, podemos crear un campo computado que deter
 
 En `models.py`, añadimos un campo booleano computado:
 
-```python
-from datetime import date
+!!! example "models.py - Añadiendo campo `activo`"
 
-class sprints_sergio(models.Model):
-    _name = 'gestion_tareas_sergio.sprints_sergio'
-    # ... campos existentes ...
-    
-    activo = fields.Boolean(
-        compute='_compute_activo',
-        string='En Curso',
-        help='Indica si el sprint está actualmente en curso'
-    )
-    
-    @api.depends('fecha_ini', 'fecha_fin')
-    def _compute_activo(self):
-        hoy = date.today()
-        for sprint in self:
-            if sprint.fecha_ini and sprint.fecha_fin:
-                # Sprint activo si hoy está entre fecha inicio y fin
-                fecha_ini_date = sprint.fecha_ini.date() if hasattr(sprint.fecha_ini, 'date') else sprint.fecha_ini
-                fecha_fin_date = sprint.fecha_fin.date() if hasattr(sprint.fecha_fin, 'date') else sprint.fecha_fin
-                sprint.activo = fecha_ini_date <= hoy <= fecha_fin_date
-            else:
-                sprint.activo = False
-```
+    ```python
+    from datetime import date
+
+    class sprints_sergio(models.Model):
+        _name = 'gestion_tareas_sergio.sprints_sergio'
+        # ... campos existentes ...
+        
+        activo = fields.Boolean(
+            compute='_compute_activo',
+            string='En Curso',
+            help='Indica si el sprint está actualmente en curso'
+        )
+        
+        @api.depends('fecha_ini', 'fecha_fin')
+        def _compute_activo(self):
+            hoy = date.today()
+            for sprint in self:
+                if sprint.fecha_ini and sprint.fecha_fin:
+                    # Sprint activo si hoy está entre fecha inicio y fin
+                    fecha_ini_date = sprint.fecha_ini.date() if hasattr(sprint.fecha_ini, 'date') else sprint.fecha_ini
+                    fecha_fin_date = sprint.fecha_fin.date() if hasattr(sprint.fecha_fin, 'date') else sprint.fecha_fin
+                    sprint.activo = fecha_ini_date <= hoy <= fecha_fin_date
+                else:
+                    sprint.activo = False
+    ```
 
 **Explicación del código**:
 
@@ -197,15 +208,17 @@ class sprints_sergio(models.Model):
 
 Ahora podemos usar este campo para aplicar decoraciones, incluso si no lo mostramos como columna:
 
-```xml
-<list decoration-info="activo == True">
-    <field name="nombre"/>
-    <field name="duracion"/>
-    <field name="fecha_ini"/>
-    <field name="fecha_fin"/>
-    <field name="activo" invisible="1"/>
-</list>
-```
+!!! example "views.xml"
+
+    ```xml
+    <list decoration-info="activo == True">
+        <field name="nombre"/>
+        <field name="duracion"/>
+        <field name="fecha_ini"/>
+        <field name="fecha_fin"/>
+        <field name="activo" invisible="1"/>
+    </list>
+    ```
 
 **Aspectos importantes**:
 
@@ -219,25 +232,29 @@ Con esto, los sprints en curso se resaltarán en azul, facilitando su identifica
 
 Podemos aplicar diferentes decoraciones según el estado del sprint para crear una vista muy informativa:
 
-```xml
-<list decoration-info="activo == True"
-      decoration-muted="fecha_fin &lt; context_today()"
-      decoration-success="duracion == 14">
-    <field name="nombre"/>
-    <field name="descripcion"/>
-    <field name="duracion"/>
-    <field name="fecha_ini"/>
-    <field name="fecha_fin"/>
-    <field name="activo" invisible="1"/>
-</list>
-```
+!!! example "views.xml"
+
+    ```xml
+    <list decoration-info="activo == True"
+        decoration-muted="fecha_fin &lt; context_today()"
+        decoration-success="duracion == 14">
+        <field name="nombre"/>
+        <field name="descripcion"/>
+        <field name="duracion"/>
+        <field name="fecha_ini"/>
+        <field name="fecha_fin"/>
+        <field name="activo" invisible="1"/>
+    </list>
+    ```
 
 Esta configuración:
+
 - **Azul**: Sprints en curso (activos)
 - **Gris**: Sprints finalizados
 - **Verde**: Sprints con duración estándar de 14 días
 
-**Recuerda**: El orden de evaluación es importante. Si un sprint cumple múltiples condiciones, se aplicará la última que coincida.
+!!! note "Recuerda"
+    El orden de evaluación es importante. Si un sprint cumple múltiples condiciones, se aplicará la última que coincida.
 
 ## Vistas Lista Editables
 
@@ -265,22 +282,26 @@ o
 
 ### Ejemplo con Sprints
 
-```xml
-<list editable="top">
-    <field name="nombre"/>
-    <field name="duracion"/>
-    <field name="fecha_ini"/>
-</list>
-```
+!!! example "views.xml"
+
+    ```xml
+    <list editable="top">
+        <field name="nombre"/>
+        <field name="duracion"/>
+        <field name="fecha_ini"/>
+    </list>
+    ```
 
 ### Consideraciones sobre Vistas Editables
 
 **Ventajas**:
+
 - Edición rápida sin abrir formularios
 - Útil para listas de configuración o catálogos simples
 - Mejora la productividad en tareas repetitivas
 
 **Desventajas**:
+
 - Solo se pueden editar campos visibles en la lista
 - No permite usar widgets complejos del formulario
 - Pierde funcionalidad de validaciones complejas
@@ -296,14 +317,16 @@ Otra funcionalidad muy útil es mostrar sumatorios al pie de las columnas numér
 
 Para mostrar el total de días programados en todos los sprints:
 
-```xml
-<list>
-    <field name="nombre"/>
-    <field name="duracion" sum="Total días"/>
-    <field name="fecha_ini"/>
-    <field name="fecha_fin"/>
-</list>
-```
+!!! example "views.xml"
+
+    ```xml
+    <list>
+        <field name="nombre"/>
+        <field name="duracion" sum="Total días"/>
+        <field name="fecha_ini"/>
+        <field name="fecha_fin"/>
+    </list>
+    ```
 
 El atributo `sum="Total días"` hace que:
 - Se sume automáticamente el valor de todos los registros visibles
@@ -313,14 +336,16 @@ El atributo `sum="Total días"` hace que:
 
 Podemos añadir sumatorios a varias columnas:
 
-```xml
-<list>
-    <field name="nombre"/>
-    <field name="duracion" sum="Total días"/>
-    <field name="numero_tareas" sum="Total tareas"/>
-    <field name="fecha_ini"/>
-</list>
-```
+!!! example "views.xml"
+
+    ```xml
+    <list>
+        <field name="nombre"/>
+        <field name="duracion" sum="Total días"/>
+        <field name="numero_tareas" sum="Total tareas"/>
+        <field name="fecha_ini"/>
+    </list>
+    ```
 
 ### Otros Atributos de Agregación
 
@@ -331,39 +356,45 @@ Además de `sum`, Odoo soporta otros tipos de agregación:
 - `min`: Valor mínimo
 - `max`: Valor máximo
 
-Ejemplo con promedio:
 
-```xml
-<field name="duracion" avg="Promedio"/>
-```
+!!! example "views.xml - Ejemplo con promedio"
 
-**Nota**: Los sumatorios solo aplican a los registros visibles en la lista según los filtros activos. Si tienes 100 sprints pero solo muestras 10 filtrados, el sumatorio será de esos 10.
+    ```xml
+    <field name="duracion" avg="Promedio"/>
+    ```
+
+!!! note "Nota"
+    Los sumatorios solo aplican a los registros visibles en la lista según los filtros activos. Si tienes 100 sprints pero solo muestras 10 filtrados, el sumatorio será de esos 10.
 
 ## Vista Lista Completa y Mejorada
 
 Juntando todas las técnicas vistas, aquí tienes una vista lista completa y funcional para Sprints:
 
-```xml
-<record model="ir.ui.view" id="sprints_list">
-    <field name="name">gestion_tareas_sergio.sprints_sergio.list</field>
-    <field name="model">gestion_tareas_sergio.sprints_sergio</field>
-    <field name="arch" type="xml">
-        <list decoration-info="activo == True"
-              decoration-muted="fecha_fin &lt; context_today()"
-              decoration-warning="duracion &lt; 7"
-              decoration-success="duracion == 14">
-            <field name="nombre"/>
-            <field name="descripcion"/>
-            <field name="duracion" sum="Total días" avg="Promedio"/>
-            <field name="fecha_ini"/>
-            <field name="fecha_fin"/>
-            <field name="activo" invisible="1"/>
-        </list>
-    </field>
-</record>
-```
+
+!!! example "views.xml"
+
+    ```xml
+    <record model="ir.ui.view" id="sprints_list">
+        <field name="name">gestion_tareas_sergio.sprints_sergio.list</field>
+        <field name="model">gestion_tareas_sergio.sprints_sergio</field>
+        <field name="arch" type="xml">
+            <list decoration-info="activo == True"
+                decoration-muted="fecha_fin &lt; context_today()"
+                decoration-warning="duracion &lt; 7"
+                decoration-success="duracion == 14">
+                <field name="nombre"/>
+                <field name="descripcion"/>
+                <field name="duracion" sum="Total días" avg="Promedio"/>
+                <field name="fecha_ini"/>
+                <field name="fecha_fin"/>
+                <field name="activo" invisible="1"/>
+            </list>
+        </field>
+    </record>
+    ```
 
 Esta vista:
+
 - Resalta en azul los sprints activos
 - Muestra en gris los sprints finalizados
 - Alerta en amarillo sobre sprints muy cortos (menos de 7 días)
