@@ -244,13 +244,11 @@ Recapitulemos con todo el código completo para las vista de los desarrolladores
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="mode">primary</field> 
         <field name="arch" type="xml">
-          <form>
             <sheet>
-              <group>
+                <group>
                 <field name="tecnologia_ids" widget="many2many_tags"/>
-              </group>
+                </group>
             </sheet>
-          </form>
         </field> 
     </record>
 
@@ -325,7 +323,6 @@ Ahora ya podemos escribir de nuevo nuestra vista heredada, pero añadiendo el ca
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="mode">primary</field> 
         <field name="arch" type="xml">
-          <form>
             <xpath expr="//sheet/notebook/page[@name='internal_notes']" position="after">
                 <page name="devs" string="Datos Desarrollador">
                     <group>
@@ -437,7 +434,7 @@ Con estos cambios:
 
 ### Visibilidad Condicional de la Pestaña
 
-Para que la pestaña de desarrollador solo sea visible cuando un contacto tiene marcado el campo `es_desarrollador`, utilizamos el atributo `modifiers`:
+Para que la pestaña de desarrollador solo sea visible cuando un contacto tiene marcado el campo `es_desarrollador`, utilizamos el atributo `invisible`:
 
 !!! example "views.xml"
 
@@ -465,9 +462,6 @@ Para que la pestaña de desarrollador solo sea visible cuando un contacto tiene 
     ```
 
 El atributo `invisible` es una propiedad de las vistas que permite ocultar o mostrar elementos de la interfaz (campos, botones, pestañas o grupos) de forma dinámica, basándose en los valores de otros campos del modelo. En este caso también podría ser `invisible="es_desarrollador == False"`
-
-!!! note "Cambio de `attrs` a `modifiers` en Odoo 18"
-    Odoo 18 ha cambiado la forma de identificar los atributos de una vista, pasando de `attrs` a `modifiers`. Si encuentras código con `attrs` en versiones anteriores, debes actualizarlo a `modifiers` para la versión 18.
 
 Este último paso garantiza que la pestaña solo se muestre para contactos que sean desarrolladores, mejorando la experiencia de usuario y evitando confusiones.
 
@@ -551,6 +545,8 @@ Para que el campo muestre únicamente desarrolladores y además use nuestra vist
 
 - `domain`: Filtra el desplegable para mostrar solo contactos con `es_desarrollador = True`
 - `context`: Especifica que al abrir el formulario desde este campo, se use la vista `desarrolladores_form`
+    - Observar que en `form_view_ref` se ha indicado la vista anteponiendo el nombre del proyecto `gestion_tareas_sergio` al nombre de la vista para indicar qué es esta en concreto, si no, usará la vista por defecto.
+    - Para asignar un valor por defecto se antepone `default_` al nombre del campo que se desea asignar por defecto, por eso tenemos `default_es_desarrollador`, porque el campos es `es_desarrollador`.
 
 ### Ocultar Campo es_desarrollador
 
@@ -587,12 +583,7 @@ Podemos hacer el campo invisible:
         </record>
     ```
 
-La opción `invisible="1"` evita que el usuario pueda modificar el campo accidentalmente, manteniendo la coherencia del formulario.
-
-
-Excelente elección. Ocultar la pestaña de **"Ventas y Compras"** es un ejemplo perfecto para los apuntes porque enseña a los alumnos cómo ocultar no solo campos individuales, sino bloques completos de información (**páginas del notebook**).
-
-Aquí tienes el código actualizado y la explicación para incluir en la guía:
+La opción `invisible="1"` evita que el usuario pueda modificar el campo accidentalmente, manteniendo la coherencia del formulario. También se puede poner `invisible="true"`
 
 ### Ocultar campo de formulario inicial
 
@@ -746,7 +737,11 @@ Vas a extender el modelo `res.partner` de Odoo para gestionar **Camareros** en t
 
     Oculta la pestaña de **"Contactos"** y el campo **NIF** de la ficha del camarero .
 
-8. **Asignación automática de categoría**
+8. **Poner campo "sección" en la pantalla principal**
+
+    Pon el campo `Sección` debajo de **Puesto de trabajo**, donde antes estaba **NIF**.
+
+9. **Asignación automática de categoría**
     
     Implementa `@api.onchange` para asignar etiqueta "Camarero" automáticamente.
 
@@ -760,6 +755,7 @@ Comprueba que:
 - Solo se muestran contactos marcados como camareros
 - Al crear camarero, el campo `es_camarero` está marcado por defecto
 - La pestaña "Camarero" aparece solo en camareros
+- El campo `seccion` aparece en la pantalla principal de usuarios.
 - Puedes asignar turno, sección y menús de especialidad
 
 !!!example "Datos de Prueba"
