@@ -32,13 +32,14 @@ Para personalizar una vista lista, debemos definir un registro en el modelo `ir.
 Vamos a crear una vista lista completa para el modelo Sprint. En tu archivo `views.xml`:
 
 !!! example "views.xml"
+
     ```xml
     <record model="ir.ui.view" id="sprints_list">
         <field name="name">gestion_tareas_sergio.sprints_sergio.list</field>
         <field name="model">gestion_tareas_sergio.sprints_sergio</field>
         <field name="arch" type="xml">
             <list>
-                <field name="nombre"/>
+                <field name="name"/>
                 <field name="descripcion"/>
                 <field name="duracion"/>
                 <field name="fecha_ini"/>
@@ -58,6 +59,7 @@ Vamos a crear una vista lista completa para el modelo Sprint. En tu archivo `vie
 - `<field>`: Cada campo que queremos mostrar como columna
 
 Una vez definida y actualizado el módulo, veremos que la lista de sprints muestra todas las columnas especificadas. Si tienes sprints creados con fechas y duraciones, verás cómo los campos computados como `fecha_fin` se muestran correctamente calculados.
+
 
 ## Decoraciones Condicionales
 
@@ -86,7 +88,7 @@ Por ejemplo, para resaltar en amarillo los sprints con exactamente 15 días de d
 
     ```xml
     <list decoration-warning="duracion == 15">
-        <field name="nombre"/>
+        <field name="name"/>
         <field name="descripcion"/>
         <field name="duracion"/>
         <field name="fecha_ini"/>
@@ -105,7 +107,7 @@ Podemos aplicar varias decoraciones a la vez. Por ejemplo, resaltar en rojo spri
     ```xml
     <list decoration-danger="duracion &lt; 7" 
         decoration-success="duracion == 14">
-        <field name="nombre"/>
+        <field name="name"/>
         <field name="descripcion"/>
         <field name="duracion"/>
         <field name="fecha_ini"/>
@@ -114,7 +116,20 @@ Podemos aplicar varias decoraciones a la vez. Por ejemplo, resaltar en rojo spri
     ```
 
 !!! note "Nota importante sobre el orden" 
+
     Si un registro cumple múltiples condiciones, se aplicará la última decoración que coincida. En el ejemplo anterior, un sprint de 14 días se mostrará en verde aunque también cumpla otras condiciones.
+
+    Pero además por encima de esta regla tenemos que hay un orden de prioridad interno que tiene Odoo para las decoraciones CSS.
+
+    El motor de Odoo aplica las clases CSS en un orden específico. La prioridad (de mayor a mayor importancia) es la siguiente:
+
+    - danger (Rojo) - Máxima prioridad.
+    - warning (Naranja)
+    - success (Verde)
+    - info (Azul)
+    - muted (Gris) - Menor prioridad.
+
+Si queremos que una decoración se cumpla siempre entonces la condición será `="1"` (igual a 1 con comillas)
 
 ## Uso de Operadores en Condiciones
 
@@ -149,7 +164,7 @@ También podemos combinar condiciones con operadores lógicos:
 !!! example "views.xml"
     ```xml
     <!-- Sprints cortos que ya han comenzado -->
-    <list decoration-warning="duracion &lt; 10 and fecha_ini &lt;= context_today()">
+    <list decoration-warning="duracion &lt; 10 and fecha_ini &lt;= current_date">
         <!-- campos -->
     </list>
     ```
@@ -212,7 +227,7 @@ Ahora podemos usar este campo para aplicar decoraciones, incluso si no lo mostra
 
     ```xml
     <list decoration-info="activo == True">
-        <field name="nombre"/>
+        <field name="name"/>
         <field name="duracion"/>
         <field name="fecha_ini"/>
         <field name="fecha_fin"/>
@@ -236,9 +251,9 @@ Podemos aplicar diferentes decoraciones según el estado del sprint para crear u
 
     ```xml
     <list decoration-info="activo == True"
-        decoration-muted="fecha_fin &lt; context_today()"
+        decoration-muted="fecha_fin &lt; current_date"
         decoration-success="duracion == 14">
-        <field name="nombre"/>
+        <field name="name"/>
         <field name="descripcion"/>
         <field name="duracion"/>
         <field name="fecha_ini"/>
@@ -277,6 +292,7 @@ o
 ```
 
 **Diferencia entre top y bottom**:
+
 - `editable="top"`: Nuevos registros aparecen al principio de la lista
 - `editable="bottom"`: Nuevos registros aparecen al final de la lista
 
@@ -286,7 +302,7 @@ o
 
     ```xml
     <list editable="top">
-        <field name="nombre"/>
+        <field name="name"/>
         <field name="duracion"/>
         <field name="fecha_ini"/>
     </list>
@@ -321,7 +337,7 @@ Para mostrar el total de días programados en todos los sprints:
 
     ```xml
     <list>
-        <field name="nombre"/>
+        <field name="name"/>
         <field name="duracion" sum="Total días"/>
         <field name="fecha_ini"/>
         <field name="fecha_fin"/>
@@ -329,6 +345,7 @@ Para mostrar el total de días programados en todos los sprints:
     ```
 
 El atributo `sum="Total días"` hace que:
+
 - Se sume automáticamente el valor de todos los registros visibles
 - Se muestre el total al pie de la columna con la etiqueta "Total días"
 
@@ -340,7 +357,7 @@ Podemos añadir sumatorios a varias columnas:
 
     ```xml
     <list>
-        <field name="nombre"/>
+        <field name="name"/>
         <field name="duracion" sum="Total días"/>
         <field name="numero_tareas" sum="Total tareas"/>
         <field name="fecha_ini"/>
@@ -366,6 +383,78 @@ Además de `sum`, Odoo soporta otros tipos de agregación:
 !!! note "Nota"
     Los sumatorios solo aplican a los registros visibles en la lista según los filtros activos. Si tienes 100 sprints pero solo muestras 10 filtrados, el sumatorio será de esos 10.
 
+
+Para tus apuntes de clase, puedes definir un **Widget** en Odoo de la siguiente manera:
+
+## Añadienteo Widgets a nuestras vistas
+
+Un **Widget** es un componente de la interfaz de usuario que define **cómo se visualiza y cómo se interactúa** con un campo específico en la pantalla.
+
+Por defecto, Odoo renderiza los campos según su tipo (un `Integer` como un número, un `Char` como texto plano). Sin embargo, al usar un widget, transformamos esa representación técnica en una herramienta visual funcional.
+
+### Widgets en la Vista Listado (`tree` / `list`)
+
+En las listas, los widgets suelen ser **pasivos o de visualización rápida**. Su objetivo es facilitar la lectura de datos sin tener que entrar en el registro.
+
+* **Función:** Cambian la estética o añaden un icono.
+* **Ejemplos comunes:**
+
+| Widget | Tipo de campo | Descripción breve | Ejemplo Visual (Representación) |
+| --- | --- | --- | --- |
+| **`badge`** | Selection / Char | Encapsula el texto en un óvalo coloreado. | `[ Borrador ]` (Etiqueta azul) |
+| **`many2many_tags`** | Many2many | Muestra relaciones como etiquetas de colores. | `( Urgente ) ( Odoo ) ( Dev )` |
+| **`priority`** | Integer / Selection | Transforma el valor en estrellas doradas. | `⭐ ⭐ ⭐ ✩ ✩` |
+| **`progressbar`** | Integer / Float | Muestra una barra de carga rellena. | `[██████░░░░] 60%` |
+| **`boolean_toggle`** | Boolean | Sustituye el check por un interruptor. | `( ○━━━━) / (━━━━● )` |
+| **`boolean_favorite`** | Boolean | Muestra una estrella de "favorito". | `⭐ (Rellena) / ✩ (Vacía)` |
+| **`handle`** | Integer | Icono para arrastrar y reordenar filas. | `☰` (Icono de tres rayas) |
+| **`image`** | Binary | Muestra la miniatura de la imagen subida. | `[ 📷 Miniatura ]` |
+| **`url`** | Char | Convierte el texto en un enlace azul. | `www.odoo.com` (Subrayado) |
+| **`email`** | Char | Enlace directo para enviar correo. | `📨 usuario@mail.com` |
+| **`phone`** | Char | Enlace para realizar llamadas (Tel/Skype). | `📞 +34 600...` |
+| **`remaining_days`** | Date / Datetime | Muestra cuánto falta para una fecha. | *"En 5 días"* o *"Hace 2 días"* |
+
+
+!!!example "views.xml"
+    ```xml
+    <list decoration-info="activo == True"
+        decoration-muted="fecha_fin &lt; current_date"
+        decoration-success="duracion == 14">
+        <field name="name"/>
+        <field name="descripcion"/>
+        <field name="duracion"/>
+        <field name="fecha_ini"/>
+        <field name="fecha_fin"/>
+        <field name="activo" widget="boolean_toggle"/>
+    </list>
+    ```
+
+
+En los módulos que vienen con Odoo encontrarás excelentes ejemplos de vistas lista avanzadas, especialmente en módulos como Ventas, Compras e Inventario.
+
+!!!tip "Para saber los widgets que tenemos en nuestro odoo"
+
+    ```bash
+    docker exec -it odoo_dev_dam ls /usr/lib/python3/dist-packages/odoo/addons/web/static/src/views/fields
+    ```
+
+
+### Widgets en la Vista Formulario (`form`)
+
+En los formularios, los widgets son mucho más **interactivos**. No solo muestran el dato, sino que cambian la forma en que el usuario introduce la información.
+
+**Ejemplos comunes:**
+
+- `widget="status_bar"`: Crea la flecha de flujo de trabajo en la parte superior del formulario.
+- `widget="image"`: Permite previsualizar, subir o borrar una foto.
+- `widget="selection"`: Convierte un campo relacional en un menú desplegable simple (quitando las opciones de "Crear y editar").
+- `widget="url"`: Convierte un texto en un enlace clickeable.
+
+!!! note "Diferencia **decoraciones** y **widgets**"
+
+    Mientras que las **decoraciones** (`decoration-X`) cambian el color de la fila o campo según condiciones, el **widget** cambia la estructura y el comportamiento del control web.
+
+
 ## Vista Lista Completa y Mejorada
 
 Juntando todas las técnicas vistas, aquí tienes una vista lista completa y funcional para Sprints:
@@ -379,15 +468,15 @@ Juntando todas las técnicas vistas, aquí tienes una vista lista completa y fun
         <field name="model">gestion_tareas_sergio.sprints_sergio</field>
         <field name="arch" type="xml">
             <list decoration-info="activo == True"
-                decoration-muted="fecha_fin &lt; context_today()"
+                decoration-muted="fecha_fin &lt; current_date()"
                 decoration-warning="duracion &lt; 7"
                 decoration-success="duracion == 14">
-                <field name="nombre"/>
+                <field name="bane"/>
                 <field name="descripcion"/>
                 <field name="duracion" sum="Total días" avg="Promedio"/>
                 <field name="fecha_ini"/>
                 <field name="fecha_fin"/>
-                <field name="activo" invisible="1"/>
+                <field name="activo" widget="boolean_toggle"/>
             </list>
         </field>
     </record>
@@ -443,7 +532,6 @@ Para profundizar en la personalización de vistas, consulta:
 - [Guía de vistas lista](https://www.odoo.com/documentation/18.0/es/developer/reference/backend/views.html#list)
 - Código fuente de módulos estándar de Odoo para ver ejemplos reales
 
-En los módulos que vienen con Odoo encontrarás excelentes ejemplos de vistas lista avanzadas, especialmente en módulos como Ventas, Compras e Inventario.
 
 ---
 
@@ -501,7 +589,7 @@ Vas a personalizar las vistas lista de Platos, Menús e Ingredientes, añadiendo
     Pistas:
     
     - Para menús próximos a vencer, necesitas un campo computado `proximo_vencimiento`
-    - Usa `context_today()` para comparar con fecha actual
+    - Usa `current_date` para comparar con fecha actual
     - Añade sumatorio al campo `precio_total`
 
 5. **Crear vista lista para Ingredientes**
