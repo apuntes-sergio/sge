@@ -62,7 +62,8 @@ Campos del modelo:
 | `capacidad_max` | Float | Carga máxima en kilogramos | **Obligatorio**|
 | `bateria` | Integer | Nivel de carga actual (0-100%) | **Defecto: 100** |
 | `estado` | Selection | Estado operativo del dron | Valores: `disponible` (por **defecto**), `vuelo`, `taller` |
-| `piloto_autorizado_ids` | Many2many | Pilotos certificados para este dron (relación inversa) | |
+| `piloto_autorizado_ids` | Many2many | **Pilotos** certificados para este dron (relación inversa) | |
+
 
 
 ### Mercancía: Paquetes (`dronify.paquete`)
