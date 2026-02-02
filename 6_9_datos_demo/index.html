@@ -1,0 +1,3909 @@
+<!DOCTYPE html><html lang="es" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Generación de datos iniciales para testing y demostración en Odoo">
+      
+      
+        <meta name="author" content="Sergio Rey Martínez">
+      
+      
+        <link rel="canonical" href="https://sergio-apuntes.github.io/sge/6_9_datos_demo/">
+      
+      
+        <link rel="prev" href="../6_8_mejorando_vistas/">
+      
+      
+        <link rel="next" href="../7_1_introduccion_odoo/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Datos de demostración - Apuntes Sistemas de Gestión Empresarial</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CDejaVu+Sans+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"DejaVu Sans Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#datos-de-demostracion" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href=".." title="Apuntes Sistemas de Gestión Empresarial" class="md-header__button md-logo" aria-label="Apuntes Sistemas de Gestión Empresarial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Apuntes Sistemas de Gestión Empresarial
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Datos de demostración
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange" aria-label="Cambiar a modo oscuro" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange" aria-label="Cambiar a modo claro" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Apuntes Sistemas de Gestión Empresarial" class="md-nav__button md-logo" aria-label="Apuntes Sistemas de Gestión Empresarial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Apuntes Sistemas de Gestión Empresarial
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href=".." class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Presentación
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Presentación
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 ERP
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1 ERP
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_1_IntroduccionERP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.1. Introducción a la Gestión Empresarial
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_2_Sistemas_Informacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2. Informática en la Gestión Empresarial
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_3_Sistemas_Clave/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.3. Sistemas Clave en la Empresa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_4_ERP_CRM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.4. ERP-CRM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_5_ERP_actuales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.5. Historia y características de los ERP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_6_ERP_Libres_Privativos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.6. Elección de ERP. Aspectos a tener en cuenta.
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_7_CRM_Actuales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.7. CRM Actual
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_8_Modelos_Servicio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.8. Modelos de Servicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_9_Terminolog%C3%ADa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.8. Terminología ERP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2 Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_1_IntroduccionPython/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción a Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_2_ControlFlujo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estructuras condicionales y control de flujo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_3_EstructurasDatos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estructuras de datos o colecciones en Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_4_FuncionesExcepciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Funciones y manejo de excepciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_5_ModulosPaquetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión de módulos, paquetes y entornos virtuales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_6_ProgramacionOrientadaObjetos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programación Orientada a Objetos (POO)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 Git
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3 Git
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_1_introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción a Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_2_ramas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ramas en Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_3_remotos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Repositorios remotos. Github.
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 Docker
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4 Docker
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_1_introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_2_docker_basico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker básico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_3_imagenes_docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Imágenes Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_4_redes_volumenes_docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Redes y Volúmenes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_5_docker_compose/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Orquestación de contenedores con Docker Compose
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 Introducción a Odoo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5 Introducción a Odoo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_1_introduccion_odoo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción a Odoo.
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_2_instalacion_odoo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instalación de Odoo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_3_arquitectura_odoo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquitectura de Odoo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_4_primer_modulo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Primer Módulo en Odoo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 Desarrollo módulo ejemplo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6 Desarrollo módulo ejemplo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_1_creacion_modelo_basico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Creación de un modelo básico, vistas, menús y actions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_2_campos_basico_relacionales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Campos básicos y relacionales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_3_campos_computados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Campos computados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_4_excepciones_logs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Excepciones y mensajes de log
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_5_campos_computados_relacionales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Campos computados relacionales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_6_campos_valores_defecto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Campos con valores por defecto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_7_herencias_modelos_vistas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Herencias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_8_mejorando_vistas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mejorando vistas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Datos de demostración
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Datos de demostración
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#que-son-los-datos-de-demostracion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué son los Datos de Demostración?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuracion-inicial-base-de-datos-con-datos-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuración Inicial: Base de Datos con Datos Demo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuración Inicial: Base de Datos con Datos Demo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-base-de-datos-con-datos-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear Base de Datos con Datos Demo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificar-si-tu-base-de-datos-tiene-datos-demo-activos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificar si tu Base de Datos Tiene Datos Demo Activos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estructura-de-archivos-para-datos-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estructura de Archivos para Datos Demo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Estructura de Archivos para Datos Demo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#estructura-recomendada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estructura Recomendada
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configurar-el-manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configurar el Manifest
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-datos-demo-manualmente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear Datos Demo Manualmente
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Crear Datos Demo Manualmente">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#estructura-basica-de-un-archivo-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estructura Básica de un Archivo Demo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-crear-desarrolladores-de-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo: Crear Desarrolladores de Demo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-crear-proyectos-con-relaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo: Crear Proyectos con Relaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-crear-sprints-referenciando-proyectos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo: Crear Sprints Referenciando Proyectos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-relaciones-many2many" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo: Relaciones Many2many
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generacion-automatica-de-datos-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generación Automática de Datos Demo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Generación Automática de Datos Demo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#herramienta-mockaroo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Herramienta: Mockaroo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-1-configurar-campos-en-mockaroo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 1: Configurar Campos en Mockaroo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-2-script-python-para-convertir-csv-a-xml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 2: Script Python para Convertir CSV a XML
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-3-ejecutar-el-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 3: Ejecutar el Script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-4-verificar-el-archivo-generado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 4: Verificar el Archivo Generado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-5-anadir-al-manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 5: Añadir al Manifest
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cargar-los-datos-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cargar los Datos Demo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cargar los Datos Demo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#opcion-1-nueva-instalacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Opción 1: Nueva Instalación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#opcion-2-modulo-ya-instalado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Opción 2: Módulo Ya Instalado
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#buenas-practicas-para-datos-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Buenas Prácticas para Datos Demo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Buenas Prácticas para Datos Demo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#organizacion-de-archivos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Organización de Archivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ids-descriptivos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IDs Descriptivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datos-realistas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Datos Realistas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cantidad-apropiada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cantidad Apropiada
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#solucion-de-problemas-comunes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solución de Problemas Comunes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Solución de Problemas Comunes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#los-datos-demo-no-se-cargan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Los datos demo no se cargan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-external-id-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error: "External ID not found"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#los-datos-se-duplican" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Los datos se duplican
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#errores-de-campos-requeridos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Errores de campos requeridos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tu-turno-gestor-de-restaurante" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 Tu Turno: Gestor de Restaurante
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧩 Tu Turno: Gestor de Restaurante">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos-y-contexto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos y Contexto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pasos-a-realizar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pasos a Realizar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificaciones-y-resultado-esperado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificaciones y Resultado Esperado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pruebas-adicionales-recomendadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pruebas Adicionales Recomendadas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7 Desarrollo con Odoo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7 Desarrollo con Odoo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_1_introduccion_odoo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción a Odoo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_2_desarrollo_de_modelos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Desarrollo de Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_3_desarrollo_de_vistas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Desarrollo de Vistas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_4_navegacion_e_interaccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navegación e Interacción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_5_logica_negocio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lógica de Negocio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_6_herencia_extensibilidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Herencia y Extensibilidad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_7_seguridad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seguridad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8_2026_proyecto_odoo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Proyecto final Odoo. 'Dronify'
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#que-son-los-datos-de-demostracion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué son los Datos de Demostración?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuracion-inicial-base-de-datos-con-datos-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuración Inicial: Base de Datos con Datos Demo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuración Inicial: Base de Datos con Datos Demo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crear-base-de-datos-con-datos-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear Base de Datos con Datos Demo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificar-si-tu-base-de-datos-tiene-datos-demo-activos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificar si tu Base de Datos Tiene Datos Demo Activos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estructura-de-archivos-para-datos-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estructura de Archivos para Datos Demo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Estructura de Archivos para Datos Demo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#estructura-recomendada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estructura Recomendada
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configurar-el-manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configurar el Manifest
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-datos-demo-manualmente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear Datos Demo Manualmente
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Crear Datos Demo Manualmente">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#estructura-basica-de-un-archivo-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estructura Básica de un Archivo Demo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-crear-desarrolladores-de-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo: Crear Desarrolladores de Demo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-crear-proyectos-con-relaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo: Crear Proyectos con Relaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-crear-sprints-referenciando-proyectos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo: Crear Sprints Referenciando Proyectos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-relaciones-many2many" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo: Relaciones Many2many
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generacion-automatica-de-datos-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generación Automática de Datos Demo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Generación Automática de Datos Demo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#herramienta-mockaroo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Herramienta: Mockaroo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-1-configurar-campos-en-mockaroo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 1: Configurar Campos en Mockaroo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-2-script-python-para-convertir-csv-a-xml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 2: Script Python para Convertir CSV a XML
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-3-ejecutar-el-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 3: Ejecutar el Script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-4-verificar-el-archivo-generado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 4: Verificar el Archivo Generado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-5-anadir-al-manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 5: Añadir al Manifest
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cargar-los-datos-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cargar los Datos Demo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cargar los Datos Demo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#opcion-1-nueva-instalacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Opción 1: Nueva Instalación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#opcion-2-modulo-ya-instalado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Opción 2: Módulo Ya Instalado
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#buenas-practicas-para-datos-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Buenas Prácticas para Datos Demo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Buenas Prácticas para Datos Demo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#organizacion-de-archivos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Organización de Archivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ids-descriptivos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IDs Descriptivos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datos-realistas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Datos Realistas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cantidad-apropiada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cantidad Apropiada
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#solucion-de-problemas-comunes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solución de Problemas Comunes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Solución de Problemas Comunes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#los-datos-demo-no-se-cargan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Los datos demo no se cargan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-external-id-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error: "External ID not found"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#los-datos-se-duplican" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Los datos se duplican
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#errores-de-campos-requeridos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Errores de campos requeridos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tu-turno-gestor-de-restaurante" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 Tu Turno: Gestor de Restaurante
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧩 Tu Turno: Gestor de Restaurante">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#objetivos-y-contexto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objetivos y Contexto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pasos-a-realizar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pasos a Realizar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificaciones-y-resultado-esperado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificaciones y Resultado Esperado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pruebas-adicionales-recomendadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pruebas Adicionales Recomendadas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="datos-de-demostracion">Datos de Demostración</h1>
+<p>Cuando desarrollamos un módulo, es muy útil contar con datos de ejemplo que permitan probar la funcionalidad sin tener que crearlos manualmente cada vez. Los datos de demostración son registros predefinidos que se cargan automáticamente al instalar un módulo, facilitando las pruebas, las presentaciones y el aprendizaje del sistema.</p>
+<p>En este apartado aprenderemos a crear datos de demostración para nuestro módulo de gestión de tareas, incluyendo tanto la creación manual de registros simples como la generación automática de grandes volúmenes de datos mediante scripts.</p>
+<h2 id="que-son-los-datos-de-demostracion">¿Qué son los Datos de Demostración?</h2>
+<p>Los datos de demostración (demo data) son registros de ejemplo que se cargan automáticamente cuando:</p>
+<ul>
+<li>Se instala un módulo por primera vez</li>
+<li>La base de datos fue creada con la opción "Load demonstration data" activada</li>
+</ul>
+<p>Estos datos son especialmente útiles para:</p>
+<ul>
+<li><strong>Desarrolladores</strong>: Probar funcionalidades sin crear datos manualmente</li>
+<li><strong>Formación</strong>: Proporcionar ejemplos realistas a los alumnos</li>
+<li><strong>Presentaciones</strong>: Demostrar el módulo con datos representativos</li>
+<li><strong>Testing</strong>: Verificar que todo funciona correctamente</li>
+</ul>
+<p>A diferencia de los datos de producción, los datos de demostración son opcionales y pueden omitirse en instalaciones reales simplemente no marcando la casilla correspondiente al crear la base de datos.</p>
+<h2 id="configuracion-inicial-base-de-datos-con-datos-demo">Configuración Inicial: Base de Datos con Datos Demo</h2>
+<p>Para que los datos de demostración se carguen, la base de datos debe crearse con la opción correspondiente activada.</p>
+<h3 id="crear-base-de-datos-con-datos-demo">Crear Base de Datos con Datos Demo</h3>
+<p>Al crear una nueva base de datos en Odoo (por ejemplo, accediendo a <code>http://localhost:8069/web/database/manager</code>):</p>
+<ul>
+<li>Completa los datos básicos (nombre, contraseña, etc.)</li>
+<li><strong>Marca la casilla "Load demonstration data"</strong></li>
+<li>Crea la base de datos</li>
+</ul>
+<figure align="center">
+  <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../imgs/ejemploT/24_EjemploCreacionNuevaBBDD.png" data-desc-position="bottom"><img alt="Creación de base de datos" src="../imgs/ejemploT/24_EjemploCreacionNuevaBBDD.png" width="60%"></a>
+<br>
+<figcaption>Opción para cargar datos de demostración al crear la base de datos</figcaption>
+</figure>
+<div class="admonition warning">
+<p class="admonition-title">Importante: Opción al crear la base de datos</p>
+<p>La opción de datos de demostración solo está disponible al <strong>crear</strong> la base de datos, no puede activarse después. Si tu base de datos actual no tiene esta opción activada, deberás crear una nueva base de datos para poder usar datos demo.</p>
+</div>
+<h3 id="verificar-si-tu-base-de-datos-tiene-datos-demo-activos">Verificar si tu Base de Datos Tiene Datos Demo Activos</h3>
+<p>Para comprobar si tu base de datos actual tiene los datos demo activados:</p>
+<ul>
+<li>Instala cualquier módulo estándar de Odoo (por ejemplo, Ventas)</li>
+<li>Si se cargan automáticamente clientes, productos, etc., la opción está activa</li>
+<li>Si el módulo se instala vacío, la opción no está activa</li>
+</ul>
+<h2 id="estructura-de-archivos-para-datos-demo">Estructura de Archivos para Datos Demo</h2>
+<p>Los datos de demostración se definen en archivos XML dentro de una carpeta específica del módulo.</p>
+<h3 id="estructura-recomendada">Estructura Recomendada</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>gestion_tareas_sergio/
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── __init__.py
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── __manifest__.py
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>├── models/
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>├── views/
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>├── security/
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>└── demo/
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    ├── demo.xml              # Datos demo básicos
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    ├── desarrolladores.xml   # Desarrolladores de ejemplo
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    ├── proyectos.xml         # Proyectos de ejemplo
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    └── sprints.xml           # Sprints de ejemplo
+</span></code></pre></div>
+<h3 id="configurar-el-manifest">Configurar el Manifest</h3>
+<p>En el archivo <code>__manifest__.py</code>, existe una sección específica para datos de demostración:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="s1">'name'</span><span class="p">:</span> <span class="s1">'Gestión de Tareas'</span><span class="p">,</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="c1"># ... otros campos ...</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="s1">'data'</span><span class="p">:</span> <span class="p">[</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        <span class="s1">'security/ir.model.access.csv'</span><span class="p">,</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        <span class="s1">'views/views.xml'</span><span class="p">,</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>        <span class="s1">'views/templates.xml'</span><span class="p">,</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="p">],</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="s1">'demo'</span><span class="p">:</span> <span class="p">[</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>        <span class="s1">'demo/demo.xml'</span><span class="p">,</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>        <span class="s1">'demo/desarrolladores.xml'</span><span class="p">,</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>        <span class="s1">'demo/proyectos.xml'</span><span class="p">,</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>        <span class="s1">'demo/sprints.xml'</span><span class="p">,</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    <span class="p">],</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>La clave <code>demo</code> especifica qué archivos contienen datos de demostración. Estos archivos solo se cargarán si la base de datos tiene los datos demo activados.</p>
+<h2 id="crear-datos-demo-manualmente">Crear Datos Demo Manualmente</h2>
+<p>Para cantidades pequeñas de datos, podemos crear los registros manualmente en archivos XML.</p>
+<h3 id="estructura-basica-de-un-archivo-demo">Estructura Básica de un Archivo Demo</h3>
+<p>Un archivo de datos demo tiene la siguiente estructura:</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nt">&lt;odoo&gt;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">&lt;data&gt;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">        </span><span class="cm">&lt;!-- Aquí van los registros --&gt;</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="nt">&lt;/data&gt;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="nt">&lt;/odoo&gt;</span>
+</span></code></pre></div>
+<h3 id="ejemplo-crear-desarrolladores-de-demo">Ejemplo: Crear Desarrolladores de Demo</h3>
+<p>Vamos a crear algunos desarrolladores de ejemplo. En <code>demo/desarrolladores.xml</code>:</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nt">&lt;odoo&gt;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">&lt;data&gt;</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">        </span><span class="cm">&lt;!-- Desarrollador 1 --&gt;</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">        </span><span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">"desarrollador_juan"</span><span class="w"> </span><span class="na">model=</span><span class="s">"res.partner"</span><span class="nt">&gt;</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"name"</span><span class="nt">&gt;</span>Juan<span class="w"> </span>Pérez<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"es_desarrollador"</span><span class="nt">&gt;</span>True<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"email"</span><span class="nt">&gt;</span>juan.perez@example.com<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"phone"</span><span class="nt">&gt;</span>+34<span class="w"> </span>600<span class="w"> </span>123<span class="w"> </span>456<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">        </span><span class="nt">&lt;/record&gt;</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">        </span><span class="cm">&lt;!-- Desarrollador 2 --&gt;</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">        </span><span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">"desarrollador_maria"</span><span class="w"> </span><span class="na">model=</span><span class="s">"res.partner"</span><span class="nt">&gt;</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"name"</span><span class="nt">&gt;</span>María<span class="w"> </span>García<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"es_desarrollador"</span><span class="nt">&gt;</span>True<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"email"</span><span class="nt">&gt;</span>maria.garcia@example.com<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"phone"</span><span class="nt">&gt;</span>+34<span class="w"> </span>600<span class="w"> </span>234<span class="w"> </span>567<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">        </span><span class="nt">&lt;/record&gt;</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">        </span><span class="cm">&lt;!-- Desarrollador 3 --&gt;</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">        </span><span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">"desarrollador_pedro"</span><span class="w"> </span><span class="na">model=</span><span class="s">"res.partner"</span><span class="nt">&gt;</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"name"</span><span class="nt">&gt;</span>Pedro<span class="w"> </span>López<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"es_desarrollador"</span><span class="nt">&gt;</span>True<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"email"</span><span class="nt">&gt;</span>pedro.lopez@example.com<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"phone"</span><span class="nt">&gt;</span>+34<span class="w"> </span>600<span class="w"> </span>345<span class="w"> </span>678<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="w">        </span><span class="nt">&lt;/record&gt;</span>
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="w">    </span><span class="nt">&lt;/data&gt;</span>
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="nt">&lt;/odoo&gt;</span>
+</span></code></pre></div>
+<p><strong>Elementos clave</strong>:</p>
+<ul>
+<li><code>&lt;record id="..." model="..."&gt;</code>: Define un registro con un ID único</li>
+<li><code>id</code>: Identificador único del registro (se usa para referenciar desde otros registros)</li>
+<li><code>model</code>: Modelo en el que se crea el registro</li>
+<li><code>&lt;field name="..."&gt;</code>: Cada campo del modelo con su valor</li>
+</ul>
+<h3 id="ejemplo-crear-proyectos-con-relaciones">Ejemplo: Crear Proyectos con Relaciones</h3>
+<p>Los datos demo pueden tener relaciones entre sí. En <code>demo/proyectos.xml</code>:</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nt">&lt;odoo&gt;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nt">&lt;data&gt;</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">        </span><span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">"proyecto_tienda_online"</span><span class="w"> </span><span class="na">model=</span><span class="s">"gestion_tareas_sergio.proyectos_sergio"</span><span class="nt">&gt;</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"nombre"</span><span class="nt">&gt;</span>Tienda<span class="w"> </span>Online<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"descripcion"</span><span class="nt">&gt;</span>Desarrollo<span class="w"> </span>de<span class="w"> </span>e-commerce<span class="w"> </span>con<span class="w"> </span>carrito<span class="w"> </span>de<span class="w"> </span>compra<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">        </span><span class="nt">&lt;/record&gt;</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">        </span><span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">"proyecto_app_movil"</span><span class="w"> </span><span class="na">model=</span><span class="s">"gestion_tareas_sergio.proyectos_sergio"</span><span class="nt">&gt;</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"nombre"</span><span class="nt">&gt;</span>App<span class="w"> </span>Móvil<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"descripcion"</span><span class="nt">&gt;</span>Aplicación<span class="w"> </span>móvil<span class="w"> </span>para<span class="w"> </span>gestión<span class="w"> </span>de<span class="w"> </span>pedidos<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">        </span><span class="nt">&lt;/record&gt;</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span><span class="nt">&lt;/data&gt;</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="nt">&lt;/odoo&gt;</span>
+</span></code></pre></div>
+<h3 id="ejemplo-crear-sprints-referenciando-proyectos">Ejemplo: Crear Sprints Referenciando Proyectos</h3>
+<p>En <code>demo/sprints.xml</code>:</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nt">&lt;odoo&gt;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">&lt;data&gt;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">        </span><span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">"sprint_1_tienda"</span><span class="w"> </span><span class="na">model=</span><span class="s">"gestion_tareas_sergio.sprints_sergio"</span><span class="nt">&gt;</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"nombre"</span><span class="nt">&gt;</span>Sprint<span class="w"> </span>1<span class="w"> </span>-<span class="w"> </span>Backend<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"descripcion"</span><span class="nt">&gt;</span>Desarrollo<span class="w"> </span>de<span class="w"> </span>la<span class="w"> </span>API<span class="w"> </span>REST<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"duracion"</span><span class="nt">&gt;</span>14<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"fecha_ini"</span><span class="nt">&gt;</span>2024-01-15<span class="w"> </span>09:00:00<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"proyecto"</span><span class="w"> </span><span class="na">ref=</span><span class="s">"proyecto_tienda_online"</span><span class="nt">/&gt;</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">        </span><span class="nt">&lt;/record&gt;</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">        </span><span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">"sprint_2_tienda"</span><span class="w"> </span><span class="na">model=</span><span class="s">"gestion_tareas_sergio.sprints_sergio"</span><span class="nt">&gt;</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"nombre"</span><span class="nt">&gt;</span>Sprint<span class="w"> </span>2<span class="w"> </span>-<span class="w"> </span>Frontend<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"descripcion"</span><span class="nt">&gt;</span>Desarrollo<span class="w"> </span>de<span class="w"> </span>la<span class="w"> </span>interfaz<span class="w"> </span>de<span class="w"> </span>usuario<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"duracion"</span><span class="nt">&gt;</span>14<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"fecha_ini"</span><span class="nt">&gt;</span>2024-01-29<span class="w"> </span>09:00:00<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"proyecto"</span><span class="w"> </span><span class="na">ref=</span><span class="s">"proyecto_tienda_online"</span><span class="nt">/&gt;</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">        </span><span class="nt">&lt;/record&gt;</span>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">    </span><span class="nt">&lt;/data&gt;</span>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="nt">&lt;/odoo&gt;</span>
+</span></code></pre></div>
+<p><strong>Nota sobre relaciones</strong>:</p>
+<ul>
+<li><code>ref="proyecto_tienda_online"</code>: Referencia el ID del proyecto creado anteriormente</li>
+<li>Odoo resuelve automáticamente estas referencias al cargar los datos</li>
+</ul>
+<h3 id="ejemplo-relaciones-many2many">Ejemplo: Relaciones Many2many</h3>
+<p>Para campos Many2many, usamos una sintaxis especial:</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">"tarea_login"</span><span class="w"> </span><span class="na">model=</span><span class="s">"gestion_tareas_sergio.tareas_sergio"</span><span class="nt">&gt;</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"nombre"</span><span class="nt">&gt;</span>Implementar<span class="w"> </span>login<span class="w"> </span>de<span class="w"> </span>usuarios<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"descripcion"</span><span class="nt">&gt;</span>Sistema<span class="w"> </span>de<span class="w"> </span>autenticación<span class="w"> </span>con<span class="w"> </span>JWT<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"sprint"</span><span class="w"> </span><span class="na">ref=</span><span class="s">"sprint_1_tienda"</span><span class="nt">/&gt;</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"desarrollador_mo"</span><span class="w"> </span><span class="na">ref=</span><span class="s">"desarrollador_juan"</span><span class="nt">/&gt;</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"rel_tecnologias"</span><span class="w"> </span><span class="na">eval=</span><span class="s">"[(6, 0, [ref('tecnologia_python'), ref('tecnologia_jwt')])]"</span><span class="nt">/&gt;</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="nt">&lt;/record&gt;</span>
+</span></code></pre></div>
+<p>La sintaxis <code>eval="[(6, 0, [...])]"</code> es específica de Odoo:</p>
+<ul>
+<li><code>6</code>: Comando para "reemplazar todos los registros relacionados"</li>
+<li><code>0</code>: No usado en este comando</li>
+<li><code>[ref('id1'), ref('id2')]</code>: Lista de IDs a relacionar</li>
+</ul>
+<h2 id="generacion-automatica-de-datos-demo">Generación Automática de Datos Demo</h2>
+<p>Cuando necesitamos crear muchos registros (por ejemplo, 50 desarrolladores o 100 tareas), crear los archivos XML manualmente es tedioso y propenso a errores. En estos casos, usamos scripts para generar los datos automáticamente.</p>
+<h3 id="herramienta-mockaroo">Herramienta: Mockaroo</h3>
+<p><a href="https://mockaroo.com/">Mockaroo</a> es una herramienta web gratuita que genera datos aleatorios realistas en varios formatos.</p>
+<p><strong>Características</strong>:</p>
+<ul>
+<li>Genera datos en CSV, JSON, SQL, XML, etc.</li>
+<li>Múltiples tipos de datos: nombres, emails, teléfonos, direcciones, etc.</li>
+<li>Permite patrones personalizados con expresiones regulares</li>
+<li>Puede generar hasta 1000 registros en la versión gratuita</li>
+</ul>
+<h3 id="paso-1-configurar-campos-en-mockaroo">Paso 1: Configurar Campos en Mockaroo</h3>
+<p>Vamos a generar 50 desarrolladores con datos realistas.</p>
+<p>Configuración en Mockaroo:</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Tipo</th>
+<th>Opciones</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>Row Number</td>
+<td>Desde 1</td>
+</tr>
+<tr>
+<td>name</td>
+<td>Full Name</td>
+<td>-</td>
+</tr>
+<tr>
+<td>email</td>
+<td>Email Address</td>
+<td>-</td>
+</tr>
+<tr>
+<td>phone</td>
+<td>Phone</td>
+<td>Formato español</td>
+</tr>
+<tr>
+<td>ciudad</td>
+<td>City</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Configuración adicional</strong>:</p>
+<ul>
+<li>Número de filas: 50</li>
+<li>Formato: CSV</li>
+<li>Sin encabezados (desmarca "include header row")</li>
+</ul>
+<p>Descarga el archivo como <code>desarrolladores.csv</code>.</p>
+<h3 id="paso-2-script-python-para-convertir-csv-a-xml">Paso 2: Script Python para Convertir CSV a XML</h3>
+<p>Creamos un script que lee el CSV y genera el archivo XML correspondiente. Crea un archivo <code>scripts/generar_demo.py</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">csv</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">escribir_texto</span><span class="p">(</span><span class="n">texto</span><span class="p">,</span> <span class="n">archivo</span><span class="p">):</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="sd">"""Escribe texto en un archivo (modo append)"""</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">archivo</span><span class="p">,</span> <span class="s1">'a'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'utf-8'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">texto</span><span class="p">)</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">generar_desarrollador</span><span class="p">(</span><span class="n">fila</span><span class="p">,</span> <span class="n">archivo</span><span class="p">):</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="sd">"""Genera un registro XML para un desarrollador"""</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>    <span class="n">id_dev</span><span class="p">,</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">telefono</span><span class="p">,</span> <span class="n">ciudad</span> <span class="o">=</span> <span class="n">fila</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>    <span class="n">xml</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'''</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="s1">    &lt;record id="desarrollador_demo_</span><span class="si">{</span><span class="n">id_dev</span><span class="si">}</span><span class="s1">" model="res.partner"&gt;</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="s1">        &lt;field name="name"&gt;</span><span class="si">{</span><span class="n">nombre</span><span class="si">}</span><span class="s1">&lt;/field&gt;</span>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="s1">        &lt;field name="es_desarrollador"&gt;True&lt;/field&gt;</span>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="s1">        &lt;field name="email"&gt;</span><span class="si">{</span><span class="n">email</span><span class="si">}</span><span class="s1">&lt;/field&gt;</span>
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="s1">        &lt;field name="phone"&gt;</span><span class="si">{</span><span class="n">telefono</span><span class="si">}</span><span class="s1">&lt;/field&gt;</span>
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="s1">        &lt;field name="city"&gt;</span><span class="si">{</span><span class="n">ciudad</span><span class="si">}</span><span class="s1">&lt;/field&gt;</span>
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="s1">    &lt;/record&gt;</span>
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="s1">'''</span>
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>    <span class="n">escribir_texto</span><span class="p">(</span><span class="n">xml</span><span class="p">,</span> <span class="n">archivo</span><span class="p">)</span>
+</span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>
+</span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="k">def</span><span class="w"> </span><span class="nf">generar_xml_desarrolladores</span><span class="p">(</span><span class="n">archivo_csv</span><span class="p">,</span> <span class="n">archivo_xml</span><span class="p">):</span>
+</span><span id="__span-7-25"><a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="w">    </span><span class="sd">"""Genera archivo XML completo desde CSV"""</span>
+</span><span id="__span-7-26"><a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a>
+</span><span id="__span-7-27"><a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a>    <span class="c1"># Eliminar archivo XML si existe</span>
+</span><span id="__span-7-28"><a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">archivo_xml</span><span class="p">):</span>
+</span><span id="__span-7-29"><a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a>        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">archivo_xml</span><span class="p">)</span>
+</span><span id="__span-7-30"><a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a>
+</span><span id="__span-7-31"><a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a>    <span class="c1"># Escribir cabecera XML</span>
+</span><span id="__span-7-32"><a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a>    <span class="n">escribir_texto</span><span class="p">(</span><span class="s1">'&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">archivo_xml</span><span class="p">)</span>
+</span><span id="__span-7-33"><a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a>    <span class="n">escribir_texto</span><span class="p">(</span><span class="s1">'&lt;odoo&gt;</span><span class="se">\n</span><span class="s1">    &lt;data&gt;</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">archivo_xml</span><span class="p">)</span>
+</span><span id="__span-7-34"><a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a>
+</span><span id="__span-7-35"><a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a>    <span class="c1"># Leer CSV y generar registros</span>
+</span><span id="__span-7-36"><a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">archivo_csv</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'utf-8'</span><span class="p">)</span> <span class="k">as</span> <span class="n">csv_file</span><span class="p">:</span>
+</span><span id="__span-7-37"><a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a>        <span class="n">lector</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">csv_file</span><span class="p">)</span>
+</span><span id="__span-7-38"><a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a>        <span class="k">for</span> <span class="n">fila</span> <span class="ow">in</span> <span class="n">lector</span><span class="p">:</span>
+</span><span id="__span-7-39"><a id="__codelineno-7-39" name="__codelineno-7-39" href="#__codelineno-7-39"></a>            <span class="k">if</span> <span class="n">fila</span><span class="p">:</span>  <span class="c1"># Ignorar líneas vacías</span>
+</span><span id="__span-7-40"><a id="__codelineno-7-40" name="__codelineno-7-40" href="#__codelineno-7-40"></a>                <span class="n">generar_desarrollador</span><span class="p">(</span><span class="n">fila</span><span class="p">,</span> <span class="n">archivo_xml</span><span class="p">)</span>
+</span><span id="__span-7-41"><a id="__codelineno-7-41" name="__codelineno-7-41" href="#__codelineno-7-41"></a>
+</span><span id="__span-7-42"><a id="__codelineno-7-42" name="__codelineno-7-42" href="#__codelineno-7-42"></a>    <span class="c1"># Escribir cierre XML</span>
+</span><span id="__span-7-43"><a id="__codelineno-7-43" name="__codelineno-7-43" href="#__codelineno-7-43"></a>    <span class="n">escribir_texto</span><span class="p">(</span><span class="s1">'    &lt;/data&gt;</span><span class="se">\n</span><span class="s1">&lt;/odoo&gt;</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">archivo_xml</span><span class="p">)</span>
+</span><span id="__span-7-44"><a id="__codelineno-7-44" name="__codelineno-7-44" href="#__codelineno-7-44"></a>
+</span><span id="__span-7-45"><a id="__codelineno-7-45" name="__codelineno-7-45" href="#__codelineno-7-45"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✓ Archivo generado: </span><span class="si">{</span><span class="n">archivo_xml</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-7-46"><a id="__codelineno-7-46" name="__codelineno-7-46" href="#__codelineno-7-46"></a>
+</span><span id="__span-7-47"><a id="__codelineno-7-47" name="__codelineno-7-47" href="#__codelineno-7-47"></a><span class="c1"># Ejecutar el script</span>
+</span><span id="__span-7-48"><a id="__codelineno-7-48" name="__codelineno-7-48" href="#__codelineno-7-48"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+</span><span id="__span-7-49"><a id="__codelineno-7-49" name="__codelineno-7-49" href="#__codelineno-7-49"></a>    <span class="n">generar_xml_desarrolladores</span><span class="p">(</span>
+</span><span id="__span-7-50"><a id="__codelineno-7-50" name="__codelineno-7-50" href="#__codelineno-7-50"></a>        <span class="s1">'scripts/desarrolladores.csv'</span><span class="p">,</span>
+</span><span id="__span-7-51"><a id="__codelineno-7-51" name="__codelineno-7-51" href="#__codelineno-7-51"></a>        <span class="s1">'demo/desarrolladores.xml'</span>
+</span><span id="__span-7-52"><a id="__codelineno-7-52" name="__codelineno-7-52" href="#__codelineno-7-52"></a>    <span class="p">)</span>
+</span></code></pre></div>
+<p><strong>Explicación del script</strong>:</p>
+<ul>
+<li><code>escribir_texto()</code>: Función auxiliar para escribir en archivos</li>
+<li><code>generar_desarrollador()</code>: Genera el XML de un registro individual</li>
+<li><code>generar_xml_desarrolladores()</code>: Función principal que:<ul>
+<li>Borra el archivo destino si existe</li>
+<li>Escribe la cabecera XML</li>
+<li>Lee cada fila del CSV</li>
+<li>Genera un registro por cada fila</li>
+<li>Escribe el cierre XML</li>
+</ul>
+</li>
+</ul>
+<h3 id="paso-3-ejecutar-el-script">Paso 3: Ejecutar el Script</h3>
+<p>Desde la raíz de tu módulo:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">cd</span><span class="w"> </span>gestion_tareas_sergio
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>python<span class="w"> </span>scripts/generar_demo.py
+</span></code></pre></div>
+<p>Esto generará el archivo <code>demo/desarrolladores.xml</code> con 50 desarrolladores.</p>
+<h3 id="paso-4-verificar-el-archivo-generado">Paso 4: Verificar el Archivo Generado</h3>
+<p>Abre <code>demo/desarrolladores.xml</code> y verifica que tiene la estructura correcta:</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nt">&lt;odoo&gt;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="nt">&lt;data&gt;</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">        </span><span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">"desarrollador_demo_1"</span><span class="w"> </span><span class="na">model=</span><span class="s">"res.partner"</span><span class="nt">&gt;</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"name"</span><span class="nt">&gt;</span>Juan<span class="w"> </span>Carlos<span class="w"> </span>Rodríguez<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"es_desarrollador"</span><span class="nt">&gt;</span>True<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"email"</span><span class="nt">&gt;</span>jc.rodriguez@example.com<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"phone"</span><span class="nt">&gt;</span>+34<span class="w"> </span>612<span class="w"> </span>345<span class="w"> </span>678<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"city"</span><span class="nt">&gt;</span>Madrid<span class="nt">&lt;/field&gt;</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">        </span><span class="nt">&lt;/record&gt;</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">        </span><span class="cm">&lt;!-- ... más registros ... --&gt;</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">    </span><span class="nt">&lt;/data&gt;</span>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="nt">&lt;/odoo&gt;</span>
+</span></code></pre></div>
+<h3 id="paso-5-anadir-al-manifest">Paso 5: Añadir al Manifest</h3>
+<p>Añade el nuevo archivo en el <code>__manifest__.py</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="s1">'demo'</span><span class="p">:</span> <span class="p">[</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    <span class="s1">'demo/demo.xml'</span><span class="p">,</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    <span class="s1">'demo/desarrolladores.xml'</span><span class="p">,</span>  <span class="c1"># &lt;- Añadido</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="p">],</span>
+</span></code></pre></div>
+<h2 id="cargar-los-datos-demo">Cargar los Datos Demo</h2>
+<p>Para que Odoo cargue los datos de demostración:</p>
+<h3 id="opcion-1-nueva-instalacion">Opción 1: Nueva Instalación</h3>
+<p>Si aún no has instalado el módulo:</p>
+<ul>
+<li>Actualiza la lista de módulos</li>
+<li>Instala tu módulo</li>
+<li>Los datos demo se cargarán automáticamente</li>
+</ul>
+<h3 id="opcion-2-modulo-ya-instalado">Opción 2: Módulo Ya Instalado</h3>
+<p>Si el módulo ya está instalado, los datos demo <strong>no se cargarán automáticamente</strong> al actualizar. Debes:</p>
+<p><strong>Método 1: Desinstalar y reinstalar</strong></p>
+<ul>
+<li>Desinstala el módulo completamente</li>
+<li>Reinicia el servidor Odoo: <code>docker compose restart odoo_dev_dam</code></li>
+<li>Reinstala el módulo</li>
+</ul>
+<p><strong>Método 2: Forzar carga desde línea de comandos</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>odoo_dev_dam<span class="w"> </span>odoo<span class="w"> </span>-d<span class="w"> </span>nombre_bd<span class="w"> </span>-u<span class="w"> </span>gestion_tareas_sergio<span class="w"> </span>--load-language<span class="o">=</span>es_ES
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Datos Demo se Cargan Una Vez</p>
+<p>Los datos demo solo se cargan durante la instalación del módulo. Si modificas los archivos demo después de instalar, necesitas desinstalar y reinstalar el módulo para ver los cambios.</p>
+</div>
+<h2 id="buenas-practicas-para-datos-demo">Buenas Prácticas para Datos Demo</h2>
+<h3 id="organizacion-de-archivos">Organización de Archivos</h3>
+<p>Estructura tus datos demo de forma lógica:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>demo/
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>├── 01_desarrolladores.xml    # Contactos base
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>├── 02_tecnologias.xml         # Tecnologías (sin dependencias)
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>├── 03_proyectos.xml           # Proyectos
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>├── 04_sprints.xml             # Sprints (dependen de proyectos)
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>└── 05_tareas.xml              # Tareas (dependen de sprints y desarrolladores)
+</span></code></pre></div>
+<p>El orden en el manifest debe respetar las dependencias:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="s1">'demo'</span><span class="p">:</span> <span class="p">[</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    <span class="s1">'demo/01_desarrolladores.xml'</span><span class="p">,</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    <span class="s1">'demo/02_tecnologias.xml'</span><span class="p">,</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>    <span class="s1">'demo/03_proyectos.xml'</span><span class="p">,</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    <span class="s1">'demo/04_sprints.xml'</span><span class="p">,</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>    <span class="s1">'demo/05_tareas.xml'</span><span class="p">,</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="p">],</span>
+</span></code></pre></div>
+<h3 id="ids-descriptivos">IDs Descriptivos</h3>
+<p>Usa IDs descriptivos que faciliten referencias:</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="cm">&lt;!-- Mal --&gt;</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">"rec1"</span><span class="w"> </span><span class="na">model=</span><span class="s">"..."</span><span class="nt">&gt;</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="cm">&lt;!-- Bien --&gt;</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">"proyecto_tienda_online"</span><span class="w"> </span><span class="na">model=</span><span class="s">"..."</span><span class="nt">&gt;</span>
+</span></code></pre></div>
+<h3 id="datos-realistas">Datos Realistas</h3>
+<p>Usa datos que parezcan reales:</p>
+<ul>
+<li>Nombres completos, no "Test 1", "Test 2"</li>
+<li>Emails con dominios válidos</li>
+<li>Fechas coherentes (sprints pasados, actuales y futuros)</li>
+<li>Descripciones con sentido</li>
+</ul>
+<h3 id="cantidad-apropiada">Cantidad Apropiada</h3>
+<p>No exageres con la cantidad de datos:</p>
+<ul>
+<li>10-20 registros por modelo suele ser suficiente</li>
+<li>Suficiente para probar, pero no abrumador</li>
+<li>Considera el rendimiento al cargar</li>
+</ul>
+<h3 id="documentacion">Documentación</h3>
+<p>Documenta el propósito de los datos demo en un README:</p>
+<div class="language-markdown highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="gh"># Datos de Demostración</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>Este módulo incluye datos demo para facilitar las pruebas:
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="k">-</span><span class="w"> </span>20 desarrolladores con datos completos
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="k">-</span><span class="w"> </span>5 proyectos de diferentes tipos
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="k">-</span><span class="w"> </span>15 sprints distribuidos en los proyectos
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="k">-</span><span class="w"> </span>50 tareas asignadas a desarrolladores
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="k">-</span><span class="w"> </span>10 tecnologías comunes
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>Para usar los datos demo, crea la base de datos con
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>la opción "Load demonstration data" activada.
+</span></code></pre></div>
+<h2 id="solucion-de-problemas-comunes">Solución de Problemas Comunes</h2>
+<h3 id="los-datos-demo-no-se-cargan">Los datos demo no se cargan</h3>
+<p><strong>Causas posibles</strong>:</p>
+<ul>
+<li>Base de datos creada sin la opción "Load demonstration data"</li>
+<li>Errores en la sintaxis XML</li>
+<li>Referencias a IDs que no existen</li>
+<li>Módulo ya instalado (los datos demo solo se cargan en la instalación)</li>
+</ul>
+<p><strong>Solución</strong>:</p>
+<ul>
+<li>Verifica los logs de Odoo: <code>docker logs odoo_dev_dam -f</code></li>
+<li>Comprueba la sintaxis XML</li>
+<li>Desinstala y reinstala el módulo</li>
+</ul>
+<h3 id="error-external-id-not-found">Error: "External ID not found"</h3>
+<p><strong>Causa</strong>: Intentas referenciar un ID que no existe o no se ha cargado aún.</p>
+<p><strong>Solución</strong>:</p>
+<ul>
+<li>Verifica que el ID existe en algún archivo demo</li>
+<li>Asegura el orden correcto en el manifest (dependencias primero)</li>
+<li>Comprueba que no hay errores tipográficos en los IDs</li>
+</ul>
+<h3 id="los-datos-se-duplican">Los datos se duplican</h3>
+<p><strong>Causa</strong>: Los IDs no son únicos o estás cargando el mismo archivo varias veces.</p>
+<p><strong>Solución</strong>:</p>
+<ul>
+<li>Asegura que cada <code>id</code> es único en todo el módulo</li>
+<li>Verifica que no tienes el mismo archivo listado dos veces en el manifest</li>
+</ul>
+<h3 id="errores-de-campos-requeridos">Errores de campos requeridos</h3>
+<p><strong>Causa</strong>: Faltan campos obligatorios en los registros.</p>
+<p><strong>Solución</strong>:</p>
+<ul>
+<li>Revisa la definición del modelo para ver campos con <code>required=True</code></li>
+<li>Añade esos campos en los datos demo</li>
+</ul>
+<hr>
+<h2 id="tu-turno-gestor-de-restaurante">🧩 Tu Turno: Gestor de Restaurante</h2>
+<p>Ahora crearás datos de demostración completos para tu proyecto del restaurante.</p>
+<h3 id="objetivos-y-contexto">Objetivos y Contexto</h3>
+<p>Vas a crear datos demo que incluyan platos, menús, ingredientes, camareros y otras entidades de tu restaurante. Esto te permitirá probar fácilmente todas las funcionalidades sin tener que crear datos manualmente cada vez que reinstales el módulo.</p>
+<p>Crearás tanto datos simples manualmente como datos masivos usando scripts de generación automática.</p>
+<h3 id="pasos-a-realizar">Pasos a Realizar</h3>
+<ol>
+<li>
+<p><strong>Verificar que tu base de datos tiene datos demo activos</strong></p>
+<p>Si no los tiene, crea una nueva base de datos marcando "Load demonstration data".</p>
+<p>Pistas:</p>
+<ul>
+<li>Accede al gestor de bases de datos</li>
+<li>Crea una nueva base de datos o verifica la actual instalando un módulo estándar</li>
+</ul>
+</li>
+<li>
+<p><strong>Crear estructura de carpetas para datos demo</strong></p>
+<p>Crea una carpeta <code>demo/</code> en tu módulo si no existe.</p>
+<p>Estructura sugerida:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>demo/
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>├── 01_categorias.xml
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>├── 02_ingredientes.xml
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>├── 03_platos.xml
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>├── 04_menus.xml
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>└── 05_camareros.xml
+</span></code></pre></div>
+</li>
+<li>
+<p><strong>Crear datos demo de categorías manualmente</strong></p>
+<p>En <code>demo/01_categorias.xml</code>, crea 4-5 categorías de platos.</p>
+<p>Pistas:</p>
+<ul>
+<li>Categorías sugeridas: Entrantes, Principales, Postres, Bebidas</li>
+<li>Usa IDs descriptivos como <code>categoria_entrantes</code></li>
+<li>Incluye nombre y descripción</li>
+</ul>
+</li>
+<li>
+<p><strong>Crear datos demo de ingredientes manualmente</strong></p>
+<p>En <code>demo/02_ingredientes.xml</code>, crea 15-20 ingredientes comunes.</p>
+<p>Pistas:</p>
+<ul>
+<li>Incluye alergenos y no alergenos</li>
+<li>Ejemplos: Tomate, Gluten, Huevo, Leche, Lechuga, etc.</li>
+<li>Marca correctamente el campo <code>es_alergeno</code></li>
+<li>Usa IDs como <code>ingrediente_tomate</code>, <code>ingrediente_gluten</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Crear script para generar platos masivamente</strong></p>
+<p>Crea <code>scripts/generar_demo_platos.py</code> que genere 30-40 platos desde un CSV.</p>
+<p>Pistas:</p>
+<ul>
+<li>Campos CSV: id, nombre, descripcion, precio, tiempo_preparacion, categoria_id</li>
+<li>Usa Mockaroo para generar nombres de platos creativos</li>
+<li>Precios entre 5 y 35 euros</li>
+<li>Tiempos de preparación entre 10 y 60 minutos</li>
+<li>Asigna categorías usando <code>ref()</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Configurar Mockaroo para platos</strong></p>
+<p>Configuración sugerida:</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Tipo</th>
+<th>Opciones</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>Row Number</td>
+<td>1-40</td>
+</tr>
+<tr>
+<td>nombre</td>
+<td>Custom List</td>
+<td>Lista de nombres de platos</td>
+</tr>
+<tr>
+<td>descripcion</td>
+<td>Sentences</td>
+<td>1-2 oraciones</td>
+</tr>
+<tr>
+<td>precio</td>
+<td>Number</td>
+<td>Min: 5, Max: 35, Decimales: 2</td>
+</tr>
+<tr>
+<td>tiempo</td>
+<td>Number</td>
+<td>Min: 10, Max: 60</td>
+</tr>
+<tr>
+<td>categoria</td>
+<td>Number</td>
+<td>Min: 1, Max: 4</td>
+</tr>
+</tbody>
+</table>
+<p>Descarga como CSV sin encabezados.</p>
+</li>
+<li>
+<p><strong>Ejecutar el script de generación de platos</strong></p>
+<p>Ejecuta tu script para generar <code>demo/03_platos.xml</code>.</p>
+<p>Pistas:</p>
+<ul>
+<li>Verifica que el XML generado tiene la estructura correcta</li>
+<li>Comprueba que las referencias a categorías son válidas</li>
+<li>El script debe ser similar al ejemplo de desarrolladores</li>
+</ul>
+</li>
+<li>
+<p><strong>Crear relaciones Many2many entre platos e ingredientes</strong></p>
+<p>Modifica el script de platos para añadir ingredientes aleatorios.</p>
+<p>Pistas:</p>
+<ul>
+<li>Cada plato debería tener 3-6 ingredientes</li>
+<li>Usa la sintaxis: <code>eval="[(6, 0, [ref('ingrediente_1'), ref('ingrediente_2')])]"</code></li>
+<li>Genera combinaciones aleatorias pero lógicas (no mezcles todo con todo)</li>
+</ul>
+</li>
+<li>
+<p><strong>Crear datos demo de menús manualmente</strong></p>
+<p>En <code>demo/04_menus.xml</code>, crea 5-6 menús con diferentes características.</p>
+<p>Pistas:</p>
+<ul>
+<li>Menús: Menú del Día, Menú Fin de Semana, Menú Degustación, etc.</li>
+<li>Incluye menús con diferentes estados: activos, finalizados, próximos</li>
+<li>Asigna 3-5 platos a cada menú</li>
+<li>Usa fechas realistas (algunos actuales, otros pasados, otros futuros)</li>
+</ul>
+</li>
+<li>
+<p><strong>Crear datos demo de camareros usando script</strong></p>
+<p>Similar al script de desarrolladores, genera 15-20 camareros.</p>
+<p>Pistas:</p>
+<ul>
+<li>Usa Mockaroo para generar nombres, emails, teléfonos</li>
+<li>Campos adicionales: turno (mañana/tarde/noche), seccion</li>
+<li>Asigna turnos de forma equilibrada</li>
+<li>Secciones: Terraza, Sala Principal, Bar, VIP</li>
+</ul>
+</li>
+<li>
+<p><strong>Relacionar camareros con menús de especialidad</strong></p>
+<p>Modifica el script de camareros para asignar 1-3 menús a cada uno.</p>
+<p>Pistas:</p>
+<ul>
+<li>No todos los camareros necesitan menús de especialidad</li>
+<li>Usa relación Many2many similar a platos-ingredientes</li>
+</ul>
+</li>
+<li>
+<p><strong>Añadir todos los archivos al manifest</strong></p>
+<p>Actualiza <code>__manifest__.py</code> con todos los archivos demo en orden correcto.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="s1">'demo'</span><span class="p">:</span> <span class="p">[</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>    <span class="s1">'demo/01_categorias.xml'</span><span class="p">,</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>    <span class="s1">'demo/02_ingredientes.xml'</span><span class="p">,</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>    <span class="s1">'demo/03_platos.xml'</span><span class="p">,</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>    <span class="s1">'demo/04_menus.xml'</span><span class="p">,</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>    <span class="s1">'demo/05_camareros.xml'</span><span class="p">,</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="p">],</span>
+</span></code></pre></div>
+<p>El orden es importante por las dependencias.</p>
+</li>
+<li>
+<p><strong>Probar la carga de datos demo</strong></p>
+<p>Desinstala tu módulo completamente, reinicia el servidor y reinstala.</p>
+<p>Pistas:</p>
+<ul>
+<li>Antes de reinstalar, verifica que no hay errores en los XMLs</li>
+<li>Observa los logs durante la instalación: <code>docker logs odoo_dev_dam -f</code></li>
+<li>Si hay errores, corrígelos y vuelve a intentar</li>
+</ul>
+</li>
+<li>
+<p><strong>Verificar las relaciones</strong></p>
+<p>Comprueba que todas las relaciones se cargaron correctamente.</p>
+<p>Verifica:</p>
+<ul>
+<li>Platos tienen ingredientes asignados</li>
+<li>Menús tienen platos asignados</li>
+<li>Camareros tienen menús de especialidad</li>
+<li>Las categorías de platos son correctas</li>
+</ul>
+</li>
+<li>
+<p><strong>Crear datos adicionales opcionales (avanzado)</strong></p>
+<p>Si has creado otros modelos (Pedidos, Mesas, etc.), genera datos demo para ellos.</p>
+<p>Pistas:</p>
+<ul>
+<li>Pedidos: Relaciona con camareros y menús</li>
+<li>Mesas: Asigna números y estados</li>
+<li>Usa el mismo enfoque de scripts para cantidades grandes</li>
+</ul>
+</li>
+</ol>
+<h3 id="verificaciones-y-resultado-esperado">Verificaciones y Resultado Esperado</h3>
+<p>Comprueba que:</p>
+<ul>
+<li>Al instalar el módulo, se cargan automáticamente todos los datos</li>
+<li>Tienes 4-5 categorías de platos</li>
+<li>Tienes 15-20 ingredientes (algunos marcados como alergenos)</li>
+<li>Tienes 30-40 platos con categorías, precios y tiempos asignados</li>
+<li>Los platos tienen ingredientes relacionados</li>
+<li>Tienes 5-6 menús con diferentes estados y fechas</li>
+<li>Los menús tienen platos asignados</li>
+<li>Tienes 15-20 camareros con turnos y secciones</li>
+<li>Algunos camareros tienen menús de especialidad</li>
+<li>No hay errores en los logs de Odoo</li>
+<li>Las vistas lista muestran los datos correctamente con las decoraciones</li>
+</ul>
+<div class="admonition example">
+<p class="admonition-title">Estructura Final Esperada</p>
+<p>Después de instalar el módulo con datos demo:</p>
+<p><strong>Categorías</strong>: 4 categorías básicas</p>
+<p><strong>Ingredientes</strong>: 20 ingredientes variados</p>
+<ul>
+<li>8 alergenos: Gluten, Huevo, Leche, Frutos secos, Soja, Pescado, Marisco, Mostaza</li>
+<li>12 no alergenos: Tomate, Lechuga, Cebolla, Aceite, etc.</li>
+</ul>
+<p><strong>Platos</strong>: 40 platos distribuidos</p>
+<ul>
+<li>10 Entrantes</li>
+<li>15 Principales</li>
+<li>10 Postres</li>
+<li>5 Bebidas</li>
+<li>Cada uno con 3-6 ingredientes</li>
+</ul>
+<p><strong>Menús</strong>: 6 menús variados</p>
+<ul>
+<li>2 activos (fechas actuales)</li>
+<li>2 finalizados (fechas pasadas)</li>
+<li>2 futuros (fechas próximas)</li>
+<li>Cada uno con 3-5 platos</li>
+</ul>
+<p><strong>Camareros</strong>: 20 camareros</p>
+<ul>
+<li>Distribuidos equitativamente en 3 turnos</li>
+<li>4 secciones diferentes</li>
+<li>60% con menús de especialidad asignados</li>
+</ul>
+</div>
+<h3 id="pruebas-adicionales-recomendadas">Pruebas Adicionales Recomendadas</h3>
+<ol>
+<li>
+<p><strong>Desinstalación limpia</strong>: Desinstala el módulo y verifica que los datos demo se eliminan</p>
+</li>
+<li>
+<p><strong>Reinstalación</strong>: Reinstala y verifica que los datos se cargan de nuevo correctamente</p>
+</li>
+<li>
+<p><strong>Referencias</strong>: Abre varios registros y verifica que las relaciones funcionan (plato → ingredientes, menú → platos, etc.)</p>
+</li>
+<li>
+<p><strong>Decoraciones</strong>: Verifica que las decoraciones de las vistas lista funcionan con los datos demo</p>
+</li>
+<li>
+<p><strong>Filtros</strong>: Prueba los filtros en las vistas (solo disponibles, solo alergenos, etc.)</p>
+</li>
+<li>
+<p><strong>Scripts</strong>: Modifica el CSV, regenera el XML con el script y verifica que los cambios se aplican</p>
+</li>
+<li>
+<p><strong>Base de datos sin demo</strong>: Crea una base de datos SIN datos demo, instala tu módulo y verifica que no se cargan los datos (el módulo funciona pero vacío)</p>
+</li>
+</ol>
+<p>Con estos datos demo completos, tendrás un restaurante totalmente funcional y listo para demostrar o probar todas las características de tu módulo.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie">
+        
+          
+          <a href="../6_8_mejorando_vistas/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Mejorando vistas">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                Mejorando vistas
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../7_1_introduccion_odoo/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: Introducción a Odoo">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                Introducción a Odoo
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Sergio Rey Martínez - DAM - SGE - 2025/26
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.indexes", "navigation.footer", "navigation.instant", "navigation.instant.progress", "toc.follow", "navigation.top", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

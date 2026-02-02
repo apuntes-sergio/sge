@@ -1,0 +1,3449 @@
+<!DOCTYPE html><html lang="es" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Comprensión de la arquitectura y componentes fundamentales de Odoo">
+      
+      
+        <meta name="author" content="Sergio Rey Martínez">
+      
+      
+        <link rel="canonical" href="https://sergio-apuntes.github.io/sge/5_3_arquitectura_odoo/">
+      
+      
+        <link rel="prev" href="../5_2_instalacion_odoo/">
+      
+      
+        <link rel="next" href="../5_4_primer_modulo/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Arquitectura de Odoo - Apuntes Sistemas de Gestión Empresarial</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CDejaVu+Sans+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"DejaVu Sans Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#vision-general-de-la-arquitectura" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href=".." title="Apuntes Sistemas de Gestión Empresarial" class="md-header__button md-logo" aria-label="Apuntes Sistemas de Gestión Empresarial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Apuntes Sistemas de Gestión Empresarial
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Arquitectura de Odoo
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange" aria-label="Cambiar a modo oscuro" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange" aria-label="Cambiar a modo claro" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Apuntes Sistemas de Gestión Empresarial" class="md-nav__button md-logo" aria-label="Apuntes Sistemas de Gestión Empresarial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Apuntes Sistemas de Gestión Empresarial
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href=".." class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Presentación
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Presentación
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 ERP
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1 ERP
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_1_IntroduccionERP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.1. Introducción a la Gestión Empresarial
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_2_Sistemas_Informacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2. Informática en la Gestión Empresarial
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_3_Sistemas_Clave/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.3. Sistemas Clave en la Empresa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_4_ERP_CRM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.4. ERP-CRM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_5_ERP_actuales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.5. Historia y características de los ERP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_6_ERP_Libres_Privativos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.6. Elección de ERP. Aspectos a tener en cuenta.
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_7_CRM_Actuales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.7. CRM Actual
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_8_Modelos_Servicio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.8. Modelos de Servicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_9_Terminolog%C3%ADa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.8. Terminología ERP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2 Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_1_IntroduccionPython/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción a Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_2_ControlFlujo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estructuras condicionales y control de flujo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_3_EstructurasDatos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estructuras de datos o colecciones en Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_4_FuncionesExcepciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Funciones y manejo de excepciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_5_ModulosPaquetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión de módulos, paquetes y entornos virtuales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_6_ProgramacionOrientadaObjetos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programación Orientada a Objetos (POO)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 Git
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3 Git
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_1_introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción a Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_2_ramas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ramas en Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_3_remotos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Repositorios remotos. Github.
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 Docker
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4 Docker
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_1_introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_2_docker_basico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker básico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_3_imagenes_docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Imágenes Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_4_redes_volumenes_docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Redes y Volúmenes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_5_docker_compose/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Orquestación de contenedores con Docker Compose
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 Introducción a Odoo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5 Introducción a Odoo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_1_introduccion_odoo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción a Odoo.
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_2_instalacion_odoo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instalación de Odoo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquitectura de Odoo
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquitectura de Odoo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#vision-general-de-la-arquitectura" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visión General de la Arquitectura
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visión General de la Arquitectura">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arquitectura-de-tenencia-multiple" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arquitectura de Tenencia Múltiple
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arquitectura-en-capas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arquitectura en Capas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#componentes-fundamentales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Componentes Fundamentales
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Componentes Fundamentales">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-orm-object-relational-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. ORM (Object-Relational Mapping)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-modelo-vista-controlador-mvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Modelo-Vista-Controlador (MVC)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Modelo-Vista-Controlador (MVC)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modelo-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modelo (Model)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vista-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vista (View)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlador-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Controlador (Controller)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-wsgi-y-werkzeug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. WSGI y Werkzeug
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-business-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Business Objects
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-wizards-asistentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Wizards (Asistentes)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-cliente-web-owl-widgets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Cliente Web (OWL + Widgets)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resumen-de-componentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resumen de Componentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#la-base-de-datos-en-odoo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La Base de Datos en Odoo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="La Base de Datos en Odoo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diseno-automatico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diseño Automático
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nomenclatura-de-tablas-y-campos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nomenclatura de Tablas y Campos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Nomenclatura de Tablas y Campos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reglas-de-nomenclatura" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reglas de Nomenclatura
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplos-de-nomenclatura" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplos de Nomenclatura
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspeccion-desde-la-interfaz-web" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspección desde la Interfaz Web
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estructura-de-carpetas-de-odoo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estructura de Carpetas de Odoo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Estructura de Carpetas de Odoo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#addons-modulos-oficiales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        addons/ - Módulos Oficiales
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#odoo-nucleo-del-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        odoo/ - Núcleo del Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-configuracion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        config/ - Configuración
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-datos-persistentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        data/ - Datos Persistentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom_addons-modulos-personalizados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        custom_addons/ - Módulos Personalizados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relacion-con-docker-compose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relación con Docker Compose
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recursos-y-referencias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recursos y Referencias
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_4_primer_modulo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Primer Módulo en Odoo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7">
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 Desarrollo módulo ejemplo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6 Desarrollo módulo ejemplo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_1_creacion_modelo_basico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Creación de un modelo básico, vistas, menús y actions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_2_campos_basico_relacionales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Campos básicos y relacionales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_3_campos_computados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Campos computados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_4_excepciones_logs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Excepciones y mensajes de log
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_5_campos_computados_relacionales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Campos computados relacionales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_6_campos_valores_defecto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Campos con valores por defecto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_7_herencias_modelos_vistas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Herencias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_8_mejorando_vistas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mejorando vistas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_9_datos_demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Datos de demostración
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7 Desarrollo con Odoo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7 Desarrollo con Odoo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_1_introduccion_odoo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción a Odoo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_2_desarrollo_de_modelos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Desarrollo de Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_3_desarrollo_de_vistas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Desarrollo de Vistas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_4_navegacion_e_interaccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navegación e Interacción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_5_logica_negocio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lógica de Negocio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_6_herencia_extensibilidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Herencia y Extensibilidad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_7_seguridad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seguridad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8_2026_proyecto_odoo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Proyecto final Odoo. 'Dronify'
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#vision-general-de-la-arquitectura" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visión General de la Arquitectura
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visión General de la Arquitectura">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arquitectura-de-tenencia-multiple" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arquitectura de Tenencia Múltiple
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arquitectura-en-capas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arquitectura en Capas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#componentes-fundamentales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Componentes Fundamentales
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Componentes Fundamentales">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-orm-object-relational-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. ORM (Object-Relational Mapping)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-modelo-vista-controlador-mvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Modelo-Vista-Controlador (MVC)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Modelo-Vista-Controlador (MVC)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modelo-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modelo (Model)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vista-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vista (View)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlador-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Controlador (Controller)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-wsgi-y-werkzeug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. WSGI y Werkzeug
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-business-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Business Objects
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-wizards-asistentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Wizards (Asistentes)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-cliente-web-owl-widgets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Cliente Web (OWL + Widgets)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resumen-de-componentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resumen de Componentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#la-base-de-datos-en-odoo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La Base de Datos en Odoo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="La Base de Datos en Odoo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diseno-automatico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diseño Automático
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nomenclatura-de-tablas-y-campos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nomenclatura de Tablas y Campos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Nomenclatura de Tablas y Campos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reglas-de-nomenclatura" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reglas de Nomenclatura
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplos-de-nomenclatura" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplos de Nomenclatura
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inspeccion-desde-la-interfaz-web" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspección desde la Interfaz Web
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estructura-de-carpetas-de-odoo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estructura de Carpetas de Odoo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Estructura de Carpetas de Odoo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#addons-modulos-oficiales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        addons/ - Módulos Oficiales
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#odoo-nucleo-del-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        odoo/ - Núcleo del Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-configuracion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        config/ - Configuración
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-datos-persistentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        data/ - Datos Persistentes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom_addons-modulos-personalizados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        custom_addons/ - Módulos Personalizados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relacion-con-docker-compose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relación con Docker Compose
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recursos-y-referencias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recursos y Referencias
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Arquitectura de Odoo</h1>
+
+<p>Antes de comenzar a desarrollar módulos en <strong>Odoo</strong>, es fundamental comprender su arquitectura para entender cómo funciona el sistema y cómo debemos programar utilizando el framework que nos proporciona.</p>
+<p>El conocimiento de la arquitectura nos permitirá:</p>
+<ul>
+<li>Comprender el flujo de datos en el sistema</li>
+<li>Utilizar correctamente el framework de desarrollo</li>
+<li>Diseñar módulos eficientes y bien estructurados</li>
+<li>Diagnosticar y resolver problemas más fácilmente</li>
+</ul>
+<h2 id="vision-general-de-la-arquitectura">Visión General de la Arquitectura</h2>
+<h3 id="arquitectura-de-tenencia-multiple">Arquitectura de Tenencia Múltiple</h3>
+<p>Odoo implementa una <strong>arquitectura de tenencia múltiple</strong> (Multi-Tenancy), lo que significa que:</p>
+<ul>
+<li>Un único servidor de Odoo puede servir a múltiples empresas/clientes</li>
+<li>Cada empresa tiene su propia base de datos independiente</li>
+<li>Los recursos del servidor (código, memoria) se comparten entre todas las empresas</li>
+<li>Cada base de datos está completamente aislada de las demás</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>                    ┌─────────────────────────┐
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                    │   Servidor Odoo         │
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                    │   (Código compartido)   │
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                    └───────────┬─────────────┘
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                                │
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                ┌───────────────┼───────────────┐
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>                │               │               │
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>          ┌─────▼──────┐   ┌────▼──────┐  ┌─────▼─────┐
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>          │ Empresa A  │   │ Empresa B │  │ Empresa C │
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>          │  (BD 1)    │   │  (BD 2)   │  │  (BD 3)   │
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>          └────────────┘   └───────────┘  └───────────┘
+</span></code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Ventajas de Multi-Tenancy</p>
+<ul>
+<li>Menor coste de infraestructura</li>
+<li>Actualizaciones centralizadas</li>
+<li>Mantenimiento simplificado</li>
+<li>Escalabilidad horizontal</li>
+</ul>
+</div>
+<h3 id="arquitectura-en-capas">Arquitectura en Capas</h3>
+<p>Odoo está organizado en tres capas principales siguiendo el patrón <strong>MVC (Modelo-Vista-Controlador)</strong>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>          ┌─────────────────────────────────────────────────────┐
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>          │              CAPA DE PRESENTACIÓN                   │
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>          │        (Vista - Interfaz de Usuario)                │
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>          │  ┌──────────────────────────────────────────────┐   │
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>          │  │  Templates XML, QWeb, CSS, JavaScript (OWL)  │   │
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>          │  └──────────────────────────────────────────────┘   │
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>          └─────────────────────────┬───────────────────────────┘
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>                                    │
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>          ┌─────────────────────────▼───────────────────────────┐
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>          │           CAPA DE LÓGICA DE NEGOCIO                 │
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>          │            (Controlador - Servidor)                 │
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>          │  ┌──────────────────────────────────────────────┐   │
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>          │  │  Métodos Python, Business Logic, API, ORM    │   │
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>          │  └──────────────────────────────────────────────┘   │
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>          └─────────────────────────┬───────────────────────────┘
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>                                    │
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>          ┌─────────────────────────▼───────────────────────────┐
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>          │              CAPA DE DATOS                          │
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>          │           (Modelo - PostgreSQL)                     │
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>          │  ┌──────────────────────────────────────────────┐   │
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>          │  │        Tablas, Relaciones, Datos             │   │
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>          │  └──────────────────────────────────────────────┘   │
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>          └─────────────────────────────────────────────────────┘
+</span></code></pre></div>
+<p>Otra forma de ver esta arquitectura es la que representa la siguiente imagen:</p>
+<figure align="center">
+  <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../imgs/desarrollo/Diagrama_MVC.jpg" data-desc-position="bottom"><img alt="Image title" src="../imgs/desarrollo/Diagrama_MVC.jpg" width="65%"></a>
+<br>
+<figcaption>Diagrama Modelo - Vista - Controlador en Odoo</figcaption>
+</figure>
+<h2 id="componentes-fundamentales">Componentes Fundamentales</h2>
+<h3 id="1-orm-object-relational-mapping">1. ORM (Object-Relational Mapping)</h3>
+<p>El <strong>ORM</strong> es el corazón de Odoo. Proporciona una capa de abstracción entre las clases Python y las tablas de PostgreSQL. Las <strong>funciones principales</strong> son </p>
+<ul>
+<li><strong>Mapea automáticamente</strong> clases Python → tablas PostgreSQL</li>
+<li><strong>Elimina SQL manual</strong>: No necesitas escribir consultas SQL</li>
+<li><strong>Gestiona relaciones</strong>: One2many, Many2one, Many2many automáticamente</li>
+<li><strong>Valida datos</strong>: Aplica constraints y validaciones</li>
+<li><strong>Control de acceso</strong>: Gestiona permisos a nivel de registro</li>
+</ul>
+<figure align="center">
+  <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../imgs/odoo/odoo_ORM.png" data-desc-position="bottom"><img alt="Image title" src="../imgs/odoo/odoo_ORM.png" width="75%"></a>
+<br>
+<figcaption>Diagrama del ORM de Odoo</figcaption>
+</figure>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo conceptual</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># En lugar de escribir SQL...</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">sale_order</span> <span class="n">WHERE</span> <span class="n">state</span> <span class="o">=</span> <span class="s1">'draft'</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Con el ORM de Odoo escribes...</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">orders</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="s1">'sale.order'</span><span class="p">]</span><span class="o">.</span><span class="n">search</span><span class="p">([(</span><span class="s1">'state'</span><span class="p">,</span> <span class="s1">'='</span><span class="p">,</span> <span class="s1">'draft'</span><span class="p">)])</span>
+</span></code></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Ventajas del ORM</p>
+<ul>
+<li>Código más legible y mantenible</li>
+<li>Prevención de inyección SQL</li>
+<li>Gestión automática de transacciones</li>
+<li>Cache inteligente de consultas</li>
+<li>Compatibilidad entre versiones</li>
+</ul>
+</div>
+<blockquote>
+<p><strong>Documentación</strong>: <a href="https://sdlccorp.com/post/an-overview-of-orm-methods-in-odoo-18/">ORM Methods in Odoo</a></p>
+</blockquote>
+<h3 id="2-modelo-vista-controlador-mvc">2. Modelo-Vista-Controlador (MVC)</h3>
+<h4 id="modelo-model">Modelo (Model)</h4>
+<ul>
+<li><strong>Definición</strong>: Clases Python que representan entidades de negocio</li>
+<li><strong>Ubicación</strong>: Archivos <code>.py</code> en la carpeta <code>models/</code></li>
+<li><strong>Responsabilidad</strong>: Estructura de datos + lógica de negocio</li>
+<li><strong>Persistencia</strong>: El ORM mapea automáticamente a PostgreSQL</li>
+</ul>
+<p><strong>Ejemplo</strong>: Un modelo <code>sale.order</code> define qué es un pedido de venta, sus campos (cliente, líneas, total, etc.) y métodos (confirmar, cancelar, etc.)</p>
+<h4 id="vista-view">Vista (View)</h4>
+<ul>
+<li><strong>Definición</strong>: Archivos XML que definen cómo se visualizan los datos</li>
+<li><strong>Ubicación</strong>: Archivos <code>.xml</code> en la carpeta <code>views/</code></li>
+<li><strong>Responsabilidad</strong>: Presentación de la información al usuario</li>
+<li><strong>Tipos</strong>: Formularios, listas, kanban, calendario, gráficos, pivote, etc.</li>
+</ul>
+<p><strong>Ejemplo</strong>: Una vista de formulario de <code>sale.order</code> define cómo se muestra el pedido en pantalla (campos visibles, orden, agrupaciones, etc.)</p>
+<h4 id="controlador-controller">Controlador (Controller)</h4>
+<ul>
+<li><strong>Definición</strong>: Métodos Python que procesan la lógica de negocio</li>
+<li><strong>Ubicación</strong>: Dentro de las clases de modelo o en <code>controllers/</code></li>
+<li><strong>Responsabilidad</strong>: Procesar acciones, validar datos, coordinar el flujo</li>
+<li><strong>Tipos</strong>: Métodos de modelo, controladores web (HTTP)</li>
+</ul>
+<p><strong>Ejemplo</strong>: Un método <code>action_confirm()</code> en <code>sale.order</code> que valida y confirma el pedido</p>
+<h3 id="3-wsgi-y-werkzeug">3. WSGI y Werkzeug</h3>
+<p><strong>WSGI</strong> (Web Server Gateway Interface) es el estándar Python para comunicación entre servidores web y aplicaciones.</p>
+<p><strong>Werkzeug</strong> es la biblioteca que Odoo utiliza para:</p>
+<ul>
+<li>Recibir peticiones HTTP/HTTPS</li>
+<li>Enrutar las peticiones a los controladores correctos</li>
+<li>Generar las respuestas HTTP</li>
+<li>Gestionar sesiones y cookies</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Cliente Web → HTTP Request → Werkzeug → Controlador Odoo → Respuesta
+</span></code></pre></div>
+<p>Aquí tienes un esquema <strong>en texto plano (ASCII)</strong> que explica la relación entre <strong>WSGI</strong>, <strong>Werkzeug</strong> y <strong>Odoo</strong>:</p>
+<p></p><div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>          +------------------------------------------------------+
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>          |                      Odoo                            |
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>          |  (Aplicación Python para ERP)                        |
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>          +------------------------------------------------------+
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>                                │
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>                                │ usa
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>                                ▼
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>          +------------------------------------------------------+
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>          |                    WSGI                              |
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>          |  (Web Server Gateway Interface)                      |
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>          |  Estándar que conecta servidores web con apps        |
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>          |  Python. Define cómo se comunican.                   |
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>          +------------------------------------------------------+
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>                                │
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>                                │ implementado por
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>                                ▼
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>          +------------------------------------------------------+
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>          |                   Werkzeug                           |
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>          |  (Biblioteca WSGI en Python)                         |
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>          |  Proporciona utilidades para manejar peticiones,     |
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>          |  respuestas y middlewares.                           |
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>          +------------------------------------------------------+
+</span></code></pre></div>
+Explicación rápida del esquema:<p></p>
+<ul>
+<li><strong>Odoo</strong> es la aplicación ERP escrita en Python.</li>
+<li>Para servir contenido web, Odoo necesita hablar con un servidor (como Gunicorn, uWSGI).</li>
+<li><strong>WSGI</strong> es el protocolo estándar que define cómo se comunican aplicaciones Python con servidores web.</li>
+<li><strong>Werkzeug</strong> es una implementación de WSGI que Odoo utiliza internamente para gestionar peticiones HTTP y respuestas.</li>
+</ul>
+<h3 id="4-business-objects">4. Business Objects</h3>
+<p>Los <strong>Business Objects</strong> son los modelos que contienen tanto datos como lógica de negocio.</p>
+<p><strong>Características</strong>:  </p>
+<ul>
+<li>Heredan de <code>models.Model</code></li>
+<li>Combinan estructura (campos) y comportamiento (métodos)</li>
+<li>Representan entidades del mundo real (clientes, productos, facturas)</li>
+<li>Encapsulan la lógica relacionada con esa entidad</li>
+</ul>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo conceptual</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Cliente</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="n">_name</span> <span class="o">=</span> <span class="s1">'res.partner'</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="c1"># DATOS (Estructura)</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="n">name</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Char</span><span class="p">(</span><span class="s1">'Nombre'</span><span class="p">)</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="n">email</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Char</span><span class="p">(</span><span class="s1">'Email'</span><span class="p">)</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    <span class="c1"># LÓGICA (Comportamiento)</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">enviar_bienvenida</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>        <span class="c1"># Lógica para enviar email de bienvenida</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        <span class="k">pass</span>
+</span></code></pre></div>
+</div>
+<h3 id="5-wizards-asistentes">5. Wizards (Asistentes)</h3>
+<p>Los <strong>Wizards</strong> son formularios temporales que guían al usuario en procesos complejos paso a paso.</p>
+<p><strong>Características</strong>:
+- Heredan de <code>models.TransientModel</code>
+- No persisten permanentemente en la BD (se auto-eliminan)
+- Simplifican tareas complejas dividiéndolas en pasos
+- Suelen tener botones de "Siguiente", "Anterior", "Finalizar"</p>
+<p><strong>Ejemplos de uso</strong>:
+- Asistente de facturación masiva
+- Importador de datos CSV
+- Configurador de productos con múltiples opciones
+- Generador de informes personalizados</p>
+<h3 id="6-cliente-web-owl-widgets">6. Cliente Web (OWL + Widgets)</h3>
+<p>El <strong>cliente web</strong> de Odoo está construido con tecnologías modernas:</p>
+<ul>
+<li>
+<p><strong>OWL</strong> (Odoo Web Library)</p>
+<ul>
+<li>Framework JavaScript propio de Odoo (similar a React/Vue)</li>
+<li>Basado en componentes</li>
+<li>Reactivo y eficiente</li>
+<li>Sistema de plantillas con QWeb</li>
+</ul>
+</li>
+<li>
+<p><strong>Widgets</strong></p>
+</li>
+</ul>
+<p>Los <strong>Widgets</strong> son componentes visuales que se adaptan al tipo de dato:</p>
+<table>
+<thead>
+<tr>
+<th>Tipo de Campo</th>
+<th>Widget</th>
+<th>Comportamiento</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Date</td>
+<td>Calendario</td>
+<td>Muestra selector de fecha</td>
+</tr>
+<tr>
+<td>Many2one</td>
+<td>Select2</td>
+<td>Autocompletado con búsqueda</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td>Checkbox</td>
+<td>Casilla de verificación</td>
+</tr>
+<tr>
+<td>Selection</td>
+<td>Dropdown</td>
+<td>Lista desplegable</td>
+</tr>
+<tr>
+<td>Image</td>
+<td>Image</td>
+<td>Visor/cargador de imágenes</td>
+</tr>
+<tr>
+<td>HTML</td>
+<td>HTML Editor</td>
+<td>Editor de texto enriquecido</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition info">
+<p class="admonition-title">Personalización</p>
+<p>Puedes crear <strong>widgets personalizados</strong> para comportamientos específicos de tu negocio</p>
+</div>
+<h3 id="resumen-de-componentes">Resumen de Componentes</h3>
+<table>
+<thead>
+<tr>
+<th>Componente</th>
+<th>Descripción</th>
+<th>Tecnología</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Base de Datos</strong></td>
+<td>Almacenamiento persistente de datos</td>
+<td>PostgreSQL</td>
+</tr>
+<tr>
+<td><strong>ORM</strong></td>
+<td>Mapeo objeto-relacional, abstrae SQL</td>
+<td>Python</td>
+</tr>
+<tr>
+<td><strong>Business Objects</strong></td>
+<td>Modelos con datos + lógica de negocio</td>
+<td>Python (models.Model)</td>
+</tr>
+<tr>
+<td><strong>WSGI/Werkzeug</strong></td>
+<td>Servidor HTTP, enrutamiento</td>
+<td>Python/Werkzeug</td>
+</tr>
+<tr>
+<td><strong>Wizards</strong></td>
+<td>Asistentes temporales</td>
+<td>Python (TransientModel)</td>
+</tr>
+<tr>
+<td><strong>Cliente Web</strong></td>
+<td>Interfaz de usuario interactiva</td>
+<td>JavaScript (OWL) + QWeb</td>
+</tr>
+<tr>
+<td><strong>Widgets</strong></td>
+<td>Componentes visuales adaptables</td>
+<td>JavaScript</td>
+</tr>
+</tbody>
+</table>
+<h2 id="la-base-de-datos-en-odoo">La Base de Datos en Odoo</h2>
+<h3 id="diseno-automatico">Diseño Automático</h3>
+<p>En Odoo <strong>no existe un diseño explícito de base de datos</strong>. En su lugar:</p>
+<ul>
+<li>El desarrollador <strong>define clases Python</strong> (modelos)</li>
+<li>El <strong>ORM mapea</strong> automáticamente esas clases a tablas</li>
+<li><strong>PostgreSQL</strong> almacena los datos resultantes</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Sin diagramas ER</p>
+<p>Odoo no proporciona diagramas Entidad-Relación tradicionales. La "base de datos" es el resultado del mapeo automático de los modelos.</p>
+</div>
+<h3 id="nomenclatura-de-tablas-y-campos">Nomenclatura de Tablas y Campos</h3>
+<h4 id="reglas-de-nomenclatura">Reglas de Nomenclatura</h4>
+<p><strong>Clases Python → Tablas PostgreSQL</strong></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Clase Python en Odoo</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">class</span><span class="w"> </span><span class="nc">SaleOrder</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="n">_name</span> <span class="o">=</span> <span class="s1">'sale.order'</span>  <span class="c1"># Nombre del modelo</span>
+</span></code></pre></div>
+<p>Se mapea a:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">-- Tabla en PostgreSQL</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">sale_order</span><span class="w"> </span><span class="p">(...)</span>
+</span></code></pre></div>
+<p><strong>Regla</strong>: Los puntos (<code>.</code>) se convierten en guiones bajos (<code>_</code>)</p>
+<p><strong>Atributos Python → Columnas PostgreSQL</strong></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">SaleOrder</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    <span class="n">_name</span> <span class="o">=</span> <span class="s1">'sale.order'</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="n">date_order</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Datetime</span><span class="p">(</span><span class="s1">'Fecha Pedido'</span><span class="p">)</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="n">amount_total</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Float</span><span class="p">(</span><span class="s1">'Total'</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Se mapea a:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">sale_order</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="n">date_order</span><span class="w"> </span><span class="k">TIMESTAMP</span><span class="p">,</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="n">amount_total</span><span class="w"> </span><span class="nb">NUMERIC</span><span class="p">,</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="p">...</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="p">)</span>
+</span></code></pre></div>
+<p><strong>Regla</strong>: Los nombres de atributos Python se mantienen idénticos como nombres de columna</p>
+<h4 id="ejemplos-de-nomenclatura">Ejemplos de Nomenclatura</h4>
+<table>
+<thead>
+<tr>
+<th>Modelo Python</th>
+<th>Tabla PostgreSQL</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>res.partner</code></td>
+<td><code>res_partner</code></td>
+<td>Contactos (clientes/proveedores)</td>
+</tr>
+<tr>
+<td><code>sale.order</code></td>
+<td><code>sale_order</code></td>
+<td>Pedidos de venta</td>
+</tr>
+<tr>
+<td><code>sale.order.line</code></td>
+<td><code>sale_order_line</code></td>
+<td>Líneas de pedido</td>
+</tr>
+<tr>
+<td><code>account.move</code></td>
+<td><code>account_move</code></td>
+<td>Asientos contables</td>
+</tr>
+<tr>
+<td><code>product.product</code></td>
+<td><code>product_product</code></td>
+<td>Productos</td>
+</tr>
+</tbody>
+</table>
+<h3 id="inspeccion-desde-la-interfaz-web">Inspección desde la Interfaz Web</h3>
+<p>Odoo permite <strong>descubrir el nombre técnico</strong> de modelos y campos desde la interfaz:</p>
+<ol>
+<li>
+<p><strong>Activar Modo Desarrollador</strong>: </p>
+<ul>
+<li>Configuración → Activar modo desarrollador</li>
+<li>O añadir <code>?debug=1</code> a la URL</li>
+</ul>
+</li>
+<li>
+<p><strong>Ver información técnica</strong>:</p>
+<ul>
+<li>Al pasar el ratón sobre campos, aparece el nombre técnico</li>
+<li>Menú "Ver metadatos" muestra modelo y campos</li>
+<li>Vista de formulario muestra la estructura XML</li>
+</ul>
+</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Ejemplo práctico</p>
+<p>Si en un formulario de cliente ves el campo "Nombre" y activas el modo desarrollador, verás que:
+- Modelo: <code>res.partner</code>
+- Campo: <code>name</code>
+- Tabla: <code>res_partner</code>
+- Columna: <code>name</code></p>
+</div>
+<h2 id="estructura-de-carpetas-de-odoo">Estructura de Carpetas de Odoo</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>odoo/
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>├── addons/              # Módulos oficiales de Odoo
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>│   ├── sale/
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>│   ├── purchase/
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>│   ├── account/
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>│   └── ...
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>├── odoo/                # Núcleo del framework
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>│   ├── models/          # Definición del ORM
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>│   ├── addons/          # Módulos integrados en el core
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>│   ├── tools/           # Utilidades y helpers
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>│   └── http.py          # Gestión de peticiones HTTP
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>├── config/              # Archivos de configuración
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>│   └── odoo.conf
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>├── data/                # Datos persistentes (filestore)
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>├── setup/               # Scripts de instalación
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>├── tests/               # Tests automatizados
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>├── doc/                 # Documentación técnica
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>├── static/              # Archivos estáticos (CSS, JS, imágenes)
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>└── web/                 # Módulo de interfaz web
+</span></code></pre></div>
+<h3 id="addons-modulos-oficiales"><code>addons/</code> - Módulos Oficiales</h3>
+<p>Contiene todos los módulos estándar de Odoo:</p>
+<ul>
+<li>Cada módulo en su propia carpeta</li>
+<li>Estructura completa: models, views, controllers, data, security</li>
+<li>Ejemplos: <code>sale</code>, <code>account</code>, <code>crm</code>, <code>inventory</code>, <code>hr</code></li>
+</ul>
+<p><strong>Uso</strong>: Estos módulos se instalan desde la interfaz de Odoo</p>
+<h3 id="odoo-nucleo-del-framework"><code>odoo/</code> - Núcleo del Framework</h3>
+<p>El corazón de Odoo con todos los componentes esenciales:</p>
+<p><strong>Subcarpetas importantes</strong>:</p>
+<ul>
+<li><code>odoo/models/</code>: Clases base del ORM (<code>Model</code>, <code>TransientModel</code>, <code>AbstractModel</code>)</li>
+<li><code>odoo/fields/</code>: Definición de tipos de campos</li>
+<li><code>odoo/tools/</code>: Funciones auxiliares (validaciones, conversiones, etc.)</li>
+<li><code>odoo/http.py</code>: Manejo de peticiones HTTP y controladores web</li>
+<li><code>odoo/api.py</code>: Decoradores y API del ORM</li>
+</ul>
+<p><strong>Uso</strong>: Los desarrolladores rara vez modifican esta carpeta directamente</p>
+<h3 id="config-configuracion"><code>config/</code> - Configuración</h3>
+<p>Archivos de configuración del servidor:</p>
+<ul>
+<li><code>odoo.conf</code>: Configuración principal (puertos, BD, addons_path, workers, etc.)</li>
+<li>Parámetros de conexión a PostgreSQL</li>
+<li>Rutas de módulos personalizados</li>
+</ul>
+<p><strong>Uso</strong>: Editar para personalizar el comportamiento del servidor</p>
+<h3 id="data-datos-persistentes"><code>data/</code> - Datos Persistentes</h3>
+<p>Almacenamiento de archivos subidos por usuarios:</p>
+<ul>
+<li>Imágenes de productos</li>
+<li>Documentos adjuntos</li>
+<li>Archivos de importación/exportación</li>
+<li>Avatar de usuarios</li>
+</ul>
+<p><strong>Uso</strong>: Backup regular de esta carpeta es crucial</p>
+<h3 id="custom_addons-modulos-personalizados"><code>custom_addons/</code> - Módulos Personalizados</h3>
+<p>Esta carpeta <strong>no existe por defecto</strong>, pero es una convención común:</p>
+<ul>
+<li>Separar módulos personalizados de los oficiales</li>
+<li>Facilitar actualizaciones de Odoo sin perder cambios</li>
+<li>Mejor organización del código</li>
+</ul>
+<p><strong>Configuración en <code>odoo.conf</code></strong>:
+</p><div class="language-ini highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="na">addons_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">/mnt/custom_addons,/usr/lib/python3/dist-packages/odoo/addons</span>
+</span></code></pre></div><p></p>
+<h3 id="relacion-con-docker-compose">Relación con Docker Compose</h3>
+<p>Las carpetas que mapeamos en nuestro <code>docker-compose.yml</code>:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./data/addons:/mnt/extra-addons</span><span class="w">                 </span><span class="c1"># ← Nuestros módulos personalizados</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./data/odoo_config:/etc/odoo</span><span class="w">                    </span><span class="c1"># ← Archivo odoo.conf</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./data/odoo/filestore:/var/lib/odoo/filestore</span><span class="w">   </span><span class="c1"># ← Archivos subidos</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./data/odoo/sessions:/var/lib/odoo/sessions</span><span class="w">     </span><span class="c1"># ← Sesiones de usuario</span>
+</span></code></pre></div>
+<p><strong>Correspondencia</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Volumen Docker</th>
+<th>Ruta en Contenedor</th>
+<th>Propósito</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>./data/addons</code></td>
+<td><code>/mnt/extra-addons</code></td>
+<td>Módulos personalizados</td>
+</tr>
+<tr>
+<td><code>./data/odoo_config</code></td>
+<td><code>/etc/odoo</code></td>
+<td>Configuración (odoo.conf)</td>
+</tr>
+<tr>
+<td><code>./data/odoo/filestore</code></td>
+<td><code>/var/lib/odoo/filestore</code></td>
+<td>Archivos adjuntos</td>
+</tr>
+<tr>
+<td><code>./data/odoo/sessions</code></td>
+<td><code>/var/lib/odoo/sessions</code></td>
+<td>Sesiones web</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition success">
+<p class="admonition-title">Ventaja de los volúmenes</p>
+<p>Al mapear estas carpetas, nuestros cambios persisten incluso si eliminamos los contenedores</p>
+</div>
+<h2 id="recursos-y-referencias">Recursos y Referencias</h2>
+<p>Documentación Oficial:</p>
+<ul>
+<li><a href="https://www.odoo.com/documentation/19.0/developer.html">Odoo Developer Documentation</a></li>
+<li><a href="https://www.odoo.com/documentation/19.0/developer/reference/backend/orm.html">ORM API Reference</a></li>
+<li><a href="https://www.odoo.com/documentation/19.0/developer/reference/backend/views.html">Views Reference</a></li>
+<li><a href="https://www.odoo.com/documentation/19.0/developer/reference/backend/http.html">Controllers &amp; Routing</a></li>
+</ul>
+<p>Tutoriales y Guías:</p>
+<ul>
+<li><a href="https://sdlccorp.com/post/an-overview-of-orm-methods-in-odoo-18/">An Overview of ORM Methods in Odoo</a></li>
+<li><a href="https://www.odoo.com/documentation/8.0/reference/module.html#reference-module-manifest">Odoo Module Manifest Reference</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie">
+        
+          
+          <a href="../5_2_instalacion_odoo/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Instalación de Odoo">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                Instalación de Odoo
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../5_4_primer_modulo/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: Primer Módulo en Odoo">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                Primer Módulo en Odoo
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Sergio Rey Martínez - DAM - SGE - 2025/26
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.indexes", "navigation.footer", "navigation.instant", "navigation.instant.progress", "toc.follow", "navigation.top", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

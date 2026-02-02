@@ -1,0 +1,3126 @@
+<!DOCTYPE html><html lang="es" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Guía básica de Docker. Imágenes">
+      
+      
+        <meta name="author" content="Sergio Rey Martínez">
+      
+      
+        <link rel="canonical" href="https://sergio-apuntes.github.io/sge/4_3_imagenes_docker/">
+      
+      
+        <link rel="prev" href="../4_2_docker_basico/">
+      
+      
+        <link rel="next" href="../4_4_redes_volumenes_docker/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Imágenes Docker - Apuntes Sistemas de Gestión Empresarial</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CDejaVu+Sans+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"DejaVu Sans Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#gestion-de-imagenes-en-docker" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href=".." title="Apuntes Sistemas de Gestión Empresarial" class="md-header__button md-logo" aria-label="Apuntes Sistemas de Gestión Empresarial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Apuntes Sistemas de Gestión Empresarial
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Imágenes Docker
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange" aria-label="Cambiar a modo oscuro" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange" aria-label="Cambiar a modo claro" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Apuntes Sistemas de Gestión Empresarial" class="md-nav__button md-logo" aria-label="Apuntes Sistemas de Gestión Empresarial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Apuntes Sistemas de Gestión Empresarial
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href=".." class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Presentación
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Presentación
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 ERP
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1 ERP
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_1_IntroduccionERP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.1. Introducción a la Gestión Empresarial
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_2_Sistemas_Informacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2. Informática en la Gestión Empresarial
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_3_Sistemas_Clave/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.3. Sistemas Clave en la Empresa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_4_ERP_CRM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.4. ERP-CRM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_5_ERP_actuales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.5. Historia y características de los ERP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_6_ERP_Libres_Privativos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.6. Elección de ERP. Aspectos a tener en cuenta.
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_7_CRM_Actuales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.7. CRM Actual
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_8_Modelos_Servicio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.8. Modelos de Servicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_9_Terminolog%C3%ADa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.8. Terminología ERP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2 Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_1_IntroduccionPython/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción a Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_2_ControlFlujo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estructuras condicionales y control de flujo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_3_EstructurasDatos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estructuras de datos o colecciones en Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_4_FuncionesExcepciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Funciones y manejo de excepciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_5_ModulosPaquetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión de módulos, paquetes y entornos virtuales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_6_ProgramacionOrientadaObjetos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programación Orientada a Objetos (POO)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 Git
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3 Git
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_1_introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción a Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_2_ramas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ramas en Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_3_remotos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Repositorios remotos. Github.
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 Docker
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4 Docker
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_1_introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_2_docker_basico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker básico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Imágenes Docker
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Imágenes Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#gestion-de-imagenes-en-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gestión de imágenes en Docker
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gestión de imágenes en Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#listado-de-imagenes-locales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listado de imágenes locales
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#busqueda-de-imagenes-en-docker-hub" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Búsqueda de imágenes en Docker Hub
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#descarga-de-imagenes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Descarga de imágenes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#historial-de-una-imagen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Historial de una imagen
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eliminacion-de-imagenes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eliminación de imágenes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eliminacion-de-contenedores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eliminación de contenedores
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limpieza-completa-del-sistema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limpieza completa del sistema
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crear-una-imagen-a-partir-de-un-contenedor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear una imagen a partir de un contenedor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exportar-e-importar-imagenes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exportar e importar imágenes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subida-de-imagenes-a-docker-hub" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subida de imágenes a Docker Hub
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creacion-de-contenedores-personalizados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creación de contenedores personalizados
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creación de contenedores personalizados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fundamentos-del-dockerfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fundamentos del Dockerfile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flujo-de-trabajo-tipico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flujo de trabajo típico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplos-de-contenedores-personalizados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplos de contenedores personalizados
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tabla-resumen-de-comandos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tabla resumen de comandos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tabla resumen de comandos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gestion-de-imagenes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gestión de imágenes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creacion-y-exportacion-de-imagenes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creación y exportación de imágenes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-hub" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker Hub
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejemplo-guiado-de-uso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 Ejemplo guiado de uso
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_4_redes_volumenes_docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Redes y Volúmenes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_5_docker_compose/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Orquestación de contenedores con Docker Compose
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 Introducción a Odoo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5 Introducción a Odoo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_1_introduccion_odoo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción a Odoo.
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_2_instalacion_odoo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instalación de Odoo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_3_arquitectura_odoo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquitectura de Odoo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_4_primer_modulo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Primer Módulo en Odoo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7">
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 Desarrollo módulo ejemplo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6 Desarrollo módulo ejemplo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_1_creacion_modelo_basico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Creación de un modelo básico, vistas, menús y actions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_2_campos_basico_relacionales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Campos básicos y relacionales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_3_campos_computados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Campos computados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_4_excepciones_logs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Excepciones y mensajes de log
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_5_campos_computados_relacionales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Campos computados relacionales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_6_campos_valores_defecto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Campos con valores por defecto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_7_herencias_modelos_vistas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Herencias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_8_mejorando_vistas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mejorando vistas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_9_datos_demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Datos de demostración
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7 Desarrollo con Odoo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7 Desarrollo con Odoo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_1_introduccion_odoo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción a Odoo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_2_desarrollo_de_modelos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Desarrollo de Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_3_desarrollo_de_vistas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Desarrollo de Vistas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_4_navegacion_e_interaccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navegación e Interacción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_5_logica_negocio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lógica de Negocio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_6_herencia_extensibilidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Herencia y Extensibilidad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_7_seguridad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seguridad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8_2026_proyecto_odoo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Proyecto final Odoo. 'Dronify'
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#gestion-de-imagenes-en-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gestión de imágenes en Docker
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gestión de imágenes en Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#listado-de-imagenes-locales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listado de imágenes locales
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#busqueda-de-imagenes-en-docker-hub" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Búsqueda de imágenes en Docker Hub
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#descarga-de-imagenes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Descarga de imágenes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#historial-de-una-imagen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Historial de una imagen
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eliminacion-de-imagenes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eliminación de imágenes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eliminacion-de-contenedores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eliminación de contenedores
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limpieza-completa-del-sistema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limpieza completa del sistema
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crear-una-imagen-a-partir-de-un-contenedor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Crear una imagen a partir de un contenedor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exportar-e-importar-imagenes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exportar e importar imágenes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subida-de-imagenes-a-docker-hub" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subida de imágenes a Docker Hub
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creacion-de-contenedores-personalizados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creación de contenedores personalizados
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creación de contenedores personalizados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fundamentos-del-dockerfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fundamentos del Dockerfile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flujo-de-trabajo-tipico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flujo de trabajo típico
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplos-de-contenedores-personalizados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplos de contenedores personalizados
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tabla-resumen-de-comandos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tabla resumen de comandos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tabla resumen de comandos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gestion-de-imagenes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gestión de imágenes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creacion-y-exportacion-de-imagenes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creación y exportación de imágenes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-hub" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker Hub
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejemplo-guiado-de-uso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 Ejemplo guiado de uso
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Imágenes Docker</h1>
+
+<h2 id="gestion-de-imagenes-en-docker">Gestión de imágenes en Docker</h2>
+<p>Docker permite gestionar imágenes de forma flexible: listarlas, descargarlas, eliminarlas, exportarlas, versionarlas y construirlas desde cero. Esta unidad recoge los comandos esenciales para trabajar con imágenes locales y remotas, así como para crear imágenes propias mediante <code>commit</code> o <code>Dockerfile</code>.</p>
+<h3 id="listado-de-imagenes-locales">Listado de imágenes locales</h3>
+<p>Para consultar las imágenes almacenadas en el sistema:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker<span class="w"> </span>images
+</span></code></pre></div>
+<p>Se puede filtrar por repositorio y etiqueta:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>images<span class="w"> </span>ubuntu:22.04
+</span></code></pre></div>
+<p>También es posible aplicar filtros avanzados:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>images<span class="w"> </span>-f<span class="o">=</span><span class="nv">reference</span><span class="o">=</span><span class="s2">"u*:*04"</span>
+</span></code></pre></div>
+<blockquote>
+<p>Más documentación: <a href="https://docs.docker.com/engine/reference/commandline/images/"><code>docker images</code></a></p>
+</blockquote>
+<h3 id="busqueda-de-imagenes-en-docker-hub">Búsqueda de imágenes en Docker Hub</h3>
+<p>Para buscar imágenes disponibles en el registro por defecto (Docker Hub):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>search<span class="w"> </span>ubuntu
+</span></code></pre></div>
+<blockquote>
+<p>Más documentación: <a href="https://docs.docker.com/engine/reference/commandline/search/"><code>docker search</code></a></p>
+</blockquote>
+<h3 id="descarga-de-imagenes">Descarga de imágenes</h3>
+<p>Para descargar una imagen sin necesidad de ejecutarla:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>alpine:3.10
+</span></code></pre></div>
+<blockquote>
+<p>Más documentación: <a href="https://docs.docker.com/engine/reference/commandline/pull/"><code>docker pull</code></a></p>
+</blockquote>
+<h3 id="historial-de-una-imagen">Historial de una imagen</h3>
+<p>Para consultar las capas que componen una imagen:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span><span class="nb">history</span><span class="w"> </span>nginx
+</span></code></pre></div>
+<blockquote>
+<p>Más documentación: <a href="https://docs.docker.com/engine/reference/commandline/history/"><code>docker history</code></a></p>
+</blockquote>
+<h3 id="eliminacion-de-imagenes">Eliminación de imágenes</h3>
+<p>Para eliminar una imagen concreta:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker<span class="w"> </span>rmi<span class="w"> </span>ubuntu:22.04
+</span></code></pre></div>
+<p>Para eliminar todas las imágenes no utilizadas por contenedores:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>docker<span class="w"> </span>rmi<span class="w"> </span><span class="k">$(</span>docker<span class="w"> </span>images<span class="w"> </span>-q<span class="k">)</span>
+</span></code></pre></div>
+<blockquote>
+<p>Más documentación: <a href="https://docs.docker.com/engine/reference/commandline/rmi/"><code>docker rmi</code></a></p>
+</blockquote>
+<h3 id="eliminacion-de-contenedores">Eliminación de contenedores</h3>
+<p>Para eliminar un contenedor detenido:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>docker<span class="w"> </span>rm<span class="w"> </span>nombre_o_id
+</span></code></pre></div>
+<p>Para detener y eliminar todos los contenedores:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker<span class="w"> </span>stop<span class="w"> </span><span class="k">$(</span>docker<span class="w"> </span>ps<span class="w"> </span>-a<span class="w"> </span>-q<span class="k">)</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>docker<span class="w"> </span>rm<span class="w"> </span><span class="k">$(</span>docker<span class="w"> </span>ps<span class="w"> </span>-a<span class="w"> </span>-q<span class="k">)</span>
+</span></code></pre></div>
+<blockquote>
+<p>Más documentación: <a href="https://docs.docker.com/engine/reference/commandline/rm/"><code>docker rm</code></a></p>
+</blockquote>
+<h3 id="limpieza-completa-del-sistema">Limpieza completa del sistema</h3>
+<p>Para eliminar imágenes, contenedores detenidos, redes no utilizadas y caché de construcción:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>docker<span class="w"> </span>system<span class="w"> </span>prune<span class="w"> </span>-a
+</span></code></pre></div>
+<blockquote>
+<p>Más documentación: <a href="https://docs.docker.com/engine/reference/commandline/system_prune/"><code>docker system prune</code></a></p>
+</blockquote>
+<h3 id="crear-una-imagen-a-partir-de-un-contenedor">Crear una imagen a partir de un contenedor</h3>
+<p>Es posible guardar el estado de un contenedor como una nueva imagen:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker<span class="w"> </span>commit<span class="w"> </span>-a<span class="w"> </span><span class="s2">"Autor"</span><span class="w"> </span>-m<span class="w"> </span><span class="s2">"Comentario"</span><span class="w"> </span>nombre_o_id<span class="w"> </span>usuariodockerhub/imagen:2025
+</span></code></pre></div>
+<p>Para añadir una etiqueta adicional:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>docker<span class="w"> </span>tag<span class="w"> </span>usuariodockerhub/imagen:2025<span class="w"> </span>usuariodockerhub/imagen:latest
+</span></code></pre></div>
+<blockquote>
+<p>Más documentación:<br>
+<a href="https://docs.docker.com/engine/reference/commandline/commit/"><code>docker commit</code></a><br>
+<a href="https://docs.docker.com/engine/reference/commandline/tag/"><code>docker tag</code></a></p>
+</blockquote>
+<h3 id="exportar-e-importar-imagenes">Exportar e importar imágenes</h3>
+<p>Para guardar una imagen en un archivo:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>docker<span class="w"> </span>save<span class="w"> </span>-o<span class="w"> </span>copia.tar<span class="w"> </span>usuariodockerhub/imagen
+</span></code></pre></div>
+<p>O bien:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>docker<span class="w"> </span>save<span class="w"> </span>usuariodockerhub/imagen<span class="w"> </span>&gt;<span class="w"> </span>copia.tar
+</span></code></pre></div>
+<p>Para importar una imagen desde archivo:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>docker<span class="w"> </span>load<span class="w"> </span>-i<span class="w"> </span>copia.tar
+</span></code></pre></div>
+<p>O bien:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>docker<span class="w"> </span>load<span class="w"> </span>&lt;<span class="w"> </span>copia.tar
+</span></code></pre></div>
+<blockquote>
+<p>Más documentación:<br>
+<a href="https://docs.docker.com/engine/reference/commandline/save/"><code>docker save</code></a><br>
+<a href="https://docs.docker.com/engine/reference/commandline/load/"><code>docker load</code></a></p>
+</blockquote>
+<h3 id="subida-de-imagenes-a-docker-hub">Subida de imágenes a <code>Docker Hub</code></h3>
+<ol>
+<li>
+<p>Iniciar sesión:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>docker<span class="w"> </span>login
+</span></code></pre></div>
+</li>
+<li>
+<p>Crear el repositorio en https://hub.docker.com  </p>
+</li>
+<li>
+<p>Etiquetar la imagen si es necesario:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>docker<span class="w"> </span>tag<span class="w"> </span>imagen_local<span class="w"> </span>usuariodockerhub/nombre_repo
+</span></code></pre></div>
+</li>
+<li>
+<p>Subir la imagen:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>docker<span class="w"> </span>push<span class="w"> </span>usuariodockerhub/nombre_repo
+</span></code></pre></div>
+</li>
+</ol>
+<blockquote>
+<p>Más documentación:<br>
+<a href="https://docs.docker.com/engine/reference/commandline/login/"><code>docker login</code></a><br>
+<a href="https://docs.docker.com/engine/reference/commandline/push/"><code>docker push</code></a></p>
+</blockquote>
+<h2 id="creacion-de-contenedores-personalizados">Creación de contenedores personalizados</h2>
+<p>Docker permite construir imágenes propias a partir de instrucciones declarativas contenidas en un fichero llamado <code>Dockerfile</code>. Estas imágenes pueden incluir software preinstalado, configuraciones específicas, scripts de arranque, usuarios personalizados, variables de entorno, puertos expuestos y cualquier otra personalización que se desee aplicar al entorno de ejecución.</p>
+<p>Este enfoque es especialmente útil en contextos educativos, ya que permite preparar entornos reproducibles para prácticas, simulaciones o despliegues controlados.</p>
+<h3 id="fundamentos-del-dockerfile">Fundamentos del Dockerfile</h3>
+<p>Un <code>Dockerfile</code> es un archivo de texto plano que define, paso a paso, cómo debe construirse una imagen. Cada línea representa una instrucción que Docker ejecutará durante el proceso de construcción (<code>docker build</code>). Las instrucciones más comunes son:</p>
+<ul>
+<li><code>FROM</code>: define la imagen base sobre la que se construye. Puede ser una distribución Linux (<code>ubuntu</code>, <code>alpine</code>) o una imagen especializada (<code>python</code>, <code>node</code>, etc.).</li>
+<li><code>LABEL</code>: añade metadatos como el autor o el propósito de la imagen.</li>
+<li><code>RUN</code>: ejecuta comandos en la imagen durante la construcción. Se utiliza para instalar paquetes, modificar archivos, crear usuarios, etc.</li>
+<li><code>COPY</code> o <code>ADD</code>: copia archivos locales al contenedor o descarga recursos externos.</li>
+<li><code>WORKDIR</code>: establece el directorio de trabajo dentro del contenedor.</li>
+<li><code>ENV</code>: define variables de entorno persistentes.</li>
+<li><code>EXPOSE</code>: declara puertos que el contenedor utilizará (no los publica en el host).</li>
+<li><code>CMD</code>: indica el comando que se ejecutará por defecto al lanzar el contenedor.</li>
+<li><code>ENTRYPOINT</code>: define el proceso principal del contenedor, útil para imágenes que deben comportarse como ejecutables.</li>
+</ul>
+<blockquote>
+<p>Más documentación: <a href="https://docs.docker.com/engine/reference/builder/"><code>Dockerfile reference</code></a></p>
+</blockquote>
+<div class="admonition tip">
+<p class="admonition-title">Buenas prácticas en la construcción de imágenes</p>
+<ul>
+<li>Utilizar imágenes base ligeras (<code>alpine</code>, <code>slim</code>) cuando sea posible.</li>
+<li>Agrupar comandos en un solo <code>RUN</code> para reducir el número de capas.</li>
+<li>Evitar copiar archivos innecesarios al contenedor.</li>
+<li>Usar <code>CMD</code> para definir el comportamiento por defecto y <code>ENTRYPOINT</code> si se requiere control total del proceso.</li>
+<li>Añadir etiquetas (<code>docker tag</code>) para versionar las imágenes y facilitar su gestión.</li>
+<li>Documentar el propósito de cada instrucción dentro del Dockerfile.</li>
+</ul>
+</div>
+<h3 id="flujo-de-trabajo-tipico">Flujo de trabajo típico</h3>
+<ol>
+<li>Crear un directorio de trabajo con los archivos necesarios (scripts, configuraciones, etc.).</li>
+<li>Escribir el <code>Dockerfile</code> con las instrucciones deseadas.</li>
+<li>Construir la imagen:</li>
+</ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>nombreimagen<span class="w"> </span>.
+</span></code></pre></div>
+<ol>
+<li>Verificar que la imagen se ha creado:</li>
+</ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>docker<span class="w"> </span>images
+</span></code></pre></div>
+<ol>
+<li>Lanzar un contenedor basado en la imagen:</li>
+</ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>nombreimagen
+</span></code></pre></div>
+<ol>
+<li>(Opcional) Subir la imagen a Docker Hub:</li>
+</ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>docker<span class="w"> </span>login
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>docker<span class="w"> </span>push<span class="w"> </span>usuario/nombreimagen
+</span></code></pre></div>
+<hr>
+<h3 id="ejemplos-de-contenedores-personalizados">Ejemplos de contenedores personalizados</h3>
+<p>Los siguientes ejemplos ilustran distintos enfoques de personalización:</p>
+<ul>
+<li><strong>Servidor web con Apache y PHP sobre Alpine</strong>: imagen ligera con entorno gráfico mínimo y configuración web básica.</li>
+<li><strong>Aplicación Flask en Python</strong>: entorno de desarrollo web con dependencias gestionadas por <code>pip</code>.</li>
+<li><strong>Contenedor de diagnóstico de red en Ubuntu</strong>: imagen con herramientas CLI para prácticas de redes.</li>
+</ul>
+<div class="admonition example">
+<p class="admonition-title">1 Servidor web con Apache y PHP sobre Alpine</p>
+<p>El siguiente contenedor está pensado para servir una página PHP básica mediante Apache, con configuración mínima y sin entorno gráfico.</p>
+<p></p><div class="language-Dockerfile highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">alpine</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="k">LABEL</span><span class="w"> </span><span class="nv">maintainer</span><span class="o">=</span><span class="s2">"email@gmail.com"</span>
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="k">RUN</span><span class="w"> </span>apk<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apk<span class="w"> </span>add<span class="w"> </span>apache2<span class="w"> </span>php<span class="w"> </span>php-apache2<span class="w"> </span>openrc<span class="w"> </span>tar
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="k">ADD</span><span class="w"> </span>./start.sh<span class="w"> </span>/start.sh
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="k">ADD</span><span class="w"> </span>https://gist.githubusercontent.com/SyntaxC4/5648247/raw/info.php<span class="w"> </span>/var/www/localhost/htdocs/index.php
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="k">RUN</span><span class="w"> </span>adduser<span class="w"> </span>-u<span class="w"> </span><span class="m">82</span><span class="w"> </span>-D<span class="w"> </span>-S<span class="w"> </span>-G<span class="w"> </span>www-data<span class="w"> </span>www-data
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="k">RUN</span><span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>www-data:www-data<span class="w"> </span>/var/www/<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>chmod<span class="w"> </span>-R<span class="w"> </span><span class="m">775</span><span class="w"> </span>/var/www/<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>chmod<span class="w"> </span><span class="m">755</span><span class="w"> </span>/start.sh
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="k">EXPOSE</span><span class="w"> </span><span class="s">80</span>
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="k">CMD</span><span class="w"> </span>/start.sh
+</span></code></pre></div>
+Explicación<p></p>
+<ul>
+<li><strong>FROM alpine</strong>: usa como base la imagen Alpine Linux, una distribución ligera ideal para contenedores.</li>
+<li><strong>LABEL maintainer</strong>: añade metadatos indicando el responsable de la imagen.</li>
+<li><strong>RUN apk update &amp;&amp; apk add ...</strong>: actualiza el índice de paquetes e instala Apache2, PHP y herramientas necesarias.</li>
+<li><strong>ADD ./start.sh /start.sh</strong>: copia un script local al contenedor. Este script se usará para iniciar Apache.</li>
+<li><strong>ADD https://.../info.php ...</strong>: descarga un archivo PHP de ejemplo y lo coloca como página principal.</li>
+<li><strong>RUN adduser ...</strong>: crea un usuario <code>www-data</code> con UID 82 y lo asocia al grupo del mismo nombre.</li>
+<li><strong>RUN chown/chmod</strong>: asigna propiedad y permisos adecuados al directorio web y al script de arranque.</li>
+<li><strong>EXPOSE 80</strong>: declara el puerto 80 como expuesto para otros contenedores (no lo publica en el host).</li>
+<li><strong>CMD /start.sh</strong>: define el comando que se ejecutará por defecto al lanzar el contenedor.</li>
+</ul>
+</div>
+<div class="admonition example">
+<p class="admonition-title">2: Contenedor con Python y Flask</p>
+<p>Este contenedor es ideal para enseñar desarrollo web básico con Flask o para montar APIs REST en prácticas.</p>
+<div class="language-Dockerfile highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.11-slim</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="k">LABEL</span><span class="w"> </span><span class="nv">maintainer</span><span class="o">=</span><span class="s2">"docente@centro.edu"</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="k">COPY</span><span class="w"> </span>requirements.txt<span class="w"> </span>.
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--no-cache-dir<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="k">COPY</span><span class="w"> </span>app.py<span class="w"> </span>.
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="k">EXPOSE</span><span class="w"> </span><span class="s">5000</span>
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">"python"</span><span class="p">,</span><span class="w"> </span><span class="s2">"app.py"</span><span class="p">]</span>
+</span></code></pre></div>
+<ul>
+<li>Usa una imagen ligera de Python 3.11.</li>
+<li>Instala dependencias desde <code>requirements.txt</code> (por ejemplo, Flask).</li>
+<li>Copia el archivo principal <code>app.py</code> al contenedor.</li>
+<li>Expone el puerto 5000 (por defecto en Flask).</li>
+<li>Lanza la aplicación con <code>python app.py</code>.</li>
+</ul>
+</div>
+<div class="admonition example">
+<p class="admonition-title">3: Contenedor de Ubuntu con herramientas de red</p>
+<p>Este contenedor puede utilizarse en prácticas de redes, para enseñar comandos básicos o simular entornos de prueba.</p>
+<div class="language-Dockerfile highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">ubuntu:24.04</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="k">LABEL</span><span class="w"> </span><span class="nv">maintainer</span><span class="o">=</span><span class="s2">"admin@fp.edu"</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="k">RUN</span><span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>net-tools<span class="w"> </span>iputils-ping<span class="w"> </span>curl<span class="w"> </span>dnsutils
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">"/bin/bash"</span><span class="p">]</span>
+</span></code></pre></div>
+<ul>
+<li>Usa Ubuntu 24.04 como base.</li>
+<li>Instala herramientas de red útiles para diagnóstico (<code>ping</code>, <code>netstat</code>, <code>dig</code>, <code>curl</code>, etc.).</li>
+<li>Lanza una shell interactiva por defecto.</li>
+</ul>
+</div>
+<h2 id="tabla-resumen-de-comandos">Tabla resumen de comandos</h2>
+<h3 id="gestion-de-imagenes">Gestión de imágenes</h3>
+<table>
+<thead>
+<tr>
+<th>Comando</th>
+<th>Descripción</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docker images</code></td>
+<td>Lista las imágenes locales disponibles.</td>
+<td><code>docker images</code></td>
+</tr>
+<tr>
+<td><code>docker search &lt;nombre&gt;</code></td>
+<td>Busca imágenes en Docker Hub.</td>
+<td><code>docker search ubuntu</code></td>
+</tr>
+<tr>
+<td><code>docker pull &lt;imagen&gt;</code></td>
+<td>Descarga una imagen desde el registro.</td>
+<td><code>docker pull alpine</code></td>
+</tr>
+<tr>
+<td><code>docker history &lt;imagen&gt;</code></td>
+<td>Muestra el historial de capas de una imagen.</td>
+<td><code>docker history alpine</code></td>
+</tr>
+<tr>
+<td><code>docker rmi &lt;imagen:tag&gt;</code></td>
+<td>Elimina una imagen local.</td>
+<td><code>docker rmi ubuntu:14.04</code></td>
+</tr>
+<tr>
+<td><code>docker rmi $(docker images -q)</code></td>
+<td>Elimina todas las imágenes no utilizadas.</td>
+<td><code>docker rmi $(docker images -q)</code></td>
+</tr>
+<tr>
+<td><code>docker rm &lt;id&gt;</code></td>
+<td>Elimina un contenedor detenido.</td>
+<td><code>docker rm 3fb53852ce99</code></td>
+</tr>
+<tr>
+<td><code>docker stop $(docker ps -a -q)</code></td>
+<td>Detiene todos los contenedores.</td>
+<td><code>docker stop $(docker ps -a -q)</code></td>
+</tr>
+<tr>
+<td><code>docker rm $(docker ps -a -q)</code></td>
+<td>Elimina todos los contenedores detenidos.</td>
+<td><code>docker rm $(docker ps -a -q)</code></td>
+</tr>
+<tr>
+<td><code>docker system prune -a</code></td>
+<td>Elimina imágenes, contenedores y redes no utilizados.</td>
+<td><code>docker system prune -a</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="creacion-y-exportacion-de-imagenes">Creación y exportación de imágenes</h3>
+<table>
+<thead>
+<tr>
+<th>Comando</th>
+<th>Descripción</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docker commit -m "&lt;comentario&gt;" &lt;id&gt; &lt;usuario/imagen:tag&gt;</code></td>
+<td>Crea una imagen a partir de un contenedor.</td>
+<td><code>docker commit -m "Ubuntu modificado" 3fb5 usuario/ubuntu:mod</code></td>
+</tr>
+<tr>
+<td><code>docker save -o &lt;archivo&gt;.tar &lt;imagen&gt;</code></td>
+<td>Exporta una imagen a un archivo <code>.tar</code>.</td>
+<td><code>docker save -o copiaSeguridad.tar alpine</code></td>
+</tr>
+<tr>
+<td><code>docker load -i &lt;archivo&gt;.tar</code></td>
+<td>Importa una imagen desde un archivo <code>.tar</code>.</td>
+<td><code>docker load -i copiaSeguridad.tar</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="docker-hub">Docker Hub</h3>
+<table>
+<thead>
+<tr>
+<th>Comando</th>
+<th>Descripción</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docker login</code></td>
+<td>Inicia sesión en Docker Hub.</td>
+<td><code>docker login</code></td>
+</tr>
+<tr>
+<td><code>docker push &lt;usuario/imagen:tag&gt;</code></td>
+<td>Sube una imagen al repositorio.</td>
+<td><code>docker push usuario/ubuntu:mod</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="ejemplo-guiado-de-uso">🧩 Ejemplo guiado de uso</h2>
+<div class="admonition example">
+<p class="admonition-title">Práctica guiada: gestión de imágenes en Docker</p>
+<p>Aprender a listar, descargar, eliminar, exportar, importar y versionar imágenes en Docker, utilizando exclusivamente la línea de comandos en entornos WSL con Ubuntu.</p>
+<ol>
+<li>
+<p>Listar imágenes locales</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>docker<span class="w"> </span>images
+</span></code></pre></div>
+<p>Consulta todas las imágenes disponibles en tu sistema. Para filtrar por nombre y versión:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>docker<span class="w"> </span>images<span class="w"> </span>ubuntu:22.04
+</span></code></pre></div>
+</li>
+<li>
+<p>Buscar imágenes en Docker Hub</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>docker<span class="w"> </span>search<span class="w"> </span>alpine
+</span></code></pre></div>
+<p>Muestra imágenes disponibles en el registro remoto.</p>
+</li>
+<li>
+<p>Descargar una imagen</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>alpine:3.10
+</span></code></pre></div>
+<p>Descarga la imagen <code>alpine</code> con la etiqueta <code>3.10</code>.</p>
+</li>
+<li>
+<p>Consultar el historial de una imagen</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>docker<span class="w"> </span><span class="nb">history</span><span class="w"> </span>alpine
+</span></code></pre></div>
+<p>Muestra las capas que componen la imagen.</p>
+</li>
+<li>
+<p>Eliminar imágenes</p>
+<p>Eliminar una imagen concreta:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>docker<span class="w"> </span>rmi<span class="w"> </span>ubuntu:22.04
+</span></code></pre></div>
+<p>Eliminar todas las imágenes no utilizadas:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>docker<span class="w"> </span>rmi<span class="w"> </span><span class="k">$(</span>docker<span class="w"> </span>images<span class="w"> </span>-q<span class="k">)</span>
+</span></code></pre></div>
+</li>
+<li>
+<p>Eliminar contenedores</p>
+<p>Eliminar un contenedor por ID:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>docker<span class="w"> </span>rm<span class="w"> </span>3fb53852ce99
+</span></code></pre></div>
+<p>Detener y eliminar todos los contenedores:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>docker<span class="w"> </span>stop<span class="w"> </span><span class="k">$(</span>docker<span class="w"> </span>ps<span class="w"> </span>-a<span class="w"> </span>-q<span class="k">)</span>
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>docker<span class="w"> </span>rm<span class="w"> </span><span class="k">$(</span>docker<span class="w"> </span>ps<span class="w"> </span>-a<span class="w"> </span>-q<span class="k">)</span>
+</span></code></pre></div>
+</li>
+<li>
+<p>Limpieza completa del sistema</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>docker<span class="w"> </span>system<span class="w"> </span>prune<span class="w"> </span>-a
+</span></code></pre></div>
+<p>Elimina contenedores detenidos, imágenes sin uso, redes no utilizadas y caché de construcción.</p>
+</li>
+<li>
+<p>Crear una imagen a partir de un contenedor</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>docker<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"Ubuntu modificado"</span><span class="w"> </span>3fb5<span class="w"> </span>usuario/ubuntu:mod
+</span></code></pre></div>
+</li>
+<li>
+<p>Exportar e importar imágenes</p>
+<p>Guardar una imagen en archivo <code>.tar</code>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>docker<span class="w"> </span>save<span class="w"> </span>-o<span class="w"> </span>copiaSeguridad.tar<span class="w"> </span>alpine
+</span></code></pre></div>
+<p>Importar una imagen desde archivo:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>docker<span class="w"> </span>load<span class="w"> </span>-i<span class="w"> </span>copiaSeguridad.tar
+</span></code></pre></div>
+</li>
+<li>
+<p>Subir imágenes a Docker Hub</p>
+<p>Iniciar sesión:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>docker<span class="w"> </span>login
+</span></code></pre></div>
+<p>Subir imagen:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>docker<span class="w"> </span>push<span class="w"> </span>usuario/ubuntu:mod
+</span></code></pre></div>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie">
+        
+          
+          <a href="../4_2_docker_basico/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Docker básico">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                Docker básico
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../4_4_redes_volumenes_docker/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: Redes y Volúmenes">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                Redes y Volúmenes
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Sergio Rey Martínez - DAM - SGE - 2025/26
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.indexes", "navigation.footer", "navigation.instant", "navigation.instant.progress", "toc.follow", "navigation.top", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

@@ -1,0 +1,3800 @@
+<!DOCTYPE html><html lang="es" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Introducción a Python. Estructuras de datos o colecciones en Python">
+      
+      
+        <meta name="author" content="Sergio Rey Martínez">
+      
+      
+        <link rel="canonical" href="https://sergio-apuntes.github.io/sge/2_3_EstructurasDatos/">
+      
+      
+        <link rel="prev" href="../2_2_ControlFlujo/">
+      
+      
+        <link rel="next" href="../2_4_FuncionesExcepciones/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Estructuras de datos o colecciones en Python - Apuntes Sistemas de Gestión Empresarial</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CDejaVu+Sans+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"DejaVu Sans Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tabla-resumen-de-estructuras-de-datos-o-colecciones" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href=".." title="Apuntes Sistemas de Gestión Empresarial" class="md-header__button md-logo" aria-label="Apuntes Sistemas de Gestión Empresarial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Apuntes Sistemas de Gestión Empresarial
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Estructuras de datos o colecciones en Python
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange" aria-label="Cambiar a modo oscuro" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo oscuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange" aria-label="Cambiar a modo claro" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Cambiar a modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Apuntes Sistemas de Gestión Empresarial" class="md-nav__button md-logo" aria-label="Apuntes Sistemas de Gestión Empresarial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Apuntes Sistemas de Gestión Empresarial
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href=".." class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Presentación
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Presentación
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 ERP
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    1 ERP
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_1_IntroduccionERP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.1. Introducción a la Gestión Empresarial
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_2_Sistemas_Informacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.2. Informática en la Gestión Empresarial
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_3_Sistemas_Clave/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.3. Sistemas Clave en la Empresa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_4_ERP_CRM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.4. ERP-CRM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_5_ERP_actuales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.5. Historia y características de los ERP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_6_ERP_Libres_Privativos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.6. Elección de ERP. Aspectos a tener en cuenta.
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_7_CRM_Actuales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.7. CRM Actual
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_8_Modelos_Servicio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.8. Modelos de Servicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_9_Terminolog%C3%ADa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1.8. Terminología ERP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2 Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_1_IntroduccionPython/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción a Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_2_ControlFlujo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estructuras condicionales y control de flujo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estructuras de datos o colecciones en Python
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estructuras de datos o colecciones en Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tabla-resumen-de-estructuras-de-datos-o-colecciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tabla resumen de estructuras de datos o colecciones
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#listas-en-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listas en Python
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Listas en Python">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creacion-y-acceso-a-elementos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creación y acceso a elementos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modificacion-de-elementos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modificación de elementos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anadir-elementos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Añadir elementos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#insertar-en-una-posicion-especifica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Insertar en una posición específica
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eliminar-elementos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eliminar elementos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comprensiones-de-listas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comprensiones de listas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resumen-de-operaciones-utiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resumen de operaciones útiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-y-ejercicio-de-uso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 Ejemplo y ejercicio de uso
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diccionarios-en-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diccionarios en Python
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Diccionarios en Python">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#definicion-de-diccionarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Definición de Diccionarios
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acceso-a-valores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acceso a valores
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modificacion-y-ampliacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modificación y ampliación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodos-mas-importantes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métodos más importantes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-y-ejercicio-de-uso_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 Ejemplo y ejercicio de uso
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tuplas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tuplas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tuplas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-y-ejercicio-de-uso_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 Ejemplo y ejercicio de uso
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sets-conjuntos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sets (Conjuntos)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sets (Conjuntos)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#metodos-mas-importantes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métodos más importantes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tabla-de-metodos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tabla de métodos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-y-ejercicio-de-uso_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 Ejemplo y ejercicio de uso
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apendice-sobre-estructuras" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Apendice sobre estructuras.
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Apendice sobre estructuras.">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iteracion-sobre-colecciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Iteración sobre colecciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listas-de-diccionarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listas de diccionarios
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_4_FuncionesExcepciones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Funciones y manejo de excepciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_5_ModulosPaquetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gestión de módulos, paquetes y entornos virtuales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_6_ProgramacionOrientadaObjetos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programación Orientada a Objetos (POO)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 Git
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3 Git
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_1_introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción a Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_2_ramas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ramas en Git
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_3_remotos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Repositorios remotos. Github.
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 Docker
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4 Docker
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_1_introduccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_2_docker_basico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker básico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_3_imagenes_docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Imágenes Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_4_redes_volumenes_docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Redes y Volúmenes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_5_docker_compose/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Orquestación de contenedores con Docker Compose
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 Introducción a Odoo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5 Introducción a Odoo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_1_introduccion_odoo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción a Odoo.
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_2_instalacion_odoo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instalación de Odoo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_3_arquitectura_odoo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquitectura de Odoo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_4_primer_modulo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Primer Módulo en Odoo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7">
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 Desarrollo módulo ejemplo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6 Desarrollo módulo ejemplo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_1_creacion_modelo_basico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Creación de un modelo básico, vistas, menús y actions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_2_campos_basico_relacionales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Campos básicos y relacionales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_3_campos_computados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Campos computados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_4_excepciones_logs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Excepciones y mensajes de log
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_5_campos_computados_relacionales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Campos computados relacionales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_6_campos_valores_defecto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Campos con valores por defecto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_7_herencias_modelos_vistas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Herencias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_8_mejorando_vistas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mejorando vistas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_9_datos_demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Datos de demostración
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7 Desarrollo con Odoo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7 Desarrollo con Odoo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_1_introduccion_odoo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introducción a Odoo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_2_desarrollo_de_modelos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Desarrollo de Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_3_desarrollo_de_vistas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Desarrollo de Vistas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_4_navegacion_e_interaccion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navegación e Interacción
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_5_logica_negocio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lógica de Negocio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_6_herencia_extensibilidad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Herencia y Extensibilidad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_7_seguridad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seguridad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8_2026_proyecto_odoo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Proyecto final Odoo. 'Dronify'
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tabla-resumen-de-estructuras-de-datos-o-colecciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tabla resumen de estructuras de datos o colecciones
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#listas-en-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listas en Python
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Listas en Python">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creacion-y-acceso-a-elementos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creación y acceso a elementos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modificacion-de-elementos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modificación de elementos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anadir-elementos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Añadir elementos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#insertar-en-una-posicion-especifica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Insertar en una posición específica
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eliminar-elementos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eliminar elementos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comprensiones-de-listas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comprensiones de listas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resumen-de-operaciones-utiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resumen de operaciones útiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-y-ejercicio-de-uso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 Ejemplo y ejercicio de uso
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diccionarios-en-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diccionarios en Python
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Diccionarios en Python">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#definicion-de-diccionarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Definición de Diccionarios
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acceso-a-valores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acceso a valores
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modificacion-y-ampliacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modificación y ampliación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metodos-mas-importantes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métodos más importantes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-y-ejercicio-de-uso_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 Ejemplo y ejercicio de uso
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tuplas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tuplas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tuplas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-y-ejercicio-de-uso_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 Ejemplo y ejercicio de uso
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sets-conjuntos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sets (Conjuntos)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sets (Conjuntos)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#metodos-mas-importantes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métodos más importantes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tabla-de-metodos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tabla de métodos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-y-ejercicio-de-uso_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 Ejemplo y ejercicio de uso
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apendice-sobre-estructuras" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Apendice sobre estructuras.
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Apendice sobre estructuras.">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iteracion-sobre-colecciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Iteración sobre colecciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listas-de-diccionarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listas de diccionarios
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Estructuras de datos o colecciones en Python</h1>
+
+<p>Python ofrece estructuras de datos versátiles que permiten organizar y manipular información de forma eficiente. En esta sesión trabajaremos con listas, diccionarios, tuplas y conjuntos, y aprenderemos a recorrerlos e incluso transformarlos con comprensiones de listas.</p>
+<h2 id="tabla-resumen-de-estructuras-de-datos-o-colecciones">Tabla resumen de estructuras de datos o colecciones</h2>
+<p>Sintetizando, estas son las estructuras que vamos a ver.</p>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Nombre técnico</th>
+<th>Mutabilidad</th>
+<th>Orden</th>
+<th>Duplicados</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lista</td>
+<td><code>list</code></td>
+<td>Mutable</td>
+<td>Sí</td>
+<td>Sí</td>
+<td><code>["a", "b", "c"]</code></td>
+</tr>
+<tr>
+<td>Diccionario</td>
+<td><code>dict</code></td>
+<td>Mutable</td>
+<td>Sí</td>
+<td>No (claves únicas)</td>
+<td><code>{"a": 1, "b": 2}</code></td>
+</tr>
+<tr>
+<td>Tupla</td>
+<td><code>tuple</code></td>
+<td>Inmutable</td>
+<td>Sí</td>
+<td>Sí</td>
+<td><code>("a", "b", "c")</code></td>
+</tr>
+<tr>
+<td>Conjunto</td>
+<td><code>set</code></td>
+<td>Mutable</td>
+<td>No</td>
+<td>No</td>
+<td><code>{"a", "b", "c"}</code></td>
+</tr>
+</tbody>
+</table>
+<p>Donde </p>
+<ul>
+<li><strong>Mutabilidad</strong>: indica si una colección puede modificarse después de creada. Las listas, diccionarios y conjuntos son mutables; las tuplas no lo son.</li>
+<li><strong>Orden</strong>: determina si los elementos mantienen el orden en que fueron añadidos. Listas, tuplas y diccionarios (desde Python 3.7) conservan el orden; los conjuntos no.</li>
+<li><strong>Duplicados</strong>: señala si se permiten elementos repetidos. Listas y tuplas sí los permiten; conjuntos y diccionarios no (las claves deben ser únicas).</li>
+</ul>
+<h2 id="listas-en-python">Listas en Python</h2>
+<p>Las listas son una de las estructuras de datos más utilizadas en Python. Permiten almacenar múltiples elementos en una sola variable, manteniendo el orden en que fueron añadidos y ofreciendo gran flexibilidad para modificarlos, recorrerlos o aplicar operaciones sobre ellos.</p>
+<p>Una lista puede contener cualquier tipo de dato: números, cadenas, booleanos, e incluso otras listas o estructuras más complejas. Además, se pueden mezclar tipos dentro de una misma lista, aunque no siempre es recomendable por cuestiones de claridad y mantenimiento.</p>
+<h3 id="creacion-y-acceso-a-elementos">Creación y acceso a elementos</h3>
+<p>Las listas se definen entre corchetes <code>[]</code> y los elementos se separan por comas. El acceso se realiza mediante índices, empezando desde 0. También se pueden usar índices negativos para contar desde el final.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo de creación de listas</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Creamos una lista con nombres de frutas</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">frutas</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"manzana"</span><span class="p">,</span> <span class="s2">"plátano"</span><span class="p">,</span> <span class="s2">"naranja"</span><span class="p">]</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Accedemos al primer elemento (índice 0)</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">frutas</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># manzana</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Accedemos al último elemento usando índice negativo</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">frutas</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># naranja</span>
+</span></code></pre></div>
+</div>
+<h3 id="modificacion-de-elementos">Modificación de elementos</h3>
+<p>Las listas son <strong>mutables</strong>, lo que significa que sus elementos pueden cambiar después de haber sido creados. Esto permite actualizar valores fácilmente sin tener que crear una nueva lista.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo de modificación de listas</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Cambiamos el segundo elemento</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">frutas</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"pera"</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">frutas</span><span class="p">)</span>  <span class="c1"># ['manzana', 'pera', 'naranja']</span>
+</span></code></pre></div>
+</div>
+<h3 id="anadir-elementos">Añadir elementos</h3>
+<p>El método <code>append()</code> agrega un nuevo elemento al final de la lista. Es uno de los métodos más utilizados cuando se construyen listas dinámicamente, como al leer datos del usuario o procesar resultados.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo para añadir elementos a listas</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Añadimos una nueva fruta al final de la lista</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">frutas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"kiwi"</span><span class="p">)</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">frutas</span><span class="p">)</span>  <span class="c1"># ['manzana', 'pera', 'naranja', 'kiwi']</span>
+</span></code></pre></div>
+</div>
+<h3 id="insertar-en-una-posicion-especifica">Insertar en una posición específica</h3>
+<p>El método <code>insert()</code> permite colocar un elemento en una posición concreta, desplazando los demás hacia la derecha. Es útil cuando se quiere mantener un orden específico.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo de inserción en posición específica</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Insertamos una fruta en la segunda posición (índice 1)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">frutas</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"melón"</span><span class="p">)</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">frutas</span><span class="p">)</span>  <span class="c1"># ['manzana', 'melón', 'pera', 'naranja', 'kiwi']</span>
+</span></code></pre></div>
+</div>
+<h3 id="eliminar-elementos">Eliminar elementos</h3>
+<p>Con <code>remove()</code> se elimina la primera aparición del valor indicado. Si el valor no existe, se genera un error. Para evitarlo, se puede comprobar antes con <code>in</code>.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo borrado de elementos</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Eliminamos el elemento "naranja"</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">frutas</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">"naranja"</span><span class="p">)</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">frutas</span><span class="p">)</span>  <span class="c1"># ['manzana', 'melón', 'pera', 'kiwi']</span>
+</span></code></pre></div>
+</div>
+<p>Las listas ofrecen métodos como <code>count()</code> para contar elementos, <code>sort()</code> para ordenarlos, y <code>reverse()</code> para invertir el orden. Estas operaciones son muy útiles en tareas de análisis y presentación de datos.</p>
+<h3 id="comprensiones-de-listas">Comprensiones de listas</h3>
+<p>Las comprensiones de listas permiten crear nuevas listas de forma compacta y expresiva, aplicando condiciones o transformaciones.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo de generación de listas de forma automática</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Creamos una lista de cuadrados del 1 al 5</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">cuadrados</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">cuadrados</span><span class="p">)</span>  <span class="c1"># [1, 4, 9, 16, 25]</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># Filtramos solo los pares</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">pares</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="nb">print</span><span class="p">(</span><span class="n">pares</span><span class="p">)</span>  <span class="c1"># [0, 2, 4, 6, 8]</span>
+</span></code></pre></div>
+</div>
+<p>Esta técnica es útil para generar listas a partir de otras, aplicar filtros o realizar cálculos en una sola línea.</p>
+<h3 id="resumen-de-operaciones-utiles">Resumen de operaciones útiles</h3>
+<p>Las listas en Python no solo permiten almacenar múltiples elementos, sino que también ofrecen una serie de métodos integrados que facilitan su manipulación. Estos métodos permiten añadir, eliminar, ordenar, buscar y transformar los elementos de forma sencilla.</p>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Descripción</th>
+<th>Ejemplo</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>append(x)</code></td>
+<td>Añade el elemento <code>x</code> al final de la lista</td>
+<td><code>lista.append("uva")</code></td>
+<td><code>["manzana", "pera", "uva"]</code></td>
+</tr>
+<tr>
+<td><code>insert(i, x)</code></td>
+<td>Inserta el elemento <code>x</code> en la posición <code>i</code></td>
+<td><code>lista.insert(1, "melón")</code></td>
+<td><code>["manzana", "melón", "pera"]</code></td>
+</tr>
+<tr>
+<td><code>remove(x)</code></td>
+<td>Elimina la primera aparición del elemento <code>x</code></td>
+<td><code>lista.remove("pera")</code></td>
+<td><code>["manzana", "melón"]</code></td>
+</tr>
+<tr>
+<td><code>pop()</code></td>
+<td>Elimina y devuelve el último elemento</td>
+<td><code>lista.pop()</code></td>
+<td><code>["manzana", "melón"]</code></td>
+</tr>
+<tr>
+<td><code>pop(i)</code></td>
+<td>Elimina y devuelve el elemento en la posición <code>i</code></td>
+<td><code>lista.pop(0)</code></td>
+<td><code>["melón", "pera"]</code></td>
+</tr>
+<tr>
+<td><code>count(x)</code></td>
+<td>Devuelve cuántas veces aparece el elemento <code>x</code></td>
+<td><code>lista.count("pera")</code></td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td><code>index(x)</code></td>
+<td>Devuelve el índice de la primera aparición del elemento <code>x</code></td>
+<td><code>lista.index("pera")</code></td>
+<td><code>2</code></td>
+</tr>
+<tr>
+<td><code>sort()</code></td>
+<td>Ordena la lista de forma ascendente (alfabética o numérica)</td>
+<td><code>lista.sort()</code></td>
+<td><code>["manzana", "pera", "uva"]</code></td>
+</tr>
+<tr>
+<td><code>reverse()</code></td>
+<td>Invierte el orden de los elementos</td>
+<td><code>lista.reverse()</code></td>
+<td><code>["uva", "pera", "manzana"]</code></td>
+</tr>
+<tr>
+<td><code>clear()</code></td>
+<td>Elimina todos los elementos de la lista</td>
+<td><code>lista.clear()</code></td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td><code>copy()</code></td>
+<td>Devuelve una copia superficial de la lista</td>
+<td><code>nueva_lista = lista.copy()</code></td>
+<td><code>["manzana", "pera", "uva"]</code></td>
+</tr>
+</tbody>
+</table>
+<p>Además de los métodos propios del tipo <code>list</code>, Python ofrece <strong>instrucciones y funciones integradas que permiten manipular listas desde fuera</strong>. Estas operaciones no se invocan con punto (<code>.</code>), pero son igualmente útiles para eliminar, consultar o transformar listas.</p>
+<table>
+<thead>
+<tr>
+<th>Instrucción / Función</th>
+<th>Descripción</th>
+<th>Ejemplo</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>del lista[i]</code></td>
+<td>Elimina el elemento en la posición <code>i</code></td>
+<td><code>del lista[1]</code></td>
+<td><code>["manzana", "uva"]</code></td>
+</tr>
+<tr>
+<td><code>del lista[a:b]</code></td>
+<td>Elimina un segmento de la lista entre las posiciones <code>a</code> y <code>b</code></td>
+<td><code>del lista[0:2]</code></td>
+<td><code>["uva"]</code></td>
+</tr>
+<tr>
+<td><code>len(lista)</code></td>
+<td>Devuelve el número de elementos en la lista</td>
+<td><code>len(lista)</code></td>
+<td><code>3</code></td>
+</tr>
+<tr>
+<td><code>sum(lista)</code></td>
+<td>Devuelve la suma de los elementos numéricos de la lista</td>
+<td><code>sum([1, 2, 3])</code></td>
+<td><code>6</code></td>
+</tr>
+<tr>
+<td><code>max(lista)</code></td>
+<td>Devuelve el valor máximo de la lista</td>
+<td><code>max([1, 5, 3])</code></td>
+<td><code>5</code></td>
+</tr>
+<tr>
+<td><code>min(lista)</code></td>
+<td>Devuelve el valor mínimo de la lista</td>
+<td><code>min([1, 5, 3])</code></td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td><code>sorted(lista)</code></td>
+<td>Devuelve una nueva lista ordenada sin modificar la original</td>
+<td><code>sorted(["pera", "manzana", "uva"])</code></td>
+<td><code>["manzana", "pera", "uva"]</code></td>
+</tr>
+<tr>
+<td><code>enumerate(lista)</code></td>
+<td>Devuelve un objeto iterable con pares <code>(índice, valor)</code></td>
+<td><code>for i, v in enumerate(lista): ...</code></td>
+<td><code>(0, "manzana"), (1, "pera")...</code></td>
+</tr>
+<tr>
+<td><code>zip(lista1, lista2)</code></td>
+<td>Combina dos listas en pares <code>(x, y)</code></td>
+<td><code>zip(["a", "b"], [1, 2])</code></td>
+<td><code>[("a", 1), ("b", 2)]</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition info">
+<p class="admonition-title">Más info</p>
+<ul>
+<li><a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">Documentación oficial del tipo <code>list</code></a><br>
+  Explica los métodos como <code>append()</code>, <code>insert()</code>, <code>remove()</code>, <code>pop()</code>, <code>sort()</code>, <code>reverse()</code>, <code>clear()</code>, <code>copy()</code>, etc.</li>
+<li>
+<p><a href="https://docs.python.org/3/library/functions.html">Funciones integradas de Python (<code>built-in functions</code>)</a><br>
+  Aquí encontrarás <code>len()</code>, <code>sum()</code>, <code>max()</code>, <code>min()</code>, <code>sorted()</code>, <code>enumerate()</code>, <code>zip()</code>, entre muchas otras.</p>
+</li>
+<li>
+<p><a href="https://docs.python.org/3/reference/index.html">Referencia del lenguaje Python</a><br>
+  Incluye instrucciones como <code>del</code>, estructuras de control, y detalles sobre cómo funciona el lenguaje.</p>
+</li>
+</ul>
+</div>
+<h3 id="ejemplo-y-ejercicio-de-uso">🧩 Ejemplo y ejercicio de uso</h3>
+<p>Este ejemplo muestra cómo combinar varios métodos para construir y modificar una lista paso a paso. El resultado final sería una lista ordenada con los elementos actualizados.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo combinado</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Lista inicial</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">frutas</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"manzana"</span><span class="p">,</span> <span class="s2">"pera"</span><span class="p">,</span> <span class="s2">"naranja"</span><span class="p">]</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># Añadir una fruta</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">frutas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"kiwi"</span><span class="p">)</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># Insertar en posición 1</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="n">frutas</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"melón"</span><span class="p">)</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="c1"># Eliminar una fruta</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">frutas</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">"naranja"</span><span class="p">)</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="c1"># Ordenar la lista</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="n">frutas</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="c1"># Mostrar resultado final</span>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="nb">print</span><span class="p">(</span><span class="n">frutas</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>Para finalizar con las listas, vamos a realizar un ejercicio para practicar los métodos <code>append()</code>, <code>insert()</code>, <code>pop()</code> y la modificación por índice, consolidando el uso básico de listas en Python.</p>
+<div class="admonition question">
+<p class="admonition-title">Ejercicio básico de listas</p>
+<p>Crea una lista con tres colores. Añade un cuarto color, cambia el segundo por otro, inserta uno en la primera posición, elimina el último y muestra la lista final por pantalla.</p>
+<details class="quote">
+<summary>Solucion</summary>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Lista inicial</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">colores</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"rojo"</span><span class="p">,</span> <span class="s2">"verde"</span><span class="p">,</span> <span class="s2">"azul"</span><span class="p">]</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># Añadir un cuarto color</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">colores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"amarillo"</span><span class="p">)</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1"># Cambiar el segundo color</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">colores</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"morado"</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="c1"># Insertar en la primera posición</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="n">colores</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">"negro"</span><span class="p">)</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="c1"># Eliminar el último color</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="n">colores</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="c1"># Mostrar la lista final</span>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="nb">print</span><span class="p">(</span><span class="n">colores</span><span class="p">)</span>
+</span></code></pre></div>
+</details>
+</div>
+<hr>
+<h2 id="diccionarios-en-python">Diccionarios en Python</h2>
+<p>Los <strong>diccionarios</strong> son una estructura de datos fundamental en Python que permite almacenar información en forma de <strong>pares clave-valor</strong>. A diferencia de las listas, donde cada elemento tiene una posición numérica (índice), en los diccionarios cada valor está asociado a una <strong>clave única</strong> que actúa como identificador.</p>
+<p>Esta estructura es especialmente útil cuando se necesita representar entidades con atributos, como un usuario con nombre, edad y correo, o un producto con precio, stock y categoría. En contextos de desarrollo modular o aplicaciones como <strong><em>Odoo</em></strong>, los diccionarios se asemejan a registros o modelos de datos, lo que los convierte en una herramienta clave para organizar y manipular información.</p>
+<figure align="center">
+  <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../imgs/python/Listas-Diccionarios.webp" data-desc-position="bottom"><img alt="Image title" src="../imgs/python/Listas-Diccionarios.webp" width="85%"></a>
+<br>
+<figcaption>Diccionarios vs Listas</figcaption>
+</figure>
+<h3 id="definicion-de-diccionarios">Definición de Diccionarios</h3>
+<p>Un diccionario se define entre llaves <code>{}</code>, y cada par clave-valor se separa por dos puntos <code>:</code>. Las claves suelen ser cadenas de texto, aunque también pueden ser números o tuplas inmutables.</p>
+<div class="admonition example">
+<p class="admonition-title">Definición de diccionario</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Diccionario que representa un usuario</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">usuario</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="s2">"nombre"</span><span class="p">:</span> <span class="s2">"Sergio"</span><span class="p">,</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="s2">"edad"</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="s2">"correo"</span><span class="p">:</span> <span class="s2">"sergio@example.com"</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>En este ejemplo, <code>"nombre"</code>, <code>"edad"</code> y <code>"correo"</code> son claves, y sus valores son <code>"Sergio"</code>, <code>25</code> y <code>"sergio@example.com"</code> respectivamente.</p>
+</div>
+<h3 id="acceso-a-valores">Acceso a valores</h3>
+<p>Para acceder a un valor, se utiliza la clave entre corchetes:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">usuario</span><span class="p">[</span><span class="s2">"nombre"</span><span class="p">])</span>  <span class="c1"># Sergio</span>
+</span></code></pre></div>
+<p>Si se intenta acceder a una clave que no existe, se genera un error <code>KeyError</code>. Para evitarlo, se puede usar el método <code>get()</code>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">usuario</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"población"</span><span class="p">))</span>  <span class="c1"># None</span>
+</span></code></pre></div>
+<hr>
+<h3 id="modificacion-y-ampliacion">Modificación y ampliación</h3>
+<p>Los diccionarios son <strong>mutables</strong>, lo que significa que se pueden modificar, añadir o eliminar elementos después de su creación.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo de modificación y ampliación de diccionario</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Modificar un valor existente</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">usuario</span><span class="p">[</span><span class="s2">"edad"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">26</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1"># Añadir una nueva clave</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="n">usuario</span><span class="p">[</span><span class="s2">"población"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Valencia"</span>
+</span></code></pre></div>
+</div>
+<h3 id="metodos-mas-importantes">Métodos más importantes</h3>
+<p>A continuación se presentan los métodos más útiles para trabajar con diccionarios, junto con su propósito y ejemplos prácticos.</p>
+<ul>
+<li><strong><code>get(clave)</code></strong></li>
+</ul>
+<p>Devuelve el valor asociado a la clave indicada. Si no existe, devuelve <code>None</code> o un valor por defecto si se especifica.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo de uso de <code>get()</code></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">usuario</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"correo"</span><span class="p">))</span>         <span class="c1"># sergio@example.com</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">usuario</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"teléfono"</span><span class="p">,</span> <span class="s2">"N/D"</span><span class="p">))</span>  <span class="c1"># N/D</span>
+</span></code></pre></div>
+</div>
+<p>Ideal para acceder a claves opcionales sin provocar errores.</p>
+<ul>
+<li><strong><code>keys()</code></strong>, <strong><code>values()</code></strong>, <strong><code>items()</code></strong></li>
+</ul>
+<p>Estos tres métodos devuelven vistas del contenido del diccionario, ya sean las claves, los valores o ambos:</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo de usos de <strong><code>keys()</code></strong>, <strong><code>values()</code></strong>, <strong><code>items()</code></strong> </p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">usuario</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>    <span class="c1"># dict_keys(['nombre', 'edad', 'correo', 'población'])</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">usuario</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>  <span class="c1"># dict_values(['Sergio', 26, 'sergio@example.com', 'Valencia'])</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">usuario</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>   <span class="c1"># dict_items([('nombre', 'Sergio'), ('edad', 26), ...])</span>
+</span></code></pre></div>
+</div>
+<p>Son útiles para recorrer el diccionario con bucles <code>for</code>:</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo de recuperación de diccionario con un <code>for</code></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">for</span> <span class="n">clave</span><span class="p">,</span> <span class="n">valor</span> <span class="ow">in</span> <span class="n">usuario</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">clave</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">valor</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<ul>
+<li><code>update()</code></li>
+</ul>
+<p>Permite añadir o modificar múltiples claves a la vez, pasando otro diccionario como argumento.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo de actualización de varias claves a la vez</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">usuario</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    <span class="s2">"edad"</span><span class="p">:</span> <span class="mi">27</span><span class="p">,</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>    <span class="s2">"teléfono"</span><span class="p">:</span> <span class="s2">"600123456"</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="p">})</span>
+</span></code></pre></div>
+</div>
+<p>Muy útil para fusionar información o actualizar registros.</p>
+<ul>
+<li><strong><code>pop(clave)</code></strong></li>
+</ul>
+<p>Elimina la clave indicada y devuelve su valor. Si no existe, lanza un error.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo de eliminación de uso de <code>pop()</code></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">correo</span> <span class="o">=</span> <span class="n">usuario</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">"correo"</span><span class="p">)</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">correo</span><span class="p">)</span>  <span class="c1"># sergio@example.com</span>
+</span></code></pre></div>
+</div>
+<p>Se puede usar para extraer datos y limpiar el diccionario.</p>
+<ul>
+<li><strong><code>clear()</code></strong></li>
+</ul>
+<p>Elimina todos los elementos del diccionario, dejándolo vacío.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo de uso de <code>clear()</code></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">usuario</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">usuario</span><span class="p">)</span>  <span class="c1"># {}</span>
+</span></code></pre></div>
+</div>
+<ul>
+<li><strong><code>copy()</code></strong></li>
+</ul>
+<p>Devuelve una copia superficial del diccionario. Es útil para duplicar estructuras sin modificar el original.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo de uso de <code>copy()</code></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">usuario_copia</span> <span class="o">=</span> <span class="n">usuario</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<ul>
+<li><strong>Tabla de métodos</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Descripción</th>
+<th>Ejemplo</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>get(clave)</code></td>
+<td>Devuelve el valor asociado a la clave, o <code>None</code> si no existe</td>
+<td><code>usuario.get("edad")</code></td>
+<td><code>25</code></td>
+</tr>
+<tr>
+<td><code>keys()</code></td>
+<td>Devuelve una vista con todas las claves</td>
+<td><code>usuario.keys()</code></td>
+<td><code>dict_keys(['nombre', 'edad'])</code></td>
+</tr>
+<tr>
+<td><code>values()</code></td>
+<td>Devuelve una vista con todos los valores</td>
+<td><code>usuario.values()</code></td>
+<td><code>dict_values(['Sergio', 25])</code></td>
+</tr>
+<tr>
+<td><code>items()</code></td>
+<td>Devuelve una vista con pares clave-valor</td>
+<td><code>usuario.items()</code></td>
+<td><code>dict_items([('nombre', 'Sergio'), ...])</code></td>
+</tr>
+<tr>
+<td><code>update()</code></td>
+<td>Añade o modifica claves con nuevos valores</td>
+<td><code>usuario.update({"edad": 26})</code></td>
+<td><code>{'nombre': 'Sergio', 'edad': 26}</code></td>
+</tr>
+<tr>
+<td><code>pop(clave)</code></td>
+<td>Elimina la clave indicada y devuelve su valor</td>
+<td><code>usuario.pop("edad")</code></td>
+<td><code>25</code></td>
+</tr>
+<tr>
+<td><code>clear()</code></td>
+<td>Elimina todos los elementos del diccionario</td>
+<td><code>usuario.clear()</code></td>
+<td><code>{}</code></td>
+</tr>
+<tr>
+<td><code>copy()</code></td>
+<td>Devuelve una copia superficial del diccionario</td>
+<td><code>nuevo = usuario.copy()</code></td>
+<td><code>{'nombre': 'Sergio', 'edad': 25}</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="ejemplo-y-ejercicio-de-uso_1">🧩 Ejemplo y ejercicio de uso</h3>
+<p>En el siguiente ejemplo se muestra cómo consultar, modificar y eliminar información de un diccionario de forma segura y eficiente.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo combinado de operaciones con diccionarios</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">producto</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>    <span class="s2">"nombre"</span><span class="p">:</span> <span class="s2">"Teclado"</span><span class="p">,</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>    <span class="s2">"precio"</span><span class="p">:</span> <span class="mf">29.99</span><span class="p">,</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>    <span class="s2">"stock"</span><span class="p">:</span> <span class="mi">100</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="p">}</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="c1"># Mostrar claves y valores</span>
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="k">for</span> <span class="n">clave</span><span class="p">,</span> <span class="n">valor</span> <span class="ow">in</span> <span class="n">producto</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">clave</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">valor</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="c1"># Actualizar precio</span>
+</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a><span class="n">producto</span><span class="p">[</span><span class="s2">"precio"</span><span class="p">]</span> <span class="o">=</span> <span class="mf">24.99</span>
+</span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>
+</span><span id="__span-19-14"><a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a><span class="c1"># Añadir categoría</span>
+</span><span id="__span-19-15"><a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a><span class="n">producto</span><span class="p">[</span><span class="s2">"categoría"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Periféricos"</span>
+</span><span id="__span-19-16"><a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a>
+</span><span id="__span-19-17"><a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a><span class="c1"># Eliminar stock</span>
+</span><span id="__span-19-18"><a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a><span class="n">producto</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">"stock"</span><span class="p">)</span>
+</span><span id="__span-19-19"><a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a>
+</span><span id="__span-19-20"><a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a><span class="nb">print</span><span class="p">(</span><span class="n">producto</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>Ahora intenta realizar el siguiente ejercicio sin mirar la solucíón. </p>
+<div class="admonition question">
+<p class="admonition-title">Ejercicio básico: Diccionario de producto</p>
+<p>Crea un diccionario llamado <code>producto</code> que contenga la siguiente información:</p>
+<ul>
+<li><code>"nombre"</code>: <code>"Ratón óptico"</code></li>
+<li><code>"precio"</code>: <code>19.95</code></li>
+<li><code>"stock"</code>: <code>50</code></li>
+</ul>
+<p>y a continuación, realiza las siguientes operaciones:</p>
+<ol>
+<li>Muestra el nombre del producto por pantalla.</li>
+<li>Modifica el precio a <code>17.50</code>.</li>
+<li>Añade una nueva clave <code>"marca"</code> con el valor <code>"Logitech"</code>.</li>
+<li>Elimina la clave <code>"stock"</code> del diccionario.</li>
+<li>Muestra el diccionario completo al final.</li>
+</ol>
+<blockquote>
+<p>Pistas   </p>
+<ul>
+<li>Usa corchetes <code>[]</code> para acceder y modificar valores.</li>
+<li>Usa <code>del</code> para eliminar una clave.</li>
+<li>Usa <code>print()</code> para mostrar resultados.</li>
+</ul>
+</blockquote>
+<details class="quote">
+<summary>Solución</summary>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># Paso 1: Crear el diccionario inicial</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="n">producto</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>    <span class="s2">"nombre"</span><span class="p">:</span> <span class="s2">"Ratón óptico"</span><span class="p">,</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>    <span class="s2">"precio"</span><span class="p">:</span> <span class="mf">19.95</span><span class="p">,</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>    <span class="s2">"stock"</span><span class="p">:</span> <span class="mi">50</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="p">}</span>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="c1"># Paso 2: Mostrar el nombre del producto</span>
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="nb">print</span><span class="p">(</span><span class="n">producto</span><span class="p">[</span><span class="s2">"nombre"</span><span class="p">])</span>  <span class="c1"># Ratón óptico</span>
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="c1"># Paso 3: Modificar el precio</span>
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="n">producto</span><span class="p">[</span><span class="s2">"precio"</span><span class="p">]</span> <span class="o">=</span> <span class="mf">17.50</span>
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a><span class="c1"># Paso 4: Añadir la clave "marca"</span>
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a><span class="n">producto</span><span class="p">[</span><span class="s2">"marca"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Logitech"</span>
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a><span class="c1"># Paso 5: Eliminar la clave "stock"</span>
+</span><span id="__span-20-18"><a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a><span class="k">del</span> <span class="n">producto</span><span class="p">[</span><span class="s2">"stock"</span><span class="p">]</span>
+</span><span id="__span-20-19"><a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a>
+</span><span id="__span-20-20"><a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a><span class="c1"># Paso 6: Mostrar el diccionario completo</span>
+</span><span id="__span-20-21"><a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a><span class="nb">print</span><span class="p">(</span><span class="n">producto</span><span class="p">)</span>
+</span></code></pre></div>
+</details>
+<hr>
+</div>
+<hr>
+<h2 id="tuplas">Tuplas</h2>
+<p>Las tuplas son colecciones ordenadas pero inmutables. Se usan cuando los datos no deben cambiar, como coordenadas o fechas.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># Definimos una tupla con coordenadas</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="n">coordenada</span> <span class="o">=</span> <span class="p">(</span><span class="mf">10.5</span><span class="p">,</span> <span class="mf">20.3</span><span class="p">)</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="c1"># Accedemos a sus elementos por índice</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">coordenada</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># 10.5</span>
+</span></code></pre></div>
+<p>Las tuplas se comportan como listas, pero no pueden modificarse. Esto las hace útiles para representar datos constantes.</p>
+<h3 id="ejemplo-y-ejercicio-de-uso_2">🧩 Ejemplo y ejercicio de uso</h3>
+<p>En el siguiente ejemplo se muestra cómo crear una tupla, acceder a sus elementos y utilizarla para representar datos que no deben modificarse.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo combinado de uso de tuplas</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># Tupla que representa una coordenada en el plano</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="n">coordenada</span> <span class="o">=</span> <span class="p">(</span><span class="mf">10.5</span><span class="p">,</span> <span class="mf">20.3</span><span class="p">)</span>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="c1"># Acceder a los elementos por índice</span>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="n">x</span> <span class="o">=</span> <span class="n">coordenada</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="n">y</span> <span class="o">=</span> <span class="n">coordenada</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"La coordenada X es </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"La coordenada Y es </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>
+</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a><span class="c1"># Mostrar la tupla completa</span>
+</span><span id="__span-22-12"><a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"Coordenada completa:"</span><span class="p">,</span> <span class="n">coordenada</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>Las tuplas son útiles cuando se necesita agrupar datos que no deben cambiar, como coordenadas, fechas o combinaciones fijas. A diferencia de las listas, no se pueden modificar ni añadir elementos una vez creadas.</p>
+<p>Ahora intenta realizar el siguiente ejercicio sin mirar la solución.</p>
+<div class="admonition question">
+<p class="admonition-title">Ejercicio básico: Tupla de datos personales</p>
+<p>Crea una tupla llamada <code>persona</code> que contenga la siguiente información:</p>
+<ul>
+<li>Nombre: <code>"Sergio"</code></li>
+<li>Edad: <code>25</code></li>
+<li>Ciudad: <code>"Alberic"</code></li>
+</ul>
+<p>y a continuación, realiza las siguientes operaciones:</p>
+<ol>
+<li>Muestra el nombre por pantalla.</li>
+<li>Muestra la edad por pantalla.</li>
+<li>Muestra la ciudad por pantalla.</li>
+<li>Muestra la tupla completa.</li>
+</ol>
+<blockquote>
+<p>Pistas</p>
+<ul>
+<li>Usa índices para acceder a los elementos: <code>persona[0]</code>, <code>persona[1]</code>, etc.</li>
+<li>Usa <code>print()</code> para mostrar resultados.</li>
+</ul>
+</blockquote>
+<details class="quote">
+<summary>Solución</summary>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># Paso 1: Crear la tupla</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="n">persona</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"Sergio"</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="s2">"Alberic"</span><span class="p">)</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="c1"># Paso 2: Mostrar el nombre</span>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"Nombre:"</span><span class="p">,</span> <span class="n">persona</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="c1"># Paso 3: Mostrar la edad</span>
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"Edad:"</span><span class="p">,</span> <span class="n">persona</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="c1"># Paso 4: Mostrar la ciudad</span>
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"Ciudad:"</span><span class="p">,</span> <span class="n">persona</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a><span class="c1"># Paso 5: Mostrar la tupla completa</span>
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"Datos completos:"</span><span class="p">,</span> <span class="n">persona</span><span class="p">)</span>
+</span></code></pre></div>
+</details>
+</div>
+<hr>
+<h2 id="sets-conjuntos">Sets (Conjuntos)</h2>
+<p>Los <strong>conjuntos son colecciones no ordenadas y sin elementos duplicados</strong>. Se utilizan para eliminar duplicados o realizar operaciones de pertenencia.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># Creamos un conjunto de colores</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="n">colores</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"rojo"</span><span class="p">,</span> <span class="s2">"verde"</span><span class="p">,</span> <span class="s2">"azul"</span><span class="p">,</span> <span class="s2">"rojo"</span><span class="p">}</span>
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="c1"># Mostramos el conjunto</span>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">colores</span><span class="p">)</span>  <span class="c1"># {'rojo', 'verde', 'azul'}</span>
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="c1"># Añadimos un nuevo color</span>
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="n">colores</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"amarillo"</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Los <strong>sets eliminan automáticamente los duplicados</strong> y permiten operaciones como unión, intersección y diferencia.</p>
+<h3 id="metodos-mas-importantes_1">Métodos más importantes</h3>
+<p>A continuación se presentan los métodos más útiles para trabajar con conjuntos (<code>set</code>) en Python, junto con su propósito y ejemplos prácticos.</p>
+<ul>
+<li><strong><code>add(elemento)</code></strong></li>
+</ul>
+<p><strong>Añade</strong> un nuevo elemento al conjunto. Si el elemento ya existe, no se añade de nuevo (los sets no permiten duplicados).</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo de uso de <code>add()</code></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="n">colores</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"rojo"</span><span class="p">,</span> <span class="s2">"verde"</span><span class="p">}</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="n">colores</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"azul"</span><span class="p">)</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">colores</span><span class="p">)</span>  <span class="c1"># {'rojo', 'verde', 'azul'}</span>
+</span></code></pre></div>
+</div>
+<p>Ideal para construir conjuntos dinámicamente sin preocuparse por duplicados.</p>
+<ul>
+<li><strong><code>discard(elemento)</code></strong></li>
+</ul>
+<p><strong>Elimina</strong> el elemento indicado si existe. Si no está presente, no lanza error.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo de uso de <code>discard()</code></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="n">colores</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"rojo"</span><span class="p">,</span> <span class="s2">"verde"</span><span class="p">}</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="n">colores</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="s2">"rojo"</span><span class="p">)</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="n">colores</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="s2">"amarillo"</span><span class="p">)</span>  <span class="c1"># No lanza error</span>
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">colores</span><span class="p">)</span>  <span class="c1"># {'verde'}</span>
+</span></code></pre></div>
+</div>
+<p>Útil para eliminar elementos sin necesidad de comprobar si existen.</p>
+<ul>
+<li><strong><code>remove(elemento)</code></strong></li>
+</ul>
+<p><strong>Elimina</strong> el elemento indicado. Si no existe, lanza un error <code>KeyError</code>.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo de uso de <code>remove()</code></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="n">colores</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"rojo"</span><span class="p">,</span> <span class="s2">"verde"</span><span class="p">}</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="n">colores</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">"verde"</span><span class="p">)</span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">colores</span><span class="p">)</span>  <span class="c1"># {'rojo'}</span>
+</span></code></pre></div>
+</div>
+<p>Se recomienda usar <code>discard()</code> si no se quiere gestionar errores manualmente.</p>
+<ul>
+<li><strong><code>pop()</code></strong></li>
+</ul>
+<p><strong>Elimina y devuelve</strong> un elemento aleatorio del conjunto. Como los sets no están ordenados, no se puede predecir cuál será eliminado.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo de uso de <code>pop()</code></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="n">colores</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"rojo"</span><span class="p">,</span> <span class="s2">"verde"</span><span class="p">,</span> <span class="s2">"azul"</span><span class="p">}</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="n">eliminado</span> <span class="o">=</span> <span class="n">colores</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"Elemento eliminado:"</span><span class="p">,</span> <span class="n">eliminado</span><span class="p">)</span>
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"Conjunto restante:"</span><span class="p">,</span> <span class="n">colores</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>Útil para vaciar progresivamente un conjunto o extraer elementos sin orden específico.</p>
+<ul>
+<li><strong><code>clear()</code></strong></li>
+</ul>
+<p><strong>Elimina todos</strong> los elementos del conjunto, dejándolo vacío.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo de uso de <code>clear()</code></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="n">colores</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"rojo"</span><span class="p">,</span> <span class="s2">"verde"</span><span class="p">}</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="n">colores</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">colores</span><span class="p">)</span>  <span class="c1"># set()</span>
+</span></code></pre></div>
+</div>
+<p>Ideal para reiniciar la colección sin crear una nueva variable.</p>
+<ul>
+<li><strong><code>copy()</code></strong></li>
+</ul>
+<p>Devuelve una <strong>copia</strong> superficial del conjunto. Es útil para <strong>duplicar</strong> conjuntos sin modificar el original.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo de uso de <code>copy()</code></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="n">colores</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"rojo"</span><span class="p">,</span> <span class="s2">"verde"</span><span class="p">}</span>
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="n">copia</span> <span class="o">=</span> <span class="n">colores</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">copia</span><span class="p">)</span>  <span class="c1"># {'rojo', 'verde'}</span>
+</span></code></pre></div>
+</div>
+<ul>
+<li><strong><code>union(set2)</code></strong></li>
+</ul>
+<p>Devuelve un nuevo conjunto con <strong>todos los elementos</strong> de ambos conjuntos, sin duplicados.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo de uso de <code>union()</code></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"rojo"</span><span class="p">,</span> <span class="s2">"verde"</span><span class="p">}</span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"azul"</span><span class="p">,</span> <span class="s2">"verde"</span><span class="p">}</span>
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="n">resultado</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span>  <span class="c1"># {'rojo', 'verde', 'azul'}</span>
+</span></code></pre></div>
+</div>
+<ul>
+<li><strong><code>intersection(set2)</code></strong></li>
+</ul>
+<p>Devuelve un conjunto con los <strong>elementos comunes</strong> entre ambos conjuntos.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo de uso de <code>intersection()</code></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"rojo"</span><span class="p">,</span> <span class="s2">"verde"</span><span class="p">}</span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"verde"</span><span class="p">,</span> <span class="s2">"azul"</span><span class="p">}</span>
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="n">comunes</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">comunes</span><span class="p">)</span>  <span class="c1"># {'verde'}</span>
+</span></code></pre></div>
+</div>
+<ul>
+<li><strong><code>difference(set2)</code></strong></li>
+</ul>
+<p>Devuelve los elementos que están en el <strong>primer conjunto pero no en el segundo</strong>.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo de uso de <code>difference()</code></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"rojo"</span><span class="p">,</span> <span class="s2">"verde"</span><span class="p">,</span> <span class="s2">"azul"</span><span class="p">}</span>
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"verde"</span><span class="p">,</span> <span class="s2">"amarillo"</span><span class="p">}</span>
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a><span class="n">exclusivos</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">exclusivos</span><span class="p">)</span>  <span class="c1"># {'rojo', 'azul'}</span>
+</span></code></pre></div>
+</div>
+<h3 id="tabla-de-metodos">Tabla de métodos</h3>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Descripción</th>
+<th>Ejemplo</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>add(x)</code></td>
+<td>Añade el elemento <code>x</code> al conjunto</td>
+<td><code>s.add("azul")</code></td>
+<td><code>{"rojo", "verde", "azul"}</code></td>
+</tr>
+<tr>
+<td><code>discard(x)</code></td>
+<td>Elimina <code>x</code> si existe, sin error si no está</td>
+<td><code>s.discard("rojo")</code></td>
+<td><code>{"verde"}</code></td>
+</tr>
+<tr>
+<td><code>remove(x)</code></td>
+<td>Elimina <code>x</code>; lanza error si no existe</td>
+<td><code>s.remove("verde")</code></td>
+<td><code>{"rojo"}</code></td>
+</tr>
+<tr>
+<td><code>pop()</code></td>
+<td>Elimina y devuelve un elemento aleatorio</td>
+<td><code>s.pop()</code></td>
+<td>Elemento eliminado</td>
+</tr>
+<tr>
+<td><code>clear()</code></td>
+<td>Elimina todos los elementos del conjunto</td>
+<td><code>s.clear()</code></td>
+<td><code>set()</code></td>
+</tr>
+<tr>
+<td><code>copy()</code></td>
+<td>Devuelve una copia superficial del conjunto</td>
+<td><code>nuevo = s.copy()</code></td>
+<td><code>{"rojo", "verde"}</code></td>
+</tr>
+<tr>
+<td><code>union(set2)</code></td>
+<td>Devuelve un conjunto con todos los elementos de ambos conjuntos</td>
+<td><code>a.union(b)</code></td>
+<td><code>{"rojo", "verde", "azul"}</code></td>
+</tr>
+<tr>
+<td><code>intersection(set2)</code></td>
+<td>Devuelve los elementos comunes entre dos conjuntos</td>
+<td><code>a.intersection(b)</code></td>
+<td><code>{"verde"}</code></td>
+</tr>
+<tr>
+<td><code>difference(set2)</code></td>
+<td>Devuelve los elementos que están en el primero pero no en el segundo</td>
+<td><code>a.difference(b)</code></td>
+<td><code>{"rojo", "azul"}</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="ejemplo-y-ejercicio-de-uso_3">🧩 Ejemplo y ejercicio de uso</h3>
+<p>En el siguiente ejemplo se muestra cómo crear un conjunto, añadir y eliminar elementos, y realizar operaciones típicas como unión, intersección y diferencia entre conjuntos.</p>
+<div class="admonition example">
+<p class="admonition-title">Ejemplo combinado de operaciones con sets</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="c1"># Creamos dos conjuntos de colores</span>
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="n">colores_a</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"rojo"</span><span class="p">,</span> <span class="s2">"verde"</span><span class="p">,</span> <span class="s2">"azul"</span><span class="p">}</span>
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="n">colores_b</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"azul"</span><span class="p">,</span> <span class="s2">"amarillo"</span><span class="p">,</span> <span class="s2">"negro"</span><span class="p">}</span>
+</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>
+</span><span id="__span-34-5"><a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a><span class="c1"># Añadir un nuevo color</span>
+</span><span id="__span-34-6"><a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a><span class="n">colores_a</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"blanco"</span><span class="p">)</span>
+</span><span id="__span-34-7"><a id="__codelineno-34-7" name="__codelineno-34-7" href="#__codelineno-34-7"></a>
+</span><span id="__span-34-8"><a id="__codelineno-34-8" name="__codelineno-34-8" href="#__codelineno-34-8"></a><span class="c1"># Eliminar un color</span>
+</span><span id="__span-34-9"><a id="__codelineno-34-9" name="__codelineno-34-9" href="#__codelineno-34-9"></a><span class="n">colores_b</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="s2">"negro"</span><span class="p">)</span>
+</span><span id="__span-34-10"><a id="__codelineno-34-10" name="__codelineno-34-10" href="#__codelineno-34-10"></a>
+</span><span id="__span-34-11"><a id="__codelineno-34-11" name="__codelineno-34-11" href="#__codelineno-34-11"></a><span class="c1"># Unión de conjuntos</span>
+</span><span id="__span-34-12"><a id="__codelineno-34-12" name="__codelineno-34-12" href="#__codelineno-34-12"></a><span class="n">todos_colores</span> <span class="o">=</span> <span class="n">colores_a</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">colores_b</span><span class="p">)</span>
+</span><span id="__span-34-13"><a id="__codelineno-34-13" name="__codelineno-34-13" href="#__codelineno-34-13"></a>
+</span><span id="__span-34-14"><a id="__codelineno-34-14" name="__codelineno-34-14" href="#__codelineno-34-14"></a><span class="c1"># Intersección de conjuntos</span>
+</span><span id="__span-34-15"><a id="__codelineno-34-15" name="__codelineno-34-15" href="#__codelineno-34-15"></a><span class="n">comunes</span> <span class="o">=</span> <span class="n">colores_a</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">colores_b</span><span class="p">)</span>
+</span><span id="__span-34-16"><a id="__codelineno-34-16" name="__codelineno-34-16" href="#__codelineno-34-16"></a>
+</span><span id="__span-34-17"><a id="__codelineno-34-17" name="__codelineno-34-17" href="#__codelineno-34-17"></a><span class="c1"># Diferencia de conjuntos</span>
+</span><span id="__span-34-18"><a id="__codelineno-34-18" name="__codelineno-34-18" href="#__codelineno-34-18"></a><span class="n">exclusivos_a</span> <span class="o">=</span> <span class="n">colores_a</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">colores_b</span><span class="p">)</span>
+</span><span id="__span-34-19"><a id="__codelineno-34-19" name="__codelineno-34-19" href="#__codelineno-34-19"></a>
+</span><span id="__span-34-20"><a id="__codelineno-34-20" name="__codelineno-34-20" href="#__codelineno-34-20"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"Todos los colores:"</span><span class="p">,</span> <span class="n">todos_colores</span><span class="p">)</span>
+</span><span id="__span-34-21"><a id="__codelineno-34-21" name="__codelineno-34-21" href="#__codelineno-34-21"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"Colores comunes:"</span><span class="p">,</span> <span class="n">comunes</span><span class="p">)</span>
+</span><span id="__span-34-22"><a id="__codelineno-34-22" name="__codelineno-34-22" href="#__codelineno-34-22"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"Colores exclusivos de A:"</span><span class="p">,</span> <span class="n">exclusivos_a</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>Los sets son útiles cuando se necesita trabajar con colecciones <strong>sin duplicados</strong> y realizar operaciones de comparación entre grupos de elementos. A diferencia de las listas, no mantienen el orden y no permiten elementos repetidos.</p>
+<p>Ahora intenta realizar el siguiente ejercicio sin mirar la solución.</p>
+<div class="admonition question">
+<p class="admonition-title">Ejercicio básico: Conjunto de animales</p>
+<p>Crea un conjunto llamado <code>animales</code> con los siguientes elementos:</p>
+<ul>
+<li><code>"perro"</code></li>
+<li><code>"gato"</code></li>
+<li><code>"loro"</code></li>
+<li><code>"gato"</code> (duplicado intencionado)</li>
+</ul>
+<p>y a continuación, realiza las siguientes operaciones:</p>
+<ol>
+<li>Añade el animal <code>"conejo"</code> al conjunto.</li>
+<li>Elimina <code>"perro"</code> del conjunto.</li>
+<li>Crea otro conjunto llamado <code>animales_domésticos</code> con <code>"gato"</code>, <code>"conejo"</code> y <code>"pez"</code>.</li>
+<li>Muestra la intersección entre ambos conjuntos.</li>
+<li>Muestra la diferencia entre <code>animales</code> y <code>animales_domésticos</code>.</li>
+</ol>
+<blockquote>
+<p>Pistas</p>
+<ul>
+<li>Usa <code>add()</code> para añadir elementos.</li>
+<li>Usa <code>discard()</code> para eliminar sin error.</li>
+<li>Usa <code>intersection()</code> y <code>difference()</code> para comparar conjuntos.</li>
+</ul>
+</blockquote>
+<details class="quote">
+<summary>Solución</summary>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="c1"># Paso 1: Crear el conjunto inicial</span>
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="n">animales</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"perro"</span><span class="p">,</span> <span class="s2">"gato"</span><span class="p">,</span> <span class="s2">"loro"</span><span class="p">,</span> <span class="s2">"gato"</span><span class="p">}</span>  <span class="c1"># El duplicado se elimina automáticamente</span>
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a><span class="c1"># Paso 2: Añadir "conejo"</span>
+</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a><span class="n">animales</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"conejo"</span><span class="p">)</span>
+</span><span id="__span-35-6"><a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a>
+</span><span id="__span-35-7"><a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a><span class="c1"># Paso 3: Eliminar "perro"</span>
+</span><span id="__span-35-8"><a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a><span class="n">animales</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="s2">"perro"</span><span class="p">)</span>
+</span><span id="__span-35-9"><a id="__codelineno-35-9" name="__codelineno-35-9" href="#__codelineno-35-9"></a>
+</span><span id="__span-35-10"><a id="__codelineno-35-10" name="__codelineno-35-10" href="#__codelineno-35-10"></a><span class="c1"># Paso 4: Crear el segundo conjunto</span>
+</span><span id="__span-35-11"><a id="__codelineno-35-11" name="__codelineno-35-11" href="#__codelineno-35-11"></a><span class="n">animales_domésticos</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"gato"</span><span class="p">,</span> <span class="s2">"conejo"</span><span class="p">,</span> <span class="s2">"pez"</span><span class="p">}</span>
+</span><span id="__span-35-12"><a id="__codelineno-35-12" name="__codelineno-35-12" href="#__codelineno-35-12"></a>
+</span><span id="__span-35-13"><a id="__codelineno-35-13" name="__codelineno-35-13" href="#__codelineno-35-13"></a><span class="c1"># Paso 5: Intersección</span>
+</span><span id="__span-35-14"><a id="__codelineno-35-14" name="__codelineno-35-14" href="#__codelineno-35-14"></a><span class="n">comunes</span> <span class="o">=</span> <span class="n">animales</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">animales_domésticos</span><span class="p">)</span>
+</span><span id="__span-35-15"><a id="__codelineno-35-15" name="__codelineno-35-15" href="#__codelineno-35-15"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"Animales comunes:"</span><span class="p">,</span> <span class="n">comunes</span><span class="p">)</span>
+</span><span id="__span-35-16"><a id="__codelineno-35-16" name="__codelineno-35-16" href="#__codelineno-35-16"></a>
+</span><span id="__span-35-17"><a id="__codelineno-35-17" name="__codelineno-35-17" href="#__codelineno-35-17"></a><span class="c1"># Paso 6: Diferencia</span>
+</span><span id="__span-35-18"><a id="__codelineno-35-18" name="__codelineno-35-18" href="#__codelineno-35-18"></a><span class="n">exclusivos</span> <span class="o">=</span> <span class="n">animales</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">animales_domésticos</span><span class="p">)</span>
+</span><span id="__span-35-19"><a id="__codelineno-35-19" name="__codelineno-35-19" href="#__codelineno-35-19"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"Animales exclusivos:"</span><span class="p">,</span> <span class="n">exclusivos</span><span class="p">)</span>
+</span></code></pre></div>
+</details>
+</div>
+<hr>
+<h2 id="apendice-sobre-estructuras">Apendice sobre estructuras.</h2>
+<p>Una vez vistas las 4 estructuras podemos crear todo tipo de combinaciones entre ellas e incluso utilizar el concepto de iteración que tiene python con <code>for</code> para ampliar su utilidad. </p>
+<p>Este campo es muy extenso y que da a vuestra curiosidad su ampliación. </p>
+<p>Veamos tan solo un par de posibilidades.</p>
+<h3 id="iteracion-sobre-colecciones">Iteración sobre colecciones</h3>
+<p>Tal y como hemos visto en las listas, todas estas estructuras pueden recorrerse con bucles <code>for</code>, lo que permite procesar sus elementos uno a uno.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="c1"># Recorremos una lista de nombres</span>
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="n">nombres</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Ana"</span><span class="p">,</span> <span class="s2">"Luis"</span><span class="p">,</span> <span class="s2">"Marta"</span><span class="p">]</span>
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="k">for</span> <span class="n">nombre</span> <span class="ow">in</span> <span class="n">nombres</span><span class="p">:</span>
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Hola, </span><span class="si">{</span><span class="n">nombre</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Recorrer una colección permite aplicar lógica sobre cada elemento, como mostrarlo, modificarlo o filtrarlo.</p>
+<h3 id="listas-de-diccionarios">Listas de diccionarios</h3>
+<p>Las listas de diccionarios en Python constituyen una estructura de datos especialmente útil cuando se necesita representar colecciones de elementos complejos, donde cada elemento tiene múltiples atributos. Esta combinación permite organizar la información de forma clara, flexible y fácilmente manipulable, tanto en programas sencillos como en aplicaciones más avanzadas.</p>
+<p>El resultado de utilizar listas de diccionarios es una estructura que se comporta como una tabla en memoria: cada diccionario representa una fila (una entidad), y cada clave dentro del diccionario representa una columna (un atributo). Esto facilita la lectura, modificación, filtrado y análisis de datos de forma estructurada.</p>
+<p>Las razones por las que esta estructura es ampliamente utilizada son las siguientes:</p>
+<ul>
+<li><strong>Permite agrupar múltiples objetos</strong> similares en una sola colección.</li>
+<li><strong>Cada objeto puede tener múltiples propiedades</strong>, accesibles por nombre.</li>
+<li>Es <strong>compatible</strong> con formatos externos como <strong>JSON</strong>, lo que facilita la exportación e importación de datos.</li>
+<li>Permite realizar <strong>búsquedas</strong>, <strong>filtrados</strong> y <strong>ordenaciones</strong> basadas en cualquier atributo.</li>
+<li>Es <strong>especialmente útil</strong> en contextos como gestión de usuarios, inventarios, registros académicos o cualquier sistema que maneje entidades con campos definidos.</li>
+</ul>
+<div class="admonition example">
+<p class="admonition-title">Lista de diccionarios</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="n">empleados</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>    <span class="p">{</span><span class="s2">"nombre"</span><span class="p">:</span> <span class="s2">"Ana"</span><span class="p">,</span> <span class="s2">"sueldo"</span><span class="p">:</span> <span class="mi">1800</span><span class="p">,</span> <span class="s2">"años"</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s2">"activo"</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>    <span class="p">{</span><span class="s2">"nombre"</span><span class="p">:</span> <span class="s2">"Luis"</span><span class="p">,</span> <span class="s2">"sueldo"</span><span class="p">:</span> <span class="mi">1500</span><span class="p">,</span> <span class="s2">"años"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">"activo"</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a>    <span class="p">{</span><span class="s2">"nombre"</span><span class="p">:</span> <span class="s2">"María"</span><span class="p">,</span> <span class="s2">"sueldo"</span><span class="p">:</span> <span class="mi">2000</span><span class="p">,</span> <span class="s2">"años"</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">"activo"</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+</span><span id="__span-37-5"><a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a><span class="p">]</span>
+</span></code></pre></div>
+</div>
+<p>Esta estructura permite recorrer la lista para mostrar empleados activos, calcular la media de sueldos, añadir nuevos registros o modificar campos específicos. Por ejemplo, para mostrar solo los empleados activos:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="k">for</span> <span class="n">emp</span> <span class="ow">in</span> <span class="n">empleados</span><span class="p">:</span>
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>    <span class="k">if</span> <span class="n">emp</span><span class="p">[</span><span class="s2">"activo"</span><span class="p">]:</span>
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">emp</span><span class="p">[</span><span class="s2">"nombre"</span><span class="p">],</span> <span class="n">emp</span><span class="p">[</span><span class="s2">"sueldo"</span><span class="p">])</span>
+</span></code></pre></div>
+<p>Las listas de diccionarios son, por tanto, una herramienta fundamental para modelar datos estructurados en Python de forma clara y eficaz.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie">
+        
+          
+          <a href="../2_2_ControlFlujo/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Estructuras condicionales y control de flujo">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                Estructuras condicionales y control de flujo
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../2_4_FuncionesExcepciones/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: Funciones y manejo de excepciones">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                Funciones y manejo de excepciones
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Sergio Rey Martínez - DAM - SGE - 2025/26
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.indexes", "navigation.footer", "navigation.instant", "navigation.instant.progress", "toc.follow", "navigation.top", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
