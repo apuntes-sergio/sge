@@ -1,5 +1,5 @@
 ---
-title: Proyecto final Odoo. 'DRONIFY'
+title: Proyecto final Odoo. 'Dronify'
 description: DRONIFY - SISTEMA DE GESTIÓN DE LOGÍSTICA CON DRONES
 ---
 
