@@ -310,3 +310,77 @@ Control de Versiones (GitHub)
 - **Entrega final Domingo 15 de Febrero de 2026**
 - **Presentación y defensa en clase: Martes 17 de Febrero de 2026**
 ---
+
+
+
+Aquí tienes el bloque de texto para añadir al final de tu documento **8_2026_proyecto_odoo.md**. He seguido estrictamente el formato de tablas y secciones del original, incluyendo la corrección de la relación **Many2one** y las especificaciones visuales que hemos definido.
+
+---
+
+## 6. Ampliación: Módulo de Logística y Zonas de Riesgo
+
+Debido a la expansión de **Dronify**, la empresa ahora requiere categorizar los destinos por zonas geográficas. Cada zona tiene una distancia específica y un nivel de riesgo que afecta directamente al consumo de batería y a la seguridad del vuelo.
+
+- **Gestión de Ubicaciones: `Zonas`**
+
+Este nuevo modelo permite definir los parámetros de los destinos disponibles.
+
+| Campo | Tipo | Propósito | Características especiales |
+| --- | --- | --- | --- |
+| `name` | Char | Nombre de la zona | **Obligatorio** |
+| `distancia_km` | Float | Distancia al destino | Valor por defecto: 1.0 |
+| `nivel_riesgo` | Selection | Nivel de peligro (1 a 5) | **Obligatorio**. Valores posibles de 1 a 5: 1 Muy bajo, Bajo, Medio, Alto y 5 Crítico |
+| `tarifa_base` | Float | Coste base del trayecto | - |
+
+
+- **Actualización del Modelo Vuelos (`dronify.vuelo`)**
+
+Se debe integrar la zona dentro de la planificación del vuelo para automatizar los cálculos.
+
+| Campo | Tipo | Cambios |
+| --- | --- | --- |
+| `zona_id` | Many2one | Relación con `dronify.zona`. **Obligatorio** para validar el vuelo |
+
+- **Vista de Listado de Zonas**
+
+Mostrará todos los campos y visualmente se distinguirán entre las zonas de riesgo bajo (1 y 2) de color verde, zona media Azul, zona riesto alto naranja y zona riesgo extremo rojo.
+
+
+- **Actualización de la lógica de Funcionamiento Actualizada**
+
+La función externa `calcular_consumo_vuelo` en el fichero `logica_dronify.py` ha sido actualizada con el siguiente código:
+
+
+!!!note "logica_dronify.py"
+    ```py
+    def calcular_consumo_vuelo(peso_total, distancia_total, riesgo_valor, es_vip=False):
+        """
+        NUEVA LÓGICA DE CONSUMO PARA RECUPERACIÓN:
+        - Coste fijo despegue/aterrizaje: 5%
+        - Coste por peso: 1.2% por cada kilo.
+        - Coste por distancia: 0.5% por cada kilómetro.
+        - Penalización por Riesgo: El consumo total se incrementa un 10% por cada nivel de riesgo.
+        (Ejemplo: Riesgo 1 = +10%, Riesgo 5 = +50%).
+        - Descuento VIP: Si el cliente es VIP, -10% al consumo final total.
+        """
+        
+        # 1. Consumo base (Fijo + Peso + Distancia)
+        consumo = 5.0 + (peso_total * 1.2) + (distancia_total * 0.5)
+        
+        # 2. Aplicar multiplicador de riesgo
+        # Riesgo 1 -> 1.1 | Riesgo 5 -> 1.5
+        multiplicador_riesgo = 1 + (riesgo_valor * 0.1)
+        consumo = consumo * multiplicador_riesgo
+        
+        # 3. Aplicar reducción VIP sobre el total penalizado
+        if es_vip:
+            consumo = consumo * 0.9
+            
+        return round(consumo, 2)
+    ```
+
+
+- **Nuevas Validaciones en `action_preparar_vuelo`**
+
+Para que un vuelo pase al estado **PREPARADO**, además de las validaciones anteriores, se añade debe tener en cuenta que el vuelo tiene una **Asignación de zona** de forma obligatoria
+
