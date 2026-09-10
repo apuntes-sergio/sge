@@ -86,50 +86,50 @@ nav:
     - 1_8_Modelos_Servicio.md
     - 1_9_Terminología.md
   
-  - 2 Python:
-  #  - 2_python.md
-    - 2_1_IntroduccionPython.md
-  #  - 2_2_PrimerosPasosPython.md
-    - 2_2_ControlFlujo.md
-    - 2_3_EstructurasDatos.md
-    - 2_4_FuncionesExcepciones.md
-    - 2_5_ModulosPaquetes.md
-    - 2_6_ProgramacionOrientadaObjetos.md
+  # - 2 Python:
+  # #  - 2_python.md
+  #   - 2_1_IntroduccionPython.md
+  # #  - 2_2_PrimerosPasosPython.md
+  #   - 2_2_ControlFlujo.md
+  #   - 2_3_EstructurasDatos.md
+  #   - 2_4_FuncionesExcepciones.md
+  #   - 2_5_ModulosPaquetes.md
+  #   - 2_6_ProgramacionOrientadaObjetos.md
 
-  - 3 Git:  
-    - 3_1_introduccion.md
-    - 3_2_ramas.md
-    - 3_3_remotos.md    
+  # - 3 Git:  
+  #   - 3_1_introduccion.md
+  #   - 3_2_ramas.md
+  #   - 3_3_remotos.md    
 
-  - 4 Docker:
-    - 4_1_introduccion.md
-    - 4_2_docker_basico.md
-    - 4_3_imagenes_docker.md
-    - 4_4_redes_volumenes_docker.md
-    - 4_5_docker_compose.md
+  # - 4 Docker:
+  #   - 4_1_introduccion.md
+  #   - 4_2_docker_basico.md
+  #   - 4_3_imagenes_docker.md
+  #   - 4_4_redes_volumenes_docker.md
+  #   - 4_5_docker_compose.md
 
-  - 5 Introducción a Odoo: 
-    - 5_1_introduccion_odoo.md
-    - 5_2_instalacion_odoo.md
-    - 5_3_arquitectura_odoo.md
-    - 5_4_primer_modulo.md
-  - 6 Desarrollo módulo ejemplo:
-    - 6_1_creacion_modelo_basico.md
-    - 6_2_campos_basico_relacionales.md
-    - 6_3_campos_computados.md
-    - 6_4_excepciones_logs.md
-    - 6_5_campos_computados_relacionales.md
-    - 6_6_campos_valores_defecto.md
-    - 6_7_herencias_modelos_vistas.md
-    - 6_8_mejorando_vistas.md
-    - 6_9_datos_demo.md
-  - 7 Desarrollo con Odoo:
-    - 7_1_introduccion_odoo.md
-    - 7_2_desarrollo_de_modelos.md
-    - 7_3_desarrollo_de_vistas.md
-    - 7_4_navegacion_e_interaccion.md
-    - 7_5_logica_negocio.md
-    - 7_6_herencia_extensibilidad.md
-    - 7_7_seguridad.md 
+  # - 5 Introducción a Odoo: 
+  #   - 5_1_introduccion_odoo.md
+  #   - 5_2_instalacion_odoo.md
+  #   - 5_3_arquitectura_odoo.md
+  #   - 5_4_primer_modulo.md
+  # - 6 Desarrollo módulo ejemplo:
+  #   - 6_1_creacion_modelo_basico.md
+  #   - 6_2_campos_basico_relacionales.md
+  #   - 6_3_campos_computados.md
+  #   - 6_4_excepciones_logs.md
+  #   - 6_5_campos_computados_relacionales.md
+  #   - 6_6_campos_valores_defecto.md
+  #   - 6_7_herencias_modelos_vistas.md
+  #   - 6_8_mejorando_vistas.md
+  #   - 6_9_datos_demo.md
+  # - 7 Desarrollo con Odoo:
+  #   - 7_1_introduccion_odoo.md
+  #   - 7_2_desarrollo_de_modelos.md
+  #   - 7_3_desarrollo_de_vistas.md
+  #   - 7_4_navegacion_e_interaccion.md
+  #   - 7_5_logica_negocio.md
+  #   - 7_6_herencia_extensibilidad.md
+  #   - 7_7_seguridad.md 
 
-  - 8_2026_proyecto_odoo.md
+  # - 8_2026_proyecto_odoo.md

@@ -44,18 +44,27 @@ Un ERP es un sistema de planificación de recursos empresariales que integra tod
 - **Adaptable**: Se configura según el tamaño y sector de la empresa.
 - **Interconectado**: Los datos fluyen entre módulos sin duplicidad.
 
-### Tipos de ERP
+### Clasificacion de los Tipos de ERP
 
-- **A medida**: Desarrollado específicamente para una empresa.
-- **Estándar**: Solución genérica adaptada a múltiples sectores.
-- **Local**: Instalado en servidores propios.
-- **En la nube**: Acceso remoto, mantenimiento externo.
-- **Vertical**: Especializado en un sector (salud, educación, etc.).
-- **Horizontal**: Aplicable a cualquier tipo de empresa.
-- **Código abierto**: Libre acceso al código fuente.
-- **Propietario**: Licencia cerrada, soporte del fabricante.
+- Según desarrollo
+    - **A medida**: Desarrollado específicamente para una empresa.
+    - **Estándar**: Solución genérica adaptada a múltiples sectores.
+
+- Según instalación
+    - **Local**: Instalado en servidores propios.
+    - **En la nube**: Acceso remoto, mantenimiento externo.
+
+- Según empresas a que están enfocados
+    - **Vertical**: Especializado en un sector (salud, educación, etc.).
+    - **Horizontal**: Aplicable a cualquier tipo de empresa.
+
+- Según código
+    - **Código abierto**: Libre acceso al código fuente.
+    - **Propietario**: Licencia cerrada, soporte del fabricante.
 
 ### Módulos comunes
+
+Los ERP suelen contar con una serie de módulos que normalmente suele ser: 
 
 - Finanzas y contabilidad
 - Gestión de inventario
@@ -65,6 +74,11 @@ Un ERP es un sistema de planificación de recursos empresariales que integra tod
 - Compras y proveedores
 - Atención al cliente
 
+<figure markdown="span" align="center">
+  ![Image title](./imgs/erp/ERP.png){ width="65%"  }
+  <figcaption>Planificación de Recursos Empresariales (ERP).</figcaption>
+</figure>
+
 !!!Example  "Ejemplos de ERP"
 
     - SAP
@@ -73,10 +87,6 @@ Un ERP es un sistema de planificación de recursos empresariales que integra tod
     - Odoo
     - Sage X3
 
-<figure markdown="span" align="center">
-  ![Image title](./imgs/erp/ERP.png){ width="65%"  }
-  <figcaption>Planificación de Recursos Empresariales (ERP).</figcaption>
-</figure>
 
 ---
 
@@ -98,6 +108,11 @@ El CRM es un sistema que permite gestionar las relaciones con los clientes, desd
 - Servicio de atención al cliente
 - Informes y análisis de rendimiento
 
+<figure markdown="span" align="center">
+  ![Image title](./imgs/erp/CRM.png){ width="75%"  }
+  <figcaption>Gestión de Relaciones con Clientes (CRM).</figcaption>
+</figure>
+
 !!!Example  "Ejemplos de CRM"
 
     - Salesforce
@@ -107,10 +122,6 @@ El CRM es un sistema que permite gestionar las relaciones con los clientes, desd
     - Zoho CRM
     - HubSpot
 
-<figure markdown="span" align="center">
-  ![Image title](./imgs/erp/CRM.png){ width="75%"  }
-  <figcaption>Gestión de Relaciones con Clientes (CRM).</figcaption>
-</figure>
 
 
 ## Otros Sistemas Empresariales

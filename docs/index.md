@@ -13,6 +13,8 @@ En este espacio encontrarás los apuntes básicos sobre el módulo pasando por l
 
 Muchas instrucciones están adaptadas para el funcionamiento de Odoo en un entorno de aprendizaje. El objetivo es desarrollar módulos para ampliar las funcionalidades del ERP según las necesidades de la empresa.
 
+Para poder abordar correctamente estos aprendizaje previamente se prepara el entorno de trabajo en el cual aprenderemos los conceptos básicos de python, puesto que ODOO esta programado y sus módulos se programan en Python así como Docker y Git, que serán las herramientas que utilizaremos para ejecutar ODOO y realizar la gestión de los versiones del código respectivamente.
+
 Esta documentación, esencialmente la parte de ODOO, se ha realizado teniendo como base el siguiente material:
 
  - [Odoo: Technical Training - Introducing to development](https://www.odoo.com/slides/technical-training-introduction-to-development-318)
