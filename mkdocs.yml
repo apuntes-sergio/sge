@@ -86,15 +86,15 @@ nav:
     - 1_8_Modelos_Servicio.md
     - 1_9_Terminología.md
   
-  # - 2 Python:
-  # #  - 2_python.md
-  #   - 2_1_IntroduccionPython.md
-  # #  - 2_2_PrimerosPasosPython.md
-  #   - 2_2_ControlFlujo.md
-  #   - 2_3_EstructurasDatos.md
-  #   - 2_4_FuncionesExcepciones.md
-  #   - 2_5_ModulosPaquetes.md
-  #   - 2_6_ProgramacionOrientadaObjetos.md
+  - 2 Python:
+  #  - 2_python.md
+    - 2_1_IntroduccionPython.md
+  #  - 2_2_PrimerosPasosPython.md
+    - 2_2_ControlFlujo.md
+    - 2_3_EstructurasDatos.md
+    - 2_4_FuncionesExcepciones.md
+    - 2_5_ModulosPaquetes.md
+    - 2_6_ProgramacionOrientadaObjetos.md
 
   # - 3 Git:  
   #   - 3_1_introduccion.md
