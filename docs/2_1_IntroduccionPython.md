@@ -239,6 +239,16 @@ Tal y como se asigne un valor u otro, el interprete ya asigna el tipo adecuado a
 
     Python es capaz de trabajar con números complejos, que están compuestos por un número en coma flotante y un imaginario, pero queda fuera del alcance de nuestro curso, aunque sirva saber que tiene esta capacidad para comprender la dimensión de python.
 
+    Para mostrar los número complejos: 
+    ```python
+    # Obtener la parte real e imaginaria (devuelven flotantes)
+    print(complejo.real)  # Output: 2.0
+    print(complejo.imag)  # Output: 3.0
+
+    # Obtener el conjugado (2 - 3j)
+    print(complejo.conjugate())  # Output: (2-3j)
+    ```
+
 #### Operadores aritméticos
 
 Por supuesto podemos realizas diferentes operaciones matemáticas:

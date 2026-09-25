@@ -87,9 +87,15 @@ nav:
     - 1_9_Terminología.md
   
   - 2 Python:
+<<<<<<< HEAD
   #  - 2_python.md
     - 2_1_IntroduccionPython.md
   #  - 2_2_PrimerosPasosPython.md
+=======
+  # #  - 2_python.md
+    - 2_1_IntroduccionPython.md
+  # #  - 2_2_PrimerosPasosPython.md
+>>>>>>> 3787887 (Actualizado Python)
     - 2_2_ControlFlujo.md
     - 2_3_EstructurasDatos.md
     - 2_4_FuncionesExcepciones.md
