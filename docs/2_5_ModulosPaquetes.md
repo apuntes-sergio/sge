@@ -200,7 +200,7 @@ pip install requests
 
 Una vez instalada, puedes usarla en tu código:
 
-!!!example "Ejemplo de uso de librería `request`
+!!!example "Ejemplo de uso de librería `request`"
 
     ```python
     import requests
@@ -451,7 +451,6 @@ El siguiente ejemplo permite crear un flujo que prepara un proyecto web con *Fla
         # Desactivar entorno
         deactivate
         ```
-Genial, Sergio. Aquí tienes el listado de módulos típicos instalables con `pip`, presentado como tarjetas visuales para MkDocs Material. Puedes integrarlo directamente en tu documentación:
 
 ---
 
