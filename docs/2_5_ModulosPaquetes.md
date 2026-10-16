@@ -244,7 +244,7 @@ python -m venv mi_entorno
 Esto crea una carpeta llamada `mi_entorno`. Para activarlo:
 
 - En Windows:
-  ```bash
+  ```dos
   mi_entorno\Scripts\activate
   ```
 - En macOS/Linux:
@@ -302,7 +302,9 @@ Además, cuando el proyecto crece, es habitual agrupar funciones propias en **su
     from utilidades import formatear_mensaje, es_par
     ```
 
-    En lugar de tener que importar cada módulo por separado. También puedes definir constantes o funciones que se ejecuten al cargar el paquete:
+    En lugar de tener que importar cada módulo por separado. 
+    
+    También puedes definir constantes o funciones que se ejecuten al cargar el paquete:
 
     ```python
     # utilidades/__init__.py
@@ -310,6 +312,14 @@ Además, cuando el proyecto crece, es habitual agrupar funciones propias en **su
 
     def iniciar():
         print("Paquete utilidades cargado correctamente.")
+    ```
+
+    Después estas funciones o constantes las puedes utilizar desde cualquier parte:
+
+    ```python
+    import utilidades
+
+    utilidades.iniciar() 
     ```
 
     Este enfoque es útil cuando quieres que el paquete tenga un comportamiento inicial o una configuración común.
