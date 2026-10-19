@@ -127,7 +127,7 @@ Veamos un ejemplo básico que muestra cómo una clase hija puede sobrescribir el
 En Python, no existe una protección estricta de atributos como en otros lenguajes, pero se usan **convenciones** para indicar que un atributo no debe modificarse directamente.
 
 - `_atributo`: indica que es de uso interno (convención).
-- `__atributo`: activa name *mangling* (ocultación parcial).
+- `__atributo`: activa name *mangling* (ocultación parcial dentro de la clase). Python cambia automáticamente el nombre de la variable añadiendo _NombreDeLaClase delante. Esto evita que las clases hijas (subclases) sobrescriban ese atributo por accidente
 - `@property`: permite acceder a atributos como si fueran públicos, pero controlando su lectura y escritura.
 
 !!!example "Ejemplo de encapsulamiento con `@property`"
@@ -148,6 +148,22 @@ En Python, no existe una protección estricta de atributos como en otros lenguaj
     ```
 
 Esto permite validar o controlar el acceso a los atributos sin exponerlos directamente.
+
+!!!example "Ejemplo de uso de `__` (Name Mangling)"
+
+    ```python
+    class Persona:
+        def __init__(self, nombre, apodo):
+            self.nombre = nombre
+            self.__apodo = apodo  # accede de forma univoca por si tiene descendentes la clase
+
+        def habla(self):
+            print( f"Resulta que {self.nombre} también es conocido como '{self._Persona__apodo}'")
+
+    p1 = Persona( "Pepe", "El grillo")
+    p1.habla()
+    ```
+
 
 ---
 
@@ -180,21 +196,21 @@ Este patrón se llama **composición** y es clave para construir sistemas comple
 
 !!!info "Esquema de clases con herencia"
 
-```mermaid
-classDiagram
-    class Persona {
-        -nombre: str
-        -edad: int
-        +saludar(): void
-    }
+    ```mermaid
+    classDiagram
+        class Persona {
+            -nombre: str
+            -edad: int
+            +saludar(): void
+        }
 
-    class Empleado {
-        -puesto: str
-        +saludar(): void
-    }
+        class Empleado {
+            -puesto: str
+            +saludar(): void
+        }
 
-    Persona <|-- Empleado
-```
+        Persona <|-- Empleado
+    ```
 
 Este diagrama muestra cómo `Empleado` hereda de `Persona` y añade nuevos atributos y métodos.
 
