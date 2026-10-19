@@ -192,30 +192,6 @@ Este patrón se llama **composición** y es clave para construir sistemas comple
 
 ---
 
-## Diagrama conceptual básico
-
-!!!info "Esquema de clases con herencia"
-
-    ```mermaid
-    classDiagram
-        class Persona {
-            -nombre: str
-            -edad: int
-            +saludar(): void
-        }
-
-        class Empleado {
-            -puesto: str
-            +saludar(): void
-        }
-
-        Persona <|-- Empleado
-    ```
-
-Este diagrama muestra cómo `Empleado` hereda de `Persona` y añade nuevos atributos y métodos.
-
----
-
 ## 🧪 Actividad de refuerzo: Biblioteca
 
 !!!question "Ejercicio: Composición y listas de objetos"
