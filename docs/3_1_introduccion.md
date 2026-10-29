@@ -217,23 +217,56 @@ git log -n3 --oneline
 
 ### Revertir cambios
 ```bash
+git restore archivo.txt
+```
+
+o también 
+
+```
 git checkout -- archivo.txt
 ```
 Revierte cambios en un archivo desde el último commit
 
+!!!note "restore vs checkout"
+
+    - `git checkout` es un comando antiguo y «sobrecargado» que hacía demasiadas cosas a la vez: servía tanto para **cambiar de rama** como para **restaurar archivos**. Esto solía generar confusión y errores graves (como sobrescribir código sin querer).
+
+    - `git restore` es el comando moderno (introducido en Git 2.23) diseñado exclusivamente para la gestión de archivos.
+
 ### Revertir commit
 ```bash
-git revert ID_commit
+git revert -m "Mensaje personalizado explicando por qué se revierte" ID_commit
 ```
 Crea un nuevo commit que revierte el anterior.
 
 ### Resetear a un commit anterior
+
+Permite eliminar o deshacer `git commit`:
+
+Podemos devolver el repositorio al estado de un commit `ID_commit`:
+
 ```bash
 git reset --hard ID_commit
 ```
-Vuelve el repositorio al estado de un commit anterior.
 
-La diferencia entre las dos últimas ordenes, es que la primera revierte creando un nuevo commit en el historial, mientras que la segunda elimina los commits desde el punto indicado.
+O podemos directamente deshacer el último `commit`:
+
+```bash
+git reset --soft HEAD~1
+```
+
+Cuando ejecutamos el comando `git reset` se ejecuta en tres modos: `--soft`, `--mixed` (por defecto si no ponemos nada) y `--hard`
+
+| Modo de `reset` | Mueve el historial (*HEAD*) | Limpia la zona de preparación (*Staging*) | Borra los archivos modificados (*Working Directory*) |
+| --- | --- | --- | --- |
+| **`--soft`** | Sí | ❌ No | ❌ No |
+| **`--mixed`** | Sí | Sí | ❌ No |
+| **`--hard`** | Sí | Sí | **Sí** |
+
+
+!!! note "`reset` vs `revert`"
+    
+    La diferencia entre `revert` y `reset`, es que la primera revierte creando un nuevo commit en el historial, mientras que la segunda elimina los commits desde el punto indicado.
 
 ## El archivo `.gitignore`
 

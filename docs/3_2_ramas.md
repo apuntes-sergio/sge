@@ -286,6 +286,215 @@ A — B — M ← main
 
 
 
+## Resolución de conflictos en un merge
+
+Un **conflicto** aparece cuando Git no puede decidir por sí solo cómo combinar los cambios de dos ramas. Es una situación normal en el trabajo con ramas, no un error grave.
+
+Se produce, por ejemplo, cuando:
+
+- Las dos ramas han modificado **las mismas líneas** de un mismo fichero (con contenido distinto).
+- Una rama **modifica** un fichero y la otra lo **elimina**.
+
+Si las dos ramas modifican el mismo fichero pero en **zonas distintas**, Git lo fusiona automáticamente y no hay conflicto.
+
+!!!note "Un conflicto no rompe nada"
+
+    Mientras estás resolviendo un conflicto, el merge está **a medias** y el historial no se ha modificado todavía. Puedes cancelar el proceso en cualquier momento con `git merge --abort` y volver al estado anterior al `git merge`.
+
+### Escenario de ejemplo
+
+Partimos del repositorio `demo-git` del ejemplo anterior, con el fichero `README.md` que contiene `Proyecto base`. Vamos a modificar **la misma línea** en dos ramas distintas.
+
+```bash
+# Rama 'docs': cambiamos la primera línea del README
+git switch -c docs
+echo "Proyecto base - documentación" > README.md
+git add README.md
+git commit -m "README: añadida referencia a documentación"
+
+# Volvemos a main y cambiamos esa misma línea de otra forma
+git switch main
+echo "Proyecto base - versión 1.0" > README.md
+git add README.md
+git commit -m "README: indicada versión 1.0"
+```
+
+**Estructura actual** (las dos ramas parten del mismo commit y han modificado la misma línea):
+
+```
+      B ← docs
+     /
+A ——┤
+     \
+      C ← main (HEAD)
+```
+
+!!!tip "Antes de hacer un merge"
+
+    Comprueba con `git status` que el directorio de trabajo está limpio (sin cambios sin confirmar). Si no, Git puede negarse a hacer el merge o mezclar cambios pendientes con los del conflicto, y será mucho más difícil de resolver.
+
+### Pasos para resolver un conflicto
+
+#### 1. Lanzar el merge y detectar el conflicto
+
+Estando en la rama que **recibe** los cambios (`main`), fusionamos la otra:
+
+```bash
+git merge docs
+```
+
+Git avisa de que no ha podido completar la fusión:
+
+```
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+*(Si tu sistema está en español, los mensajes aparecerán traducidos.)*
+
+#### 2. Identificar los ficheros en conflicto
+
+```bash
+git status
+```
+
+```
+On branch main
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+        both modified:   README.md
+```
+
+Los ficheros listados en **Unmerged paths** (`both modified`) son los que debemos resolver. El resto de ficheros que se hayan podido fusionar sin problema ya están en el *staging*.
+
+#### 3. Abrir el fichero e interpretar los marcadores
+
+Git ha modificado `README.md` e insertado **marcadores de conflicto** en él:
+
+```
+<<<<<<< HEAD
+Proyecto base - versión 1.0
+=======
+Proyecto base - documentación
+>>>>>>> docs
+```
+
+| Marcador | Significado |
+|---|---|
+| `<<<<<<< HEAD` | Inicio del conflicto. Lo que hay debajo es la versión de la **rama actual** (`main`). |
+| `=======` | Separador entre las dos versiones. |
+| `>>>>>>> docs` | Fin del conflicto. Lo que hay encima es la versión de la **rama que se fusiona** (`docs`). |
+
+#### 4. Editar el fichero y decidir el resultado final
+
+Debemos dejar el fichero **exactamente como queremos que quede**, y eso implica **eliminar los tres marcadores** (`<<<<<<<`, `=======`, `>>>>>>>`). Tenemos tres opciones:
+
+- Quedarnos con la versión de la rama actual.
+- Quedarnos con la versión de la otra rama.
+- **Combinar** ambas versiones (lo más habitual), o escribir algo nuevo.
+
+Por ejemplo, combinando ambas:
+
+```
+Proyecto base - versión 1.0 - documentación
+```
+
+!!!warning "Elimina siempre los marcadores"
+
+    Si olvidas borrar alguna línea `<<<<<<<`, `=======` o `>>>>>>>`, Git no te lo impedirá y el fichero quedará con esos símbolos dentro (en código fuente, además, dejará de compilar o ejecutarse). Puedes comprobar que no queda ninguno con:
+
+    ```bash
+    grep -rn "<<<<<<<\|>>>>>>>" .
+    ```
+
+#### 5. Marcar el conflicto como resuelto
+
+Con `git add` le indicamos a Git que el fichero ya está resuelto:
+
+```bash
+git add README.md
+git status
+```
+
+El fichero pasará de `Unmerged paths` a `Changes to be committed`. Hay que repetir los pasos 3, 4 y 5 **por cada fichero en conflicto**.
+
+#### 6. Finalizar el merge con un commit
+
+```bash
+git commit
+```
+
+Git abrirá el editor con un mensaje por defecto (`Merge branch 'docs'`) que puedes aceptar o personalizar. También se puede indicar directamente:
+
+```bash
+git commit -m "Merge de docs en main: resuelto conflicto en README.md"
+```
+
+#### 7. Verificar el resultado
+
+```bash
+git log --oneline --graph
+```
+
+```
+*   e4f5a6b (HEAD -> main) Merge de docs en main: resuelto conflicto en README.md
+|\
+| * b2c3d4e (docs) README: añadida referencia a documentación
+* | a1b2c3d README: indicada versión 1.0
+|/
+* 9f8e7d6 Commit inicial con README
+```
+
+*(Los identificadores de commit serán distintos en tu repositorio.)*
+
+**Estructura final:**
+
+```
+      B ← docs
+     /   \
+A ——┤     M ← main
+     \   /
+      C
+```
+
+`M` es el **commit de merge** que recoge la solución del conflicto. Si ya no necesitas la rama, puedes eliminarla con `git branch -d docs`.
+
+### Otras opciones durante un conflicto
+
+| Comando | Qué hace |
+|---|---|
+| `git merge --abort` | Cancela el merge y devuelve el repositorio al estado anterior. |
+| `git restore --ours fichero` | Descarta la versión de la otra rama y deja la de la rama actual (`main`). Después hay que hacer `git add`. |
+| `git restore --theirs fichero` | Descarta la versión de la rama actual y deja la de la otra rama (`docs`). Después hay que hacer `git add`. |
+| `git diff` | Durante un conflicto muestra las diferencias que aún están sin resolver. |
+| `git mergetool` | Abre una herramienta gráfica de fusión (si está configurada). |
+
+!!!tip "Resolver conflictos desde el editor"
+
+    Editores como **Visual Studio Code** o los IDE de JetBrains detectan los marcadores y muestran botones del tipo *Accept Current Change*, *Accept Incoming Change* o *Accept Both Changes*, además de una vista comparativa de las dos versiones. Hacen exactamente lo mismo que editar el fichero a mano: tras usarlos siguen siendo necesarios `git add` y `git commit`.
+
+!!!note "Cómo reducir los conflictos"
+
+    - Haz ramas pequeñas y de corta duración.
+    - Integra con frecuencia los cambios de `main` en tu rama (`git merge main` desde tu rama) para detectar los conflictos pronto.
+    - Haz *pull* antes de empezar a trabajar y antes de fusionar.
+    - Coordínate con el equipo para no editar las mismas líneas a la vez.
+
+**Resumen del proceso:**
+
+1. `git merge rama` → Git avisa del conflicto.
+2. `git status` → localizar los ficheros `both modified`.
+3. Editar cada fichero, decidir el contenido final y eliminar los marcadores.
+4. `git add fichero` → marcar como resuelto.
+5. `git commit` → cerrar el merge.
+6. (Alternativa en cualquier momento antes del commit: `git merge --abort`.)
+
+
 
 !!!tip "Buenas prácticas con ramas"
     - Usa nombres descriptivos (feature-login, bugfix-42, hotfix-crash).
