@@ -127,6 +127,19 @@ Para más detalles, instrucciones específicas por sistema operativo y recomenda
 
 
 
+!!!tip "Configuración inicial recomendada"
+
+    Antes del primer commit conviene indicar quién eres (Git guarda esos datos en cada commit) y fijar el nombre de la rama principal. Según la versión y la distribución, `git init` puede crear la rama como `master` en lugar de `main`:
+
+    ```bash
+    git config --global user.name "Tu Nombre"
+    git config --global user.email "tu@email.com"
+    git config --global init.defaultBranch main
+    ```
+
+    Si ya has creado un repositorio con la rama `master`, puedes renombrarla con `git branch -M main`.
+
+
 ## Comandos esenciales
 
 | Comando | Qué hace | Nota / explicación didáctica |
@@ -143,7 +156,7 @@ Para más detalles, instrucciones específicas por sistema operativo y recomenda
 
 <figure markdown="span" align="center">
   ![Image title](./imgs/git/git-workflow1.png){ width="85%"  }
-  <figcaption>Flojo de trabajo con git + comandos.</figcaption>
+  <figcaption>Flujo de trabajo con git + comandos.</figcaption>
 </figure>
 
 
@@ -235,9 +248,17 @@ Revierte cambios en un archivo desde el último commit
 
 ### Revertir commit
 ```bash
-git revert -m "Mensaje personalizado explicando por qué se revierte" ID_commit
+git revert ID_commit
 ```
-Crea un nuevo commit que revierte el anterior.
+Crea un nuevo commit que deshace los cambios del commit indicado, sin borrar el historial. Git abre el editor para que escribas el mensaje del nuevo commit; si quieres aceptar el mensaje por defecto sin abrir el editor:
+
+```bash
+git revert --no-edit ID_commit
+```
+
+!!!note "El parámetro `-m` en `git revert`"
+
+    En `git revert`, la opción `-m` **no** sirve para indicar el mensaje: se usa solo para revertir *commits de merge* e indica qué padre se considera la línea principal (por ejemplo, `git revert -m 1 ID_commit`).
 
 ### Resetear a un commit anterior
 
@@ -314,6 +335,11 @@ Las razones más importantes para usar `.gitignore` son :
 ```bash
 git config --global core.excludesFile ~/.gitignore_global
 ```
+
+- Los patrones admiten comodines (`*`, `?`) y los comentarios se escriben con `#`.
+- Existen plantillas por lenguaje o entorno en [github.com/github/gitignore](https://github.com/github/gitignore), y GitHub permite elegir una al crear el repositorio.
+- Revisa los patrones muy amplios: pueden excluir por error ficheros necesarios.
+- Créalo **antes del primer `push`**: lo que se sube a un remoto permanece en el historial aunque se borre después.
 
 !!!info "Para más detalles técnicos"
     - [documentación oficial de Git](https://git-scm.com/docs/gitignore)

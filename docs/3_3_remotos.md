@@ -34,7 +34,7 @@ Cuando haces `git fetch`, Git no descarga directamente los archivos, sino que ac
 
 - No puedes modificar directamente `origin/main`.
 - Es una “foto” del estado de la rama en el servidor.
-- Se actualiza con `git fetch`, no con `git pull`.
+- Se actualiza con `git fetch` (y también con `git pull`, que ejecuta un `fetch` internamente antes de fusionar).
 
 ```bash
 git branch -r
@@ -50,7 +50,7 @@ Aquí es donde Git se vuelve realmente cómodo. Una *tracking branch* es una ram
 Por ejemplo, si creas una rama local basada en `origin/main` con:
 
 ```bash
-git checkout --track origin/main
+git switch --track origin/main
 ```
 
 Git configura automáticamente el seguimiento. Ahora, cuando haces `git push`, Git sabe que debe enviar los cambios a `origin/main`. Y cuando haces `git pull`, sabe de dónde traer las actualizaciones.
@@ -208,6 +208,10 @@ Para crear un nuevo, por supuesto debemos tener una cuenta en [https://github.co
    - Opcional: añade `.gitignore` y licencia.
 4. Haz clic en **"Create repository"**.
 
+!!!note "Para la actividad práctica de este tema"
+
+    Deja **sin marcar** las opciones de README, `.gitignore` y licencia, para que el repositorio remoto se cree vacío.
+
 ### Autenticación en GitHub
 
 Desde 2021, GitHub **ya no permite autenticación por contraseña** al usar Git desde la terminal. 
@@ -256,6 +260,14 @@ Debes autenticarte mediante uno de estos métodos:
         git config --global credential.helper store
         ```
 
+        !!!warning "No lo uses en equipos compartidos"
+
+            `credential.helper store` guarda el token **en texto plano** en `~/.git-credentials`, accesible a quien use esa cuenta del equipo. En ordenadores compartidos (como los del aula) usa mejor una caché temporal:
+
+            ```bash
+            git config --global credential.helper 'cache --timeout=3600'
+            ```
+
 
 #### 2. **Clave SSH**
 - Genera una clave SSH con:
@@ -292,19 +304,7 @@ También es posible usar herramientas como [GitHub Desktop](https://desktop.gith
 
 ### Conectar un repositorio local con GitHub
 
-También podemos hacer el paso contrario, crear un repositorio local en el que ya tenemos un trabajo hecho y después  vincularlo con tu repositorio local usando:
-
-```bash
-git remote add origin https://github.com/usuario/repositorio.git
-```
-
-Esto crea una referencia llamada `origin` que apunta al repositorio remoto. Para confirmar que la conexión se ha establecido correctamente:
-
-```bash
-git remote -v
-```
-
-Este comando muestra las URLs configuradas para subir (`push`) y descargar (`fetch`) cambios.
+También podemos hacer el paso contrario: partir de un repositorio local en el que ya tenemos trabajo hecho y vincularlo después con un repositorio **vacío** creado en GitHub. Los comandos (`git remote add origin ...`, `git remote -v` y `git push -u origin main`) son los que ya hemos visto en [Conectando un repositorio remoto](#conectando-un-repositorio-remoto) y en [Enviar cambios al remoto](#enviar-cambios-al-remoto). Encontrarás un ejemplo completo en la [Actividad práctica](#actividad-practica).
 
 ## Operaciones básicas para gestión de repositorios remotos GitHub
 
@@ -313,108 +313,267 @@ Este comando muestra las URLs configuradas para subir (`push`) y descargar (`fet
   <figcaption>Trabajando con GitHub.</figcaption>
 </figure>
 
-### Subir cambios al repositorio remoto
+### Resumen de operaciones
 
-Cuando hayas hecho commits en tu repositorio local, puedes subirlos a GitHub con:
+| Operación | Comando | Más información |
+|---|---|---|
+| Copiar un repositorio remoto | `git clone <url>` | [Clonar un repositorio de GitHub](#clonar-un-repositorio-de-github) |
+| Ver los remotos configurados | `git remote -v` | [Conectando un repositorio remoto](#conectando-un-repositorio-remoto) |
+| Subir commits | `git push origin nombre_rama` (la primera vez, `git push -u origin nombre_rama`) | [Enviar cambios al remoto](#enviar-cambios-al-remoto) |
+| Descargar sin integrar | `git fetch origin` | [Obtener cambios del remoto](#obtener-cambios-del-remoto) |
+| Descargar e integrar | `git pull` | [Obtener cambios del remoto](#obtener-cambios-del-remoto) |
 
-```bash
-git push origin nombre_rama
+## Resolución de conflictos con el repositorio remoto
+
+Cuando trabajamos con GitHub, el conflicto no siempre aparece al hacer un `merge` entre ramas locales. Lo más habitual es que aparezca al **sincronizar** con el remoto: alguien (un compañero, o tú desde otro equipo o desde la web de GitHub) ha subido commits a la misma rama que tú has modificado en local.
+
+!!!note "Repaso previo"
+
+    La resolución del conflicto en sí (marcadores `<<<<<<<`, `=======`, `>>>>>>>`, `git add`, `git commit`) es **exactamente la misma** que vimos en el apartado [Resolución de conflictos en un merge](3_2_ramas.md#resolucion-de-conflictos-en-un-merge). Aquí nos centramos en lo que cambia: cómo se llega al conflicto y cómo se sincroniza después con GitHub.
+
+### ¿Por qué se rechaza mi `git push`?
+
+Git solo permite subir commits al remoto si la rama remota puede **avanzar en línea recta** (*fast-forward*) hasta tu último commit. Si en GitHub hay commits que tú no tienes en local, las historias han **divergido** y Git rechaza el envío para no sobrescribir el trabajo de otros.
+
+```
+      B ← origin/main (commit que ya está en GitHub)
+     /
+A ——┤
+     \
+      C ← main (tu commit local, aún sin subir)
 ```
 
-Si es la primera vez que subes esa rama, añade el parámetro `-u` para establecer una relación de seguimiento:
+La solución siempre es la misma: **primero traer los cambios del remoto, integrarlos con los tuyos (resolviendo conflictos si los hay) y después subir**.
+
+### Escenario de ejemplo
+
+Partimos del repositorio `mi-proyecto` de la actividad práctica, sincronizado con GitHub, con el fichero `README.md` que contiene `# Mi Proyecto`.
+
+**1. Simulamos el cambio "de otra persona" en GitHub.** En la web del repositorio abre `README.md`, pulsa el icono del lápiz (*Edit this file*), cambia la primera línea a `# Mi Proyecto - versión GitHub` y haz *Commit changes* sobre `main`.
+
+**2. Hacemos un cambio distinto sobre la misma línea, en local**, sin haber traído antes lo de GitHub:
 
 ```bash
-git push -u origin nombre_rama
+echo "# Mi Proyecto - versión local" > README.md
+git add README.md
+git commit -m "README: título versión local"
 ```
 
-Esto permite que en el futuro puedas usar simplemente `git push` sin especificar el remoto ni la rama.
-
-
-### Obtener cambios del remoto
-
-Para mantener tu repositorio local actualizado con los cambios que se hagan en GitHub:
-
-- **`git fetch origin`**  
-  Descarga los cambios del remoto, pero **no los aplica** automáticamente. Es útil para revisar antes de fusionar.
-
-- **`git pull`**  
-  Descarga y **fusiona** los cambios del remoto con tu rama actual. Es el comando más común para sincronizar tu trabajo.
-
-
-
-## El archivo `.gitignore` en sistemas de control de versiones con Git
-
-El archivo `.gitignore` constituye una herramienta esencial en la gestión de proyectos versionados con Git. Su función principal es indicar al sistema qué archivos o directorios deben ser excluidos del seguimiento, evitando que se incluyan en los commits y, por tanto, en el historial del repositorio. Esta exclusión resulta especialmente útil para preservar la limpieza del repositorio, reducir el ruido técnico y evitar la incorporación de archivos irrelevantes, temporales o específicos del entorno local de desarrollo.
-
-En contextos educativos o institucionales, donde los proyectos pueden ser compartidos entre múltiples usuarios y entornos, el uso adecuado de `.gitignore` contribuye a mantener la coherencia del repositorio y a prevenir conflictos derivados de configuraciones locales o archivos generados automáticamente.
-
-
-### Funcionamiento y sintaxis
-
-El archivo `.gitignore` se ubica habitualmente en la raíz del repositorio, aunque Git permite definir archivos `.gitignore` adicionales en subdirectorios para aplicar reglas específicas a determinadas rutas. Su contenido consiste en una lista de patrones que describen los nombres de archivos o carpetas que deben ser ignorados por Git.
-
-Ejemplos de patrones comunes incluyen:
-
-- Archivos temporales o de registro: `*.log`, `*.tmp`
-- Directorios de configuración de editores: `.vscode/`, `.idea/`
-- Archivos compilados o generados: `*.class`, `*.pyc`, `dist/`, `build/`
-
-Los patrones pueden incluir comodines (`*`, `?`) y rutas relativas. Los comentarios se indican con el símbolo `#`.
-
-!!!example "Ejemplo de fichero `.gitignore`"
-
-    Fichero `.gitignore` en la raíz del proyecto git
-
-    ```
-    # Ignorar archivos temporales
-    *.log
-    *.tmp
-
-    # Ignorar carpetas de configuración local
-    .vscode/
-    .idea/
-
-    # Ignorar archivos compilados
-    *.class
-    *.pyc
-    ```
-
-    Git lee este archivo cada vez que evalúa qué cambios hay en tu proyecto. Si un archivo coincide con algún patrón de .gitignore, simplemente lo ignora.
-
-### Consideraciones prácticas
-
-El uso de `.gitignore` debe guiarse por criterios técnicos que favorezcan la reproducibilidad del proyecto y la claridad del repositorio. Se recomienda:
-
-- Excluir archivos que no aportan valor al código fuente ni a la documentación compartida.
-- Evitar la exclusión de archivos necesarios para la ejecución o comprensión del proyecto por parte de otros usuarios.
-- Utilizar plantillas específicas por lenguaje o entorno, disponibles en repositorios como [github.com/github/gitignore](https://github.com/github/gitignore), para facilitar la configuración inicial.
-- Revisar cuidadosamente los patrones amplios que podrían excluir archivos relevantes por error.
-
-
-### Eliminación de archivos ya versionados
-
-En caso de que un archivo haya sido añadido al repositorio antes de ser incluido en `.gitignore`, Git continuará rastreándolo. Para que deje de hacerlo, es necesario eliminarlo del índice sin borrarlo del sistema de archivos:
+**3. Intentamos subirlo:**
 
 ```bash
-git rm --cached nombre-del-archivo.ext
+git push origin main
 ```
 
-Una vez ejecutado este comando, Git respetará la regla definida en `.gitignore` y omitirá dicho archivo en futuros commits.
+Git lo rechaza:
 
-  El uso correcto de `.gitignore` no solo mejora la calidad técnica del repositorio, sino que también facilita la colaboración entre estudiantes y docentes, al evitar la propagación de configuraciones locales, archivos innecesarios o elementos que dificulten la evaluación y el mantenimiento del proyecto. 
+```
+To https://github.com/usuario/mi-proyecto.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/usuario/mi-proyecto.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. ...
+```
+
+!!!warning "Nunca resuelvas esto con `git push --force`"
+
+    `git push --force` sobrescribe la rama remota con tu versión y **borra los commits de los demás**. En una rama compartida no es una solución, es el problema. Si alguna vez es imprescindible (por ejemplo, tras un `rebase` en una rama personal), usa `git push --force-with-lease`, que al menos se niega a sobrescribir si el remoto ha cambiado desde tu último `fetch`.
+
+### Pasos para resolver un conflicto con el remoto (merge)
+
+#### 1. Traer los cambios del remoto sin integrarlos
+
+```bash
+git fetch origin
+```
+
+Esto actualiza `origin/main` en tu repositorio, pero **no toca** tu rama ni tus ficheros.
+
+#### 2. Comparar qué ha pasado
+
+```bash
+git log --oneline --graph --all
+```
+
+```
+* 3b4c5d6 (origin/main) README: título versión GitHub
+| * 7e8f9a0 (HEAD -> main) README: título versión local
+|/
+* 1a2b3c4 Primer commit
+```
+
+Para ver qué cambios concretos trae el remoto:
+
+```bash
+git diff main origin/main
+```
+
+El `fetch` previo es lo que te permite **ver el conflicto venir** antes de provocarlo. Con `git pull` haces los pasos 1 y 3 de golpe, sin oportunidad de revisar.
+
+#### 3. Integrar los cambios del remoto en tu rama
+
+```bash
+git merge origin/main
+```
+
+```
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+!!!note "`git merge origin/main` frente a `git pull`"
+
+    `git pull` equivale a `git fetch` + `git merge origin/main` (o `git rebase`, según la configuración). Si en lugar de `git merge origin/main` usas `git pull`, el resultado es el mismo, pero en los marcadores de conflicto puede aparecer el identificador del commit en lugar de `origin/main`. Además, en versiones recientes de Git, si las historias han divergido y no hay configurado cómo reconciliarlas, `git pull` te pedirá que lo indiques (`git pull --no-rebase` para *merge*, `git pull --rebase` para *rebase*).
+
+#### 4. Interpretar los marcadores
+
+```
+<<<<<<< HEAD
+# Mi Proyecto - versión local
+=======
+# Mi Proyecto - versión GitHub
+>>>>>>> origin/main
+```
+
+| Parte | Significado |
+|---|---|
+| Entre `<<<<<<< HEAD` y `=======` | Tu versión **local** (rama actual). |
+| Entre `=======` y `>>>>>>> origin/main` | La versión que viene del **remoto** (GitHub). |
+
+#### 5. Resolver, marcar y confirmar
+
+Edita el fichero, deja el contenido final y **elimina los marcadores**:
+
+```
+# Mi Proyecto - versión local y GitHub
+```
+
+Después:
+
+```bash
+git add README.md
+git commit -m "Merge de origin/main: resuelto conflicto en README.md"
+```
+
+#### 6. Subir el resultado a GitHub
+
+```bash
+git push origin main
+```
+
+Ahora el push sí se acepta, porque tu rama contiene todo lo que había en el remoto más tu commit de merge.
+
+```
+      B ← origin/main (antes del push)
+     /   \
+A ——┤     M ← main (HEAD) → tras el push, origin/main también apunta a M
+     \   /
+      C
+```
+
+#### 7. Verificar
+
+```bash
+git status
+```
+
+```
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+```
+
+Comprueba también en GitHub (pestaña *Commits*) que aparecen tu commit, el del compañero y el commit de merge.
+
+### Alternativa: integrar con `rebase`
+
+En lugar de crear un commit de merge, podemos **recolocar** nuestros commits locales encima de lo que hay en el remoto:
+
+```bash
+git pull --rebase origin main
+```
+
+Si hay conflicto, Git se detiene en el commit conflictivo:
+
+```
+CONFLICT (content): Merge conflict in README.md
+error: could not apply 7e8f9a0... README: título versión local
+hint: Resolve all conflicts manually, mark them as resolved with
+hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+hint: You can instead skip this commit: run "git rebase --skip".
+hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+```
+
+Los pasos son: editar el fichero y quitar marcadores → `git add README.md` → `git rebase --continue` (**sin** `git commit`) → `git push origin main`.
+
+!!!warning "En un `rebase` los lados se invierten"
+
+    Durante un `rebase`, Git va "reaplicando" tus commits sobre el remoto. Por eso, en los marcadores, `HEAD` (parte de arriba) es la versión **del remoto** y la parte de abajo es **tu commit local**. Es el efecto contrario al de un `merge`.
+
+Resultado: historia lineal, sin commit de merge, pero con tu commit **reescrito** (nuevo identificador):
+
+```
+A — B — C' ← main, origin/main
+```
+
+| | `merge` | `rebase` |
+|---|---|---|
+| Historia resultante | Con commit de merge (refleja que hubo trabajo paralelo) | Lineal |
+| Commits locales | Se conservan tal cual | Se reescriben (nuevo hash) |
+| Cancelar el proceso | `git merge --abort` | `git rebase --abort` |
+| Terminar tras resolver | `git add` + `git commit` | `git add` + `git rebase --continue` |
+| Riesgo | Bajo | **No usar sobre commits que ya has subido y otros han descargado** |
+
+!!!tip "Recomendación para empezar"
+
+    Mientras estés aprendiendo, usa `fetch` + `merge`: es más fácil de entender y de deshacer (`git merge --abort`). Pasa a `rebase` cuando domines el flujo y solo con commits locales que aún no hayas subido.
+
+
+### Resumen del proceso
+
+1. `git push` rechazado (*fetch first* / *non-fast-forward*) → el remoto tiene commits que no tienes.
+2. `git fetch origin` → traer sin integrar.
+3. `git log --oneline --graph --all` → ver la divergencia.
+4. `git merge origin/main` → integrar (o `git pull --rebase`).
+5. Si hay conflicto: editar, quitar marcadores, `git add`, y `git commit` (merge) o `git rebase --continue` (rebase).
+6. `git push` → subir el resultado.
+7. Si algo sale mal: `git merge --abort` o `git rebase --abort`.
+
+!!!note "Cómo reducir los conflictos con el remoto"
+
+    - Haz `git pull` (o `fetch`) **antes de empezar a trabajar** y antes de cada `push`.
+    - Sube cambios pequeños y con frecuencia.
+    - Trabaja en ramas distintas y evita que dos personas editen a la vez los mismos ficheros.
+    - Nunca uses `git push --force` en ramas compartidas.
+
+
+!!!info "Pull Request (para saber más)"
+
+    Un *pull request* es una función de GitHub (no de Git) para proponer que una rama se fusione en otra y que otras personas la revisen antes. No lo usaremos en este módulo, pero es la forma habitual de trabajar en equipo. Puedes investigar más en la [documentación oficial de GitHub](https://docs.github.com/es/pull-requests).
+
+## El archivo `.gitignore` en repositorios remotos
+
+El archivo `.gitignore` (explicado en [Introducción a Git](3_1_introduccion.md#el-archivo-gitignore)) cobra especial importancia cuando trabajamos con un remoto: todo lo que se sube con `git push` queda en el servidor y, aunque se borre después, **permanece en el historial**. Por eso conviene crearlo **antes del primer `push`**.
+
+- Al crear el repositorio en GitHub puedes elegir una plantilla de `.gitignore` por lenguaje (también disponibles en [github.com/github/gitignore](https://github.com/github/gitignore)).
+- Si un fichero ya está versionado, añadirlo a `.gitignore` no basta: hay que ejecutar `git rm --cached nombre-del-archivo.ext`.
+- Si el fichero contenía **credenciales** (claves, tokens, contraseñas en un `.env`) y ya se subió a GitHub, considera esas credenciales comprometidas: borrarlas del historial no es trivial, así que lo correcto es **revocarlas y generar otras nuevas**.
 
 
 ## Actividad práctica
 
-Version 1: 
+Versión 1: 
 
 1. Crear un nuevo repositorio en GitHub (sin README ni .gitignore)  
-2. En tu equipo local
+2. En tu equipo local, clonarlo desde la carpeta donde quieras trabajar. `git clone` crea automáticamente la carpeta `mi-proyecto`, por lo que **no hay que crearla antes**:
    ```bash
-   mkdir mi-proyecto
+   cd ~/Documentos/proyectos
+   git clone https://github.com/usuario/mi-proyecto.git
    cd mi-proyecto
-   git clone  https://github.com/usuario/mi-proyecto.git
    ```
+   Git avisará de que has clonado un repositorio vacío (`You appear to have cloned an empty repository`): es lo esperado.
 
 
 Versión 2: 
@@ -432,13 +591,17 @@ Versión 2:
    git add README.md
    git commit -m "Primer commit"
    ```
-4. Conectar con GitHub:
+4. Conectar con GitHub y subir:
    ```bash
    git remote add origin https://github.com/usuario/mi-proyecto.git
-   git pull --rebase origin main    # esto solo si hay algo en el repositorio
+   git branch -M main    # asegura que la rama se llama main (puede haberse creado como master)
    git push -u origin main
    ```
 5. Verificar que el archivo aparece en GitHub
+
+!!!note "Si el repositorio de GitHub no estaba vacío"
+
+    Si al crearlo marcaste README, `.gitignore` o licencia, el `push` será rechazado, porque el remoto contiene commits que no tienes en local (y, además, con una historia independiente de la tuya). Primero hay que traerlos con `git pull --rebase origin main` y, si ambos repositorios tienen un `README.md`, resolver el conflicto como se explica en [Resolución de conflictos con el repositorio remoto](#resolucion-de-conflictos-con-el-repositorio-remoto). Después ya se puede hacer `git push -u origin main`.
 
 
 

@@ -70,9 +70,10 @@ En este gráfico podemos ver que podemos tener varias ramas en nuestro proyecto 
 | `git switch -c nombre_rama` |  Crea y cambia a la rama nueva en un solo paso. |
 | `git branch` | Muestra ramas de repositorio actual |
 | `git show-branch` | Muestra ramas de repositorio actual de una forma pseudo gráfica. |
-| `git branch -d nombre_rama`  |  Elimina la rama local `nombre_rama` si ya ha sido fusionada o no tiene cambios pendientes.|
+| `git branch -d nombre_rama`  |  Elimina la rama local `nombre_rama` **solo si ya ha sido fusionada**; si no, Git se niega a borrarla. |
+| `git branch -D nombre_rama`  |  Fuerza el borrado de la rama aunque **no** esté fusionada (se pierden sus commits no fusionados). |
 | `git merge` | Combina cambios de otra rama en la actual |
-| `git diff` | Muestra diferencias entre dos ramas |
+| `git diff` | Muestra los cambios sin confirmar. Con dos ramas (`git diff rama1 rama2`) muestra las diferencias entre ellas. |
 | *Fast-forward merge* | Cuando la rama actual puede avanzar sin conflictos |
 | *Commit de merge* | Se crea cuando hay líneas de desarrollo paralelas |
 
@@ -103,12 +104,31 @@ git merge rama-a-fusionar
 ```bash
 git branch -d nombre-rama
 ```
+Solo borra la rama si sus cambios ya están fusionados en la rama actual; si no, Git avisa y no la elimina, para evitar perder trabajo.
+
+!!!warning "Borrado forzado: `-D`"
+
+    ```bash
+    git branch -D nombre-rama
+    ```
+
+    Borra la rama **aunque no esté fusionada**. Los commits que solo existían en esa rama quedan inaccesibles. Úsalo únicamente cuando estés seguro de que no necesitas ese trabajo.
 
 ### Ver diferencias
 ```bash
 git diff
 ```
-Muestra los cambios no confirmados.
+Muestra los cambios no confirmados (los que están en el directorio de trabajo y aún no se han añadido con `git add`).
+
+```bash
+git diff --staged
+```
+Muestra los cambios que ya están en el área de preparación, pendientes del próximo commit.
+
+```bash
+git diff main login
+```
+Muestra las diferencias entre dos ramas.
 
 ### Ver ramas 
 ```bash
@@ -180,6 +200,10 @@ A ← main
 ```
 
 *(Solo existe la rama `main`, con un único commit “A”)*
+
+!!!tip "¿`main` o `master`?"
+
+    Según la versión de Git y su configuración, `git init` puede crear la rama principal con el nombre `master`. Si ese es tu caso, renómbrala antes de seguir con `git branch -M main` (o configura `git config --global init.defaultBranch main` para los repositorios futuros).
 
 
 #### Crear la rama `login` y trabajar en ella
@@ -257,15 +281,13 @@ git merge perfil
 **Resultado (merge normal):**
 
 ```
-      B ← login
-     / \
-A ——┤   M ← main
-     \ /
-      C ← perfil
+A — B — M ← main
+ \     /
+  C ——┘ ← perfil
 ```
 
-- `M` es un **commit de merge** que combina el trabajo de las dos ramas.  
-- La historia se une en un punto común.  
+- `M` es un **commit de merge** que combina el trabajo de las dos ramas: tiene **dos padres** (`B` y `C`).  
+- `login` sigue apuntando a `B` y `perfil` a `C`; ambas se unen en `M`.  
 
 #### Limpiar ramas ya fusionadas
 
@@ -278,9 +300,12 @@ git branch -d perfil
 
 ```
 A — B — M ← main
+ \     /
+  C ——┘
 ```
 
-*(El proyecto tiene la funcionalidad de `login` y `perfil` integradas en la rama principal.)*
+*(El proyecto tiene la funcionalidad de `login` y `perfil` integradas en la rama principal. Al borrar las ramas solo desaparecen las etiquetas: los commits `B` y `C` siguen en el historial y se pueden ver con `git log --graph`.)*
+
 
 
 
@@ -493,7 +518,6 @@ A ——┤     M ← main
 4. `git add fichero` → marcar como resuelto.
 5. `git commit` → cerrar el merge.
 6. (Alternativa en cualquier momento antes del commit: `git merge --abort`.)
-
 
 
 !!!tip "Buenas prácticas con ramas"
