@@ -288,6 +288,96 @@ Los siguientes ejemplos ilustran distintos enfoques de personalización:
     - **EXPOSE 80**: declara el puerto 80 como expuesto para otros contenedores (no lo publica en el host).
     - **CMD /start.sh**: define el comando que se ejecutará por defecto al lanzar el contenedor.
 
+    ??? info "Para usar y ejecutar este ejemplo de Dockerfile paso a paso"
+
+        - **Paso 1: Crear la estructura de archivos en tu equipo**
+
+        Crea una carpeta vacía en tu ordenador (por ejemplo, `docker-php-alpine`) y sitúate dentro de ella. Dentro de esa carpeta vas a necesitar **dos archivos**:
+
+        1. El archivo `Dockerfile` con el contenido que proporcionaste.
+        2. Un script de arranque llamado **`start.sh`** (ya que el Dockerfile hace un `ADD ./start.sh /start.sh`).
+
+        ---
+
+        - **Paso 2: Crear el script de arranque (`start.sh`)**
+
+        Como el contenedor está basado en Alpine y usa Apache, el script de inicio debe encargarse de arrancar el servicio web (generalmente en primer plano o configurando el demonio correctamente).
+
+        Crea un archivo llamado `start.sh` en la misma carpeta con este contenido básico:
+
+        ```bash
+        #!/bin/sh
+        # Asegurar que el entorno de Apache esté listo y arrancar en primer plano
+        httpd -D FOREGROUND
+
+        ```
+
+        *Nota:* Asegúrate de darle permisos de ejecución al script en tu máquina local antes de construir la imagen:
+
+        ```bash
+        chmod +x start.sh
+
+        ```
+
+        ---
+
+        - **Paso 3: Construir la imagen de Docker**
+
+        Con los dos archivos listos en la carpeta (`Dockerfile` y `start.sh`), ejecuta el siguiente comando para construir la imagen (no olvides el punto `.` al final, que indica el directorio actual):
+
+        ```bash
+        docker build -t mi-web-alpine .
+
+        ```
+
+        *Verificación:* Docker leerá el archivo, descargará Alpine, instalará Apache y PHP, descargará el archivo `info.php` del Gist y dejará la imagen lista bajo el nombre `mi-web-alpine`.
+
+        ---
+
+        - **Paso 4: Ejecutar el contenedor**
+
+        Una vez construida la imagen, puedes ponerla en marcha y **mapear el puerto 80** del contenedor hacia tu máquina local para poder ver la página web:
+
+        ```bash
+        docker run -d -p 8080:80 --name servidor-php mi-web-alpine
+
+        ```
+
+        *Explicación del comando:*
+
+        * `-d`: Ejecuta el contenedor en segundo plano (modo *detached*).
+        * `-p 8080:80`: Redirige el puerto 8080 de tu ordenador anfitrión al puerto 80 del contenedor (donde está escuchando Apache).
+
+        ---
+
+        - **Paso 5: Probar que funciona**
+
+        Abre tu navegador web y entra en la siguiente dirección:
+
+        * **[http://localhost:8080](http://localhost:8080)**
+
+        *Verificación:* Deberías ver la página estándar de información de PHP (`phpinfo()`) que se descargó automáticamente desde el Gist durante el proceso de construcción (`docker build`).
+
+        ---
+
+        - **Comandos útiles:**
+
+        Para ver los logs si algo falla:
+        ```bash
+        docker logs servidor-php
+
+        ```
+
+
+        Para detener y borrar el contenedor al terminar:
+        ```bash
+        docker stop servidor-php
+        docker rm servidor-php
+
+        ```
+
+
+
 
 !!!example "2: Contenedor con Python y Flask"
 
@@ -311,6 +401,85 @@ Los siguientes ejemplos ilustran distintos enfoques de personalización:
     - Lanza la aplicación con `python app.py`.
 
 
+    ??? info "Guía paso a paso para preparar, construir y ejecutar este ejemplo de Python con Flask"
+
+        - **Paso 1: Crear la estructura de archivos**
+
+        Crea una carpeta nueva en tu equipo (por ejemplo, `docker-flask`) y añade en su interior **tres archivos**:
+
+        1. **`Dockerfile`** (con el código que proporcionaste).
+        2. **`requirements.txt`** (para definir las dependencias).
+        3. **`app.py`** (el código de la aplicación Flask).
+
+        Contenido recomendado para las pruebas:
+
+        !!! note "`requirements.txt`"
+            ```text
+            flask==3.1.0
+
+            ```
+
+
+        !!! note "`app.py`"
+            ```python
+            from flask import Flask
+
+            app = Flask(__name__)
+
+
+            @app.route('/')
+            def home():
+            # Asegúrate de que esta línea tenga una sangría correcta (4 espacios o un tabulador)
+            return '¡Hola desde Flask ejecutándose dentro de un contenedor Docker!'
+
+
+            if __name__ == '__main__':
+            app.run(host='0.0.0.0', port=5000)
+
+            ```
+
+        ---
+
+        - **Paso 2: Construir la imagen de Docker**
+        Abre tu terminal, sitúate dentro de la carpeta del proyecto y ejecuta el comando de construcción (`docker build`):
+
+        ```bash
+        docker build -t mi-flask-app .
+
+        ```
+
+        * **Qué hace:** Descarga la imagen base `python:3.11-slim`, configura el directorio de trabajo `/app`, instala Flask a través de `requirements.txt` y copia tu script de Python.
+
+        ---
+
+        - **Paso 3: Ejecutar el contenedor**
+
+        Pónlo en marcha mapeando el puerto `5000` de tu ordenador al puerto `5000` del contenedor:
+
+        ```bash
+        docker run -d -p 5000:5000 --name flask-container mi-flask-app
+
+        ```
+
+        * **Parámetros clave:**
+        * `-d`: Ejecuta el contenedor en segundo plano.
+        * `-p 5000:5000`: Vincula el puerto de la app para que sea accesible desde el host.
+        * *Nota importante en `app.py`:* Fíjate que el servidor Flask escucha en `host='0.0.0.0'`, lo cual es obligatorio dentro de Docker para aceptar peticiones externas al contenedor.
+
+        ---
+
+        - **Paso 4: Comprobar el funcionamiento**
+
+        Abre tu navegador web o realiza una petición desde la terminal:
+
+        * **URL del navegador:** [http://localhost:5000](http://localhost:5000)
+        * **Verificación por terminal:**
+        ```bash
+        curl http://localhost:5000
+
+        ```
+
+
 !!!example "3: Contenedor de Ubuntu con herramientas de red"
 
     Este contenedor puede utilizarse en prácticas de redes, para enseñar comandos básicos o simular entornos de prueba.
@@ -327,6 +496,78 @@ Los siguientes ejemplos ilustran distintos enfoques de personalización:
     - Lanza una shell interactiva por defecto.
 
 
+    ??? note "Guia pasoa paso para arrancar el contenedor ubuntu"
+
+        - **Paso 1: Crear la estructura de archivos**
+
+        Crea una carpeta nueva en tu equipo (por ejemplo, `docker-ubuntu-net`) y añade un único archivo en su interior: **`Dockerfile`**.
+
+
+        ---
+
+        - **Paso 2: Construir la imagen de Docker**
+
+        Abre tu terminal, sitúate dentro de la carpeta del proyecto y ejecuta el comando de construcción (`docker build`):
+
+        ```bash
+        docker build -t ubuntu-net-tools .
+
+        ```
+
+        * **Qué hace:** Descarga la imagen base de Ubuntu 24.04, actualiza los repositorios de paquetes e instala las utilidades de red (`net-tools`, `iputils-ping`, `curl`, `dnsutils`) dejando la imagen preparada bajo el nombre `ubuntu-net-tools`.
+
+        ---
+
+        - **Paso 3: Ejecutar el contenedor de forma interactiva**
+
+        Como este contenedor está diseñado para lanzar una shell interactiva (`/bin/bash`), debes ejecutarlo utilizando las opciones `-it` (modo interactivo con una pseudo-terminal) para poder interactuar con él:
+
+        ```bash
+        docker run -it --name red-container ubuntu-net-tools
+
+        ```
+
+        * **Parámetros clave:**
+        * `-i` (interactive): Mantiene la entrada estándar abierta para que puedas escribir comandos.
+        * `-t` (tty): Asigna una terminal virtual (consola).
+        * `--name red-container`: Asigna un nombre descriptivo al contenedor.
+
+
+
+        *Verificación:* Al ejecutar el comando, tu terminal cambiará inmediatamente al prompt interno del contenedor (algo parecido a `root@abc123456789:/#`).
+
+        ---
+
+        - **Paso 4: Probar las herramientas de red dentro del contenedor**
+
+        Una vez dentro de la terminal del contenedor, puedes practicar con los comandos de red recién instalados:
+
+        * **Comprobar la dirección IP del contenedor:**
+        ```bash
+        ifconfig
+
+        ```
+
+
+        * **Hacer un ping de prueba:**
+        ```bash
+        ping -c 3 8.8.8.8
+
+        ```
+
+
+        * **Consultar resoluciones DNS con `dig`:**
+        ```bash
+        dig google.com
+
+        ```
+
+
+        * **Hacer peticiones HTTP con `curl`:**
+        ```bash
+        curl -I https://www.google.com
+
+        ```
 
 
 

@@ -151,7 +151,7 @@ git remote prune origin
 2. Haz commits.
 3. Conecta el remoto: `git remote add origin https://github.com/usuario/mi-repo.git`
 4. Sube: `git push -u origin feature-nueva`
-5. Crea un *pull request* en GitHub.
+5. Fusiona la rama en main.
 6. Si alguien actualiza `main`: `git pull`
 
 
