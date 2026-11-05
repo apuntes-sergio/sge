@@ -107,11 +107,11 @@ nav:
     - 4_4_redes_volumenes_docker.md
     - 4_5_docker_compose.md
 
-  # - 5 Introducción a Odoo: 
-  #   - 5_1_introduccion_odoo.md
-  #   - 5_2_instalacion_odoo.md
-  #   - 5_3_arquitectura_odoo.md
-  #   - 5_4_primer_modulo.md
+  - 5 Introducción a Odoo: 
+    - 5_1_introduccion_odoo.md
+    - 5_2_instalacion_odoo.md
+    - 5_3_arquitectura_odoo.md
+    - 5_4_primer_modulo.md
   # - 6 Desarrollo módulo ejemplo:
   #   - 6_1_creacion_modelo_basico.md
   #   - 6_2_campos_basico_relacionales.md

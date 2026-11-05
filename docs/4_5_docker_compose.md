@@ -308,6 +308,7 @@ docker compose down
     ```
 
     Explicación del ejemplo
+    
     - **app**: Servicio que ejecuta una aplicación Node.js, montando el código fuente desde el host.
     - **db**: Servicio de base de datos PostgreSQL con persistencia de datos usando volúmenes.
     - **volumes**: Define un volumen llamado `datos-db` para guardar los datos de PostgreSQL.
